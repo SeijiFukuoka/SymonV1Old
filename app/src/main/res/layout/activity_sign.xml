@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="br.com.symon.activity.SignActivity">
+
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="@null"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        android:tint="@color/colorAccent"/>
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
+
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/email_cadastro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:text="@string/e_mail_de_cadastro"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="23.3sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:hint="Seu e-mail"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/defaultTextColor"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    android:textSize="15sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/email_sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/continue_button"
+                android:text="@string/action_sign_in"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="30dp"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/new_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="@string/new_user"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="23.3sp" />
+
+        <Button
+            android:id="@+id/register_now"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/continue_button"
+            android:text="@string/register_now"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+</LinearLayout>

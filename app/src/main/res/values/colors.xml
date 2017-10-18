@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/tools">
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#529839</color>
+    <color name="colorAccent">#65BC46</color>
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
+    <color name="defaultTextColor">#202020</color>
+    <color name="defaultButtonColor">#f5a623</color>
+    <color name="blackAlpha">#16000000</color>
+    <color name="blackDisabled">#737373</color>
+    <color name="shadowText"
+        android:shadowColor="@color/black"
+        android:shadowDx="-2"
+        android:shadowDy="2"
+        android:shadowRadius="0.01"/>
+</resources>

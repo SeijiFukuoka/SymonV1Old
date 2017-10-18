@@ -1,0 +1,37 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--EditText hint color-->
+        <item name="android:textColorHint">@color/colorPrimaryDark</item>
+        <!-- TextInputLayout text color-->
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <!-- EditText line color when EditText on-focus-->
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <!-- EditText line color when EditText  in un-focus-->
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="DisabledTextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/blackDisabled</item>
+    </style>
+
+    <style name="StatusBarNoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

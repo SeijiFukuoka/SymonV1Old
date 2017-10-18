@@ -1,0 +1,126 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="br.com.symon.activity.SignActivity">
+
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        android:tint="@color/colorAccent" />
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/confirm_login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/confirm_login_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0">
+
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/agora_sua_senha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:text="@string/agora_sua_senha"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="23.3sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                app:hintTextAppearance="@style/DisabledTextInputLayout">
+
+                <EditText
+                    android:id="@+id/confirm_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:backgroundTint="@color/blackDisabled"
+                    android:enabled="false"
+                    android:hint="Seu e-mail"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="email@email.com"
+                    android:textColor="@color/blackDisabled"
+                    android:textColorHint="@color/blackDisabled"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:hint="Digite sua senha"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/defaultTextColor"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    android:textSize="15sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                android:text="@string/esqueceu_sua_senha"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccent"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/confirm_login_button"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/continue_button"
+                android:text="@string/confirm_login"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
