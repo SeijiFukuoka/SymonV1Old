@@ -1,23 +1,41 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.1.51'
+    ext.kotlinVersion = '1.1.51'
+    ext.gradleVersion = '3.0.0-beta7'
+    ext.androidSupportVersion = '26.1.0'
+    ext.constraintLayoutVersion = '1.0.2'
+
+    ext.multiDexVersion = '1.0.1'
+    ext.okHttpVersion = '3.2.0'
+    ext.retrofitVersion = '2.0.1'
+    ext.rxAndroidVersion = '1.2.1'
+    ext.rxKotlinVersion = '0.55.0'
+    ext.daggerVersion = '2.4'
+    ext.calligraphyVersion = '2.2.0'
+    ext.glideVersion = '3.7.0'
+    ext.rxPermissionsVersion = "0.9.4@aar"
+
+    ext.ahBottomNavigationVersion = "2.1.0"
+    ext.pagerIndicatorVersion = "0.2.0"
+    ext.autoScrollViewPagerVersion = "1.1.2"
+
+    ext.fabricVersion = '2.7.1@aar'
+    ext.junitVersion = '4.12'
+    ext.espressoVersion = '2.2.2'
 
     repositories {
-        google()
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-rc1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
 
 allprojects {
     repositories {
-        google()
         jcenter()
         maven { url 'https://jitpack.io' }
     }
