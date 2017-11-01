@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="@android:color/white"
     android:fitsSystemWindows="true"
-    tools:context="br.com.symon.MainActivity">
+    tools:context="br.com.symon.ui.MainActivity">
 
 
 </android.support.design.widget.CoordinatorLayout>
