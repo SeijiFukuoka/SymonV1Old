@@ -1,4 +1,4 @@
-package br.com.gold360.financas.common
+package br.com.symon.common
 
 import android.app.Activity
 import android.content.Intent

@@ -11,6 +11,9 @@
     <string name="facebook_app_id">123</string>
     <string name="facebook_login_protocol_scheme">fb123</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="tab_promo">Oportunidades</string>
+    <string name="tab_rating">Avaliações</string>
+    <string name="tab_send">Enviar</string>
+    <string name="tab_notifications">Notificações</string>
+    <string name="tab_profile">Perfil</string>
 </resources>
