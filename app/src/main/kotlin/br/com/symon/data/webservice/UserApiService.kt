@@ -19,14 +19,14 @@ import rx.Observable
 interface UserApiService {
 
   @GET("/user/{user_id}")
-  fun getUser(@Path("user_id") user_id: Int): Observable<Response<User>>
+  fun getUser(@Path("user_id") userId: Int): Observable<Response<User>>
 
   @POST("/user")
   @FormUrlEncoded
   fun registryUser(@Body user: User): Observable<Response<User>>
 
   @DELETE("/user/{user_id}")
-  fun deleteUser(@Path("user_id") user_id: Int): Observable<Response<Void>>
+  fun deleteUser(@Path("user_id") userId: Int): Observable<Response<Void>>
 
   @PUT("/user/{user_id}")
   @FormUrlEncoded

@@ -14,7 +14,7 @@ import rx.Observable
 interface CommentApiService {
 
   @GET("/sale/{sale_id}/comment")
-  fun getComments(@Path("sale_id") sale_id: Int): Observable<Response<List<Comment>>>
+  fun getComments(@Path("sale_id") saleId: Int): Observable<Response<List<Comment>>>
 
   @POST("/sale/{sale_id}/comment")
   @FormUrlEncoded
@@ -25,5 +25,5 @@ interface CommentApiService {
   fun updateComment(@Body comment: Comment): Observable<Response<Void>>
 
   @DELETE("/comment/{comment_id}")
-  fun deleteComment(@Path("comment_id") comment_id: Int): Observable<Response<Void>>
+  fun deleteComment(@Path("comment_id") commentId: Int): Observable<Response<Void>>
 }
