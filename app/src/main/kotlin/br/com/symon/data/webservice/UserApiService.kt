@@ -30,7 +30,7 @@ interface UserApiService {
 
   @PUT("/user/{user_id}")
   @FormUrlEncoded
-  fun updateUser(@Body user: User): Observable<Response<User>>
+  fun updateUser(@Body user: User): Observable<Response<Void>>
 
   @Multipart
   @POST("/user/photo")
