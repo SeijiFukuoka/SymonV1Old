@@ -1,28 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!--EditText hint color-->
-        <item name="android:textColorHint">@color/colorPrimaryDark</item>
-        <!-- TextInputLayout text color-->
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
-        <!-- EditText line color when EditText on-focus-->
-        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
-        <!-- EditText line color when EditText  in un-focus-->
-        <item name="colorControlNormal">@color/colorPrimaryDark</item>
-    </style>
-
-    <style name="DisabledTextInputLayout" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/blackDisabled</item>
-    </style>
-
-    <style name="StatusBarNoActionBar" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -30,8 +13,36 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="TextAppearance" parent="android:TextAppearance">
+        <item name="android:textColor">@color/black</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="TextAppearance.Black">
+        <item name="fontPath">fonts/Montserrat-Black.ttf</item>
+    </style>
+
+    <style name="TextAppearance.ExtraBold">
+        <item name="fontPath">fonts/Montserrat-ExtraBold.ttf</item>
+    </style>
+
+    <style name="TextAppearance.Bold">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+    </style>
+
+    <style name="TextAppearance.SemiBold">
+        <item name="fontPath">fonts/Montserrat-SemiBold.ttf</item>
+    </style>
+
+    <style name="TextAppearance.Medium">
+        <item name="fontPath">fonts/Montserrat-Medium.ttf</item>
+    </style>
+
+    <style name="TextAppearance.Regular">
+        <item name="fontPath">fonts/Montserrat-Regular.ttf</item>
+    </style>
+
+    <style name="TextAppearance.Light">
+        <item name="fontPath">fonts/Montserrat-Light.ttf</item>
+    </style>
 
 </resources>
