@@ -2,7 +2,7 @@
 
 buildscript {
     ext.kotlinVersion = '1.1.51'
-    ext.gradleVersion = '3.0.0-beta7'
+    ext.gradleVersion = '3.0.0'
     ext.androidSupportVersion = '26.1.0'
     ext.constraintLayoutVersion = '1.0.2'
 
@@ -15,10 +15,9 @@ buildscript {
     ext.calligraphyVersion = '2.2.0'
     ext.glideVersion = '3.7.0'
     ext.rxPermissionsVersion = "0.9.4@aar"
+    ext.facebookVersion = "4.28.0"
 
     ext.ahBottomNavigationVersion = "2.1.0"
-    ext.pagerIndicatorVersion = "0.2.0"
-    ext.autoScrollViewPagerVersion = "1.1.2"
 
     ext.fabricVersion = '2.7.1@aar'
     ext.junitVersion = '4.12'
@@ -29,7 +28,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }

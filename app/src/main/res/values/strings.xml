@@ -8,12 +8,21 @@
     <string name="general_continue">CONTINUAR</string>
     <string name="general_enter">Entrar</string>
 
-    <string name="facebook_app_id">123</string>
-    <string name="facebook_login_protocol_scheme">fb123</string>
+    <string name="facebook_app_id">1548485508507561</string>
+    <string name="facebook_permission_profile">public_profile</string>
+    <string name="facebook_permission_email">email</string>
+    <string name="facebook_email">email</string>
+    <string name="facebook_name">name</string>
+    <string name="fb_login_protocol_scheme">fb1548485508507561</string>
 
     <string name="tab_promo">Oportunidades</string>
     <string name="tab_rating">Avaliações</string>
     <string name="tab_send">Enviar</string>
     <string name="tab_notifications">Notificações</string>
     <string name="tab_profile">Perfil</string>
+
+    <string name="welcome_facebook_button">Entre com o Facebook</string>
+    <string name="welcome_title">Bem-vindo(a) ao</string>
+    <string name="welcome_message">Compartilhe e consulte ofertas reais</string>
+    <string name="welcome_facebook_error_msg">Ops, ocorreu um erro ao entrar com o Facebook =(</string>
 </resources>

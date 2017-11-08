@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "br.com.symon"
-        minSdkVersion 19
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0.0"
@@ -111,8 +111,8 @@ dependencies {
     // AH Bottom navigation
     compile "com.aurelhubert:ahbottomnavigation:$ahBottomNavigationVersion"
 
-    // Pager Indicator
-    compile "com.romandanylyk:pageindicatorview:$pagerIndicatorVersion"
+    // Facebook
+    compile "com.facebook.android:facebook-login:$facebookVersion"
 
     // Fabric
     compile("com.crashlytics.sdk.android:crashlytics:$fabricVersion") {
