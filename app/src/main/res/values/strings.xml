@@ -1,13 +1,15 @@
 <resources>
-    <string name="app_name">Symon</string>
+  <string name="app_name">Symon</string>
 
-    <string name="defaultFont">fonts/Montserrat-Regular</string>
+  <string name="defaultFont">fonts/Montserrat-Regular</string>
 
-    <string name="general_internet_connection_unavailable">Ops! Por favor, verifique sua conexão à internet e tente novamente.</string>
-    <string name="general_server_error">Ops! Ocorreu um erro. Por favor, tente novamente.</string>
-    <string name="general_continue">CONTINUAR</string>
-    <string name="general_enter">Entrar</string>
+  <string name="general_internet_connection_unavailable">Ops! Por favor, verifique sua conexão à internet e tente novamente.</string>
+  <string name="general_server_error">Ops! Ocorreu um erro. Por favor, tente novamente.</string>
+  <string name="general_continue">CONTINUAR</string>
+  <string name="general_enter">Entrar</string>
 
+  <string name="facebook_app_id">123</string>
+  <string name="facebook_login_protocol_scheme">fb123</string>
     <string name="facebook_app_id">1548485508507561</string>
     <string name="facebook_permission_profile">public_profile</string>
     <string name="facebook_permission_email">email</string>
@@ -15,6 +17,13 @@
     <string name="facebook_name">name</string>
     <string name="fb_login_protocol_scheme">fb1548485508507561</string>
 
+  <string name="tab_promo">Oportunidades</string>
+  <string name="tab_rating">Avaliações</string>
+  <string name="tab_send">Enviar</string>
+  <string name="tab_notifications">Notificações</string>
+  <string name="tab_profile">Perfil</string>
+
+  <string name="all_email">E-mail</string>
     <string name="tab_promo">Oportunidades</string>
     <string name="tab_rating">Avaliações</string>
     <string name="tab_send">Enviar</string>
