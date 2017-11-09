@@ -22,31 +22,31 @@
     <item name="android:textColor">@color/black</item>
   </style>
 
-  <style name="TextAppearance.Black">
+  <style name="TextAppearance.Black" parent="android:TextAppearance">
     <item name="fontPath">fonts/Montserrat-Black.ttf</item>
   </style>
 
-  <style name="TextAppearance.ExtraBold">
+  <style name="TextAppearance.ExtraBold" parent="android:TextAppearance">
     <item name="fontPath">fonts/Montserrat-ExtraBold.ttf</item>
   </style>
 
-  <style name="TextAppearance.Bold">
+  <style name="TextAppearance.Bold" parent="android:TextAppearance">
     <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
   </style>
 
-  <style name="TextAppearance.SemiBold">
+  <style name="TextAppearance.SemiBold" parent="android:TextAppearance">
     <item name="fontPath">fonts/Montserrat-SemiBold.ttf</item>
   </style>
 
-  <style name="TextAppearance.Medium">
+  <style name="TextAppearance.Medium" parent="android:TextAppearance">
     <item name="fontPath">fonts/Montserrat-Medium.ttf</item>
   </style>
 
-  <style name="TextAppearance.Regular">
+  <style name="TextAppearance.Regular" parent="android:TextAppearance">
     <item name="fontPath">fonts/Montserrat-Regular.ttf</item>
   </style>
 
-  <style name="TextAppearance.Light">
+  <style name="TextAppearance.Light" parent="android:TextAppearance">
     <item name="fontPath">fonts/Montserrat-Light.ttf</item>
   </style>
 
