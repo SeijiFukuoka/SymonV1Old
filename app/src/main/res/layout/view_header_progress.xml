@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin_20_dp"
+    android:layout_alignParentTop="true"
+    android:alpha="0.9"
+    android:background="#00ffffff"
+    >
+
+  <LinearLayout
+      android:id="@+id/layoutFirstStep"
+      android:layout_width="match_parent"
+      android:layout_height="3dp"
+      android:background="@color/gray_E5E5E5"
+      android:orientation="horizontal"
+      android:weightSum="1"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      >
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.3"
+        android:background="@color/colorPrimary"
+        />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        />
+  </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -4,8 +4,13 @@
   <color name="colorPrimaryDark">#529839</color>
   <color name="colorAccent">#F5A623</color>
 
+  <color name="colorAccentDark">#DC8D0A</color>
+
+  <color name="buttonShadow">#19000000</color>
+
   <color name="white">#FFFFFF</color>
   <color name="black">#000000</color>
+  <color name="black_202020">#202020</color>
 
   <color name="gray_E5E5E5">#E5E5E5</color>
   <color name="gray_CCCCCC">#CCCCCC</color>

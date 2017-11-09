@@ -17,5 +17,16 @@
   <string name="tab_notifications">Notificações</string>
   <string name="tab_profile">Perfil</string>
 
-  <string name="all_email">E-mail</string>
+  <string name="login_hint">Seu e-mail</string>
+  <string name="password_hint">Digite sua senha</string>
+
+  <string name="all_continue">Continuar</string>
+
+  <string name="register_now">Cadastre-se agora</string>
+  <string name="register_email">E-mail de cadastro</string>
+  <string name="register_new_label">Novo por aqui?</string>
+  <string name="register_login_password_title_label">Agora, sua senha</string>
+  <string name="register_forget_password">Esqueceu sua senha?</string>
+  <string name="register_confirm_login">Confirmar login</string>
+
 </resources>
