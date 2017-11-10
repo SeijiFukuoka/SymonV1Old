@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:focusableInTouchMode="true"
     >
 
   <include
@@ -25,6 +26,7 @@
       android:id="@+id/textInputPasswordLabel"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/margin_40_dp"
       android:layout_marginStart="@dimen/margin_40_dp"
       android:layout_marginTop="@dimen/margin_15_dp"
       android:text="@string/register_login_password_title_label"
@@ -43,7 +45,7 @@
       android:layout_marginEnd="@dimen/margin_40_dp"
       android:layout_marginStart="@dimen/margin_40_dp"
       android:layout_marginTop="@dimen/margin_30_dp"
-      android:theme="@style/CustomEditText"
+      android:theme="@style/CustomEditTextDisable"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toBottomOf="@id/textInputPasswordLabel"
@@ -56,8 +58,9 @@
         android:enabled="false"
         android:hint="@string/login_hint"
         android:inputType="textEmailAddress"
-        android:textColor="@color/black_202020"
+        android:textColor="@color/gray_666666"
         android:textSize="@dimen/text_size_16_sp"
+        android:textStyle="italic"
         />
   </android.support.design.widget.TextInputLayout>
 
@@ -79,7 +82,6 @@
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
         android:hint="@string/password_hint"
         android:inputType="text"
         android:textColor="@color/black_202020"
@@ -93,6 +95,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginBottom="@dimen/margin_20_dp"
+      android:layout_marginLeft="@dimen/margin_40_dp"
       android:layout_marginStart="@dimen/margin_40_dp"
       android:layout_marginTop="@dimen/margin_35_dp"
       android:text="@string/register_forget_password"
