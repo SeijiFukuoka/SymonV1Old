@@ -46,6 +46,7 @@
       android:layout_marginStart="@dimen/margin_40_dp"
       android:layout_marginTop="@dimen/margin_30_dp"
       android:theme="@style/CustomEditTextDisable"
+      app:hintAnimationEnabled="false"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toBottomOf="@id/textInputPasswordLabel"
@@ -60,7 +61,7 @@
         android:inputType="textEmailAddress"
         android:textColor="@color/gray_666666"
         android:textSize="@dimen/text_size_16_sp"
-        android:textStyle="italic"
+        android:textStyle="bold"
         />
   </android.support.design.widget.TextInputLayout>
 
@@ -71,11 +72,12 @@
       android:layout_marginEnd="@dimen/margin_40_dp"
       android:layout_marginStart="@dimen/margin_40_dp"
       android:layout_marginTop="@dimen/margin_20_dp"
+      android:paddingBottom="5dp"
       android:theme="@style/CustomEditText"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toBottomOf="@id/textLoginEmail"
-      app:passwordToggleDrawable="@drawable/ic_show_password"
+      app:passwordToggleEnabled="true"
       >
 
     <android.support.v7.widget.AppCompatEditText
@@ -83,7 +85,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password_hint"
-        android:inputType="text"
+        android:inputType="textPassword"
+        android:paddingBottom="@dimen/margin_15_dp"
         android:textColor="@color/black_202020"
         android:textSize="@dimen/text_size_16_sp"
         />
