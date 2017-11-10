@@ -25,4 +25,5 @@
     <string name="welcome_title">Bem-vindo(a) ao</string>
     <string name="welcome_message">Compartilhe e consulte ofertas reais</string>
     <string name="welcome_facebook_error_msg">Ops, ocorreu um erro ao entrar com o Facebook =(</string>
+    <string name="facebook_error_message">Ocorreu um erro ao tentar entrar com o Facebook =/</string>
 </resources>

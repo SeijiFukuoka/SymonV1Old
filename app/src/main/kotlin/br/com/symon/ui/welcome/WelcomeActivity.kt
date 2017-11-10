@@ -49,6 +49,7 @@ class WelcomeActivity : BaseActivity(), FacebookCallback<LoginResult> {
 
     override fun onError(error: FacebookException?) {
         Log.d("facebookEvent:", error?.message )
+        toast(getString(R.string.facebook_error_message))
     }
 
     override fun onSuccess(result: LoginResult?) {
