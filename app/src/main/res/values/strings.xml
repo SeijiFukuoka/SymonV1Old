@@ -35,6 +35,7 @@
   <string name="register_forget_password">Esqueceu sua senha?</string>
   <string name="register_confirm_login">Confirmar login</string>
 
+  <string name="confirm_action_login">Login realizado!\nConsulte e publique ofertas ;)</string>
   <string name="all_email">E-mail</string>
     <string name="tab_promo">Oportunidades</string>
     <string name="tab_rating">Avaliações</string>

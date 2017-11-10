@@ -6,9 +6,8 @@
 
   <color name="colorAccentDark">#DC8D0A</color>
 
-  <color name="buttonShadow">#19000000</color>
-
   <color name="white">#FFFFFF</color>
+
   <color name="black">#000000</color>
   <color name="black_202020">#202020</color>
 
@@ -17,4 +16,7 @@
   <color name="gray_CCCCCC">#CCCCCC</color>
   <color name="gray_666666">#666666</color>
   <color name="gray_737373">#737373</color>
+
+  <color name="buttonShadow">#19000000</color>
+
 </resources>
