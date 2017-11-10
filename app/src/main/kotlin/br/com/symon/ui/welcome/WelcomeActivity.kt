@@ -16,7 +16,10 @@ import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.content_welcome.*
 import java.util.*
 
-class WelcomeActivity : BaseActivity(), FacebookCallback<LoginResult> {
+class WelcomeActivity :
+        BaseActivity(),
+        WelcomeContract.View,
+        FacebookCallback<LoginResult> {
 
     private var callbackManager: CallbackManager? = null
 
@@ -55,9 +58,9 @@ class WelcomeActivity : BaseActivity(), FacebookCallback<LoginResult> {
     override fun onSuccess(result: LoginResult?) {
         Log.d("facebookEvent:", "Success")
         val request: GraphRequest = GraphRequest.newMeRequest(result?.accessToken) {
-            `object`, _ ->
-            val email = `object`.getString(getString(R.string.facebook_email))
-            val name = `object`.getString(getString(R.string.facebook_name))
+            `facebookObject`, _ ->
+            val email = `facebookObject`.getString(getString(R.string.facebook_email))
+            val name = `facebookObject`.getString(getString(R.string.facebook_name))
 
             var user = User(
                     id = null,
