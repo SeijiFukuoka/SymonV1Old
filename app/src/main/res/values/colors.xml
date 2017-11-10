@@ -13,6 +13,8 @@
   <color name="black_202020">#202020</color>
 
   <color name="gray_E5E5E5">#E5E5E5</color>
+  <color name="gray_E0E0E0">#E0E0E0</color>
   <color name="gray_CCCCCC">#CCCCCC</color>
+  <color name="gray_666666">#666666</color>
   <color name="gray_737373">#737373</color>
 </resources>

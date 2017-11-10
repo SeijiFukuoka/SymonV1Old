@@ -1,7 +1,7 @@
 <resources>
   <string name="app_name">Symon</string>
 
-  <string name="defaultFont">fonts/Montserrat-Regular</string>
+  <string name="defaultFont">fonts/Montserrat-Regular.ttf</string>
 
   <string name="general_internet_connection_unavailable">Ops! Por favor, verifique sua conexão à internet e tente novamente.</string>
   <string name="general_server_error">Ops! Ocorreu um erro. Por favor, tente novamente.</string>
