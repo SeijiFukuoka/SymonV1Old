@@ -17,17 +17,17 @@ class UserCacheManagerImpl @Inject constructor(context: Context) : UserCacheMana
         cacheManager = CacheManagerImpl(context, CacheSettings.USER_CACHE_NAME)
     }
 
-    override fun save(user: User) : Observable<Unit> = Observable.create { subscriber ->
+    override fun save(user: User) : Observable<Unit> = Observable.create<Unit> { emitter ->
         deleteUser()
-        cacheManager?.put(CacheSettings.USER_KEY, user)?.let { subscriber.onNext(it) }
-        subscriber.onComplete()
+        emitter.onNext(cacheManager?.put(CacheSettings.USER_KEY, user)!!)
+        emitter.onComplete()
     }
 
     override fun getUser(): Observable<User> = Observable.create<User> { emitter ->
         var userCache : User? = cacheManager?.get(CacheSettings.USER_KEY, User::class.java)
 
         if (userCache == null)
-            userCache = User(null, null, null, null, null, null, null)
+            userCache = User()
 
         emitter.onNext(userCache)
         emitter.onComplete()
