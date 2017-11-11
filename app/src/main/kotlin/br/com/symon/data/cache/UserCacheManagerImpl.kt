@@ -6,6 +6,8 @@ import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
+
 @Singleton
 class UserCacheManagerImpl @Inject constructor(context: Context) : UserCacheManager {
 
@@ -21,10 +23,17 @@ class UserCacheManagerImpl @Inject constructor(context: Context) : UserCacheMana
         subscriber.onComplete()
     }
 
+    override fun getUser(): Observable<User> = Observable.create<User> { emitter ->
+        var userCache : User? = cacheManager?.get(CacheSettings.USER_KEY, User::class.java)
 
-    override fun getUser(): Observable<User?> = Observable.just(cacheManager?.get(CacheSettings.USER_KEY, User::class.java))
+        if (userCache == null)
+            userCache = User(null, null, null, null, null, null, null)
 
-    override fun deleteUser(): Observable<Void> = Observable.create { subscriber ->
+        emitter.onNext(userCache)
+        emitter.onComplete()
+    }
+
+    override fun deleteUser(): Observable<Void> = Observable.create {
         cacheManager?.delete(CacheSettings.USER_KEY)
     }
 }

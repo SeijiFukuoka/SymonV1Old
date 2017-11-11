@@ -11,6 +11,10 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : BaseActivity() {
+    companion object {
+        const val EXTRA_USER = "EXTRA_USER"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

@@ -7,6 +7,7 @@ interface WelcomeContract {
     interface View: BaseView {
 
     }
+
     interface Presenter {
 
     }
