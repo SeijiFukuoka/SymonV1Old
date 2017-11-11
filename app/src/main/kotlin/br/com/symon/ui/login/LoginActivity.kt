@@ -20,6 +20,8 @@ class LoginActivity : BaseActivity(), LoginContract.View {
                 .loginModule(LoginModule(this))
                 .build()
 
+    private var user: User? = null
+
     @Inject
     lateinit var loginPresenter: LoginPresenter
 
@@ -38,13 +40,15 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         }
 
         buttonLogin.setOnClickListener({
-            val recipeDetailActivity = LoginConfirmationActivity.newIntent(this,
-                    editTextLoginEmail.text.toString())
-            startActivity(recipeDetailActivity)
+            // TODO("Verificar como vai ser esta chamada da API")
+            user = User(1, "teste", "teste@teste.com", null, null, null, null)
+            loginPresenter.login(user!!)
         })
     }
 
-    override fun showLoginResponse(user: User?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showLoginResponse(user: User) {
+        val recipeDetailActivity = LoginConfirmationActivity.newIntent(this,
+                editTextLoginEmail.text.toString())
+        startActivity(recipeDetailActivity)
     }
 }

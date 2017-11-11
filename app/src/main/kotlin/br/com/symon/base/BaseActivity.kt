@@ -45,7 +45,7 @@ open class BaseActivity : AppCompatActivity(), BaseView {
         progressContainer?.visibility = View.GONE
     }
 
-    override fun showError(stringResId: Int) {
-        errorMessage = getString(stringResId)
+    override fun showError(message: String?) {
+        errorMessage = message
     }
 }

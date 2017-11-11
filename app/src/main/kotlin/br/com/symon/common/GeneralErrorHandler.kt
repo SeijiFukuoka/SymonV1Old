@@ -1,9 +1,7 @@
 package br.com.gold360.financas.common
 
-import android.support.annotation.StringRes
-import br.com.symon.R
 import br.com.symon.base.BaseView
-import retrofit2.adapter.rxjava.HttpException
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import java.lang.ref.WeakReference
 import java.net.SocketException
 import java.net.SocketTimeoutException
@@ -24,7 +22,7 @@ class GeneralErrorHandler(private val throwable: Throwable, view: BaseView? = nu
 
     private fun call() {
         if (isNetworkError(throwable)) {
-            showMessage(R.string.general_internet_connection_unavailable)
+            showMessage(throwable.message)
         } else if (throwable is HttpException) {
             handleError(throwable)
         }
@@ -40,11 +38,11 @@ class GeneralErrorHandler(private val throwable: Throwable, view: BaseView? = nu
 
     private fun handleError(throwable: HttpException?) {
         if (throwable?.code() != UNKNOWN_ERROR) {
-            showMessage(R.string.general_server_error)
+            showMessage(throwable?.message)
         }
     }
 
-    private fun showMessage(@StringRes strResId: Int) {
-        viewReference.get()?.showError(strResId)
+    private fun showMessage(message: String?) {
+        viewReference.get()?.showError(message)
     }
 }

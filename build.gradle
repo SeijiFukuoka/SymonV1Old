@@ -7,8 +7,9 @@ buildscript {
     ext.constraintLayoutVersion = '1.0.2'
 
     ext.multiDexVersion = '1.0.1'
-    ext.okHttpVersion = '3.2.0'
-    ext.retrofitVersion = '2.0.1'
+    ext.okHttpVersion = '3.8.0'
+    ext.rxJava2AdapterVersion = '1.0.0'
+    ext.retrofitVersion = '2.1.0'
     ext.rxAndroidVersion = '2.0.1'
     ext.rxKotlinVersion = '2.1.0'
     ext.daggerVersion = '2.4'

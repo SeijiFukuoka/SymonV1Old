@@ -37,7 +37,7 @@ open class BaseFragment : Fragment(), BaseView {
         progressContainer?.visibility = View.GONE
     }
 
-    override fun showError(stringResId: Int) {
+    override fun showError(message: String?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

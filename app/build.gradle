@@ -84,10 +84,11 @@ dependencies {
     compile "com.android.support:multidex:$multiDexVersion"
 
     // Okhttp3
+    compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 
     // Retrofit
-    compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+    compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$rxJava2AdapterVersion"
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
