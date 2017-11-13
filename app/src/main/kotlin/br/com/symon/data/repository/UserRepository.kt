@@ -16,6 +16,7 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
     fun deleteCache() = call(userCacheManagerImpl.deleteUser())
 
     fun getUser(userId: Int) = call(userApiService.getUser(userId))
+    fun checkUser(userEmail: String) = call(userApiService.checkUser(userEmail))
     fun registryUser(user: User) = call(userApiService.registryUser(user))
     fun deleteUser(userId: Int) = call(userApiService.deleteUser(userId))
     fun updateUser(user: User) = call(userApiService.updateUser(user))

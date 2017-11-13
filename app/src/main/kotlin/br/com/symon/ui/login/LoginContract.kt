@@ -1,14 +1,14 @@
 package br.com.symon.ui.login
 
 import br.com.symon.base.BaseView
-import br.com.symon.data.model.User
+import br.com.symon.data.model.CheckUserResponse
 
 class LoginContract {
     interface View : BaseView {
-        fun showLoginResponse(user: User)
+        fun handleCheckResponse(checkResponse: CheckUserResponse)
     }
 
     interface Presenter {
-        fun login(user: User)
+        fun checkUser(email: String)
     }
 }
