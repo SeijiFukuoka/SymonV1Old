@@ -1,6 +1,7 @@
 package br.com.symon.data.webservice
 
 import br.com.symon.data.model.User
+import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.data.model.responses.RegisterUserResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -15,8 +16,11 @@ interface UserApiService {
   fun getUser(@Path("user_id") userId: Int): Observable<Response<User>>
 
   @POST("/user")
-  @FormUrlEncoded
   fun registryUser(@Body user: User): Observable<Response<RegisterUserResponse>>
+
+  @POST("/user")
+  fun registryUserFacebook(@Body user: UserFacebookRegistryRequest)
+          : Observable<RegisterUserResponse>
 
   @DELETE("/user/{user_id}")
   fun deleteUser(@Path("user_id") userId: Int): Observable<Response<Void>>

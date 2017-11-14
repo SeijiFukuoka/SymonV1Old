@@ -8,8 +8,8 @@ import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.common.startIntent
 import br.com.symon.data.model.User
-import br.com.symon.injection.components.DaggerSplashComponent
-import br.com.symon.injection.components.SplashComponent
+import br.com.symon.injection.components.DaggerSplashActivityComponent
+import br.com.symon.injection.components.SplashActivityComponent
 import br.com.symon.injection.modules.SplashActivityModule
 import br.com.symon.ui.MainActivity
 import br.com.symon.ui.splash.SplashContract.View
@@ -17,8 +17,8 @@ import br.com.symon.ui.welcome.WelcomeActivity
 
 class SplashActivity : AppCompatActivity(), View {
 
-    private val splashComponent: SplashComponent
-        get() = DaggerSplashComponent
+    private val splashActivityComponent: SplashActivityComponent
+        get() = DaggerSplashActivityComponent
                 .builder()
                 .applicationComponent((this.application as CustomApplication).applicationComponent)
                 .splashActivityModule(SplashActivityModule(this))
@@ -32,11 +32,11 @@ class SplashActivity : AppCompatActivity(), View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        splashComponent.inject(this)
+        splashActivityComponent.inject(this)
 
         Handler().postDelayed(
                 {
-                    splashComponent.splashPresenter().getUserCache()
+                    splashActivityComponent.splashPresenter().getUserCache()
                 }, SPLASH_TIME_OUT.toLong())
     }
 

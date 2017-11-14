@@ -3,7 +3,7 @@ package br.com.gold360.financas.common
 import android.support.annotation.StringRes
 import br.com.symon.R
 import br.com.symon.base.BaseView
-import retrofit2.adapter.rxjava.HttpException
+import retrofit2.HttpException
 import java.lang.ref.WeakReference
 import java.net.SocketException
 import java.net.SocketTimeoutException

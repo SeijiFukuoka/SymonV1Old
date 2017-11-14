@@ -1,7 +1,7 @@
 package br.com.symon.data.cache
 
 import br.com.symon.data.model.Settings
-import rx.Observable
+import io.reactivex.Observable
 
 
 interface SettingsCacheManager {

@@ -2,6 +2,7 @@ package br.com.symon.ui.welcome
 
 import br.com.symon.base.BaseView
 import br.com.symon.data.model.User
+import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 
 
 interface WelcomeContract {
@@ -10,6 +11,6 @@ interface WelcomeContract {
     }
 
     interface Presenter {
-        fun registerUser(user: User)
+        fun registerUserFacebook(user: UserFacebookRegistryRequest)
     }
 }

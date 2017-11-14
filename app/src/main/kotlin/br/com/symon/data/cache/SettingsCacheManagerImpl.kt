@@ -4,7 +4,7 @@ import android.content.Context
 import br.com.symon.data.cache.CacheSettings.SETTINGS_CACHE_NAME
 import br.com.symon.data.cache.CacheSettings.SETTINGS_KEY
 import br.com.symon.data.model.Settings
-import rx.Observable
+import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,6 +1,7 @@
 package br.com.symon.ui.welcome
 
 import br.com.symon.data.model.User
+import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.ActivityScope
 import javax.inject.Inject
@@ -11,17 +12,17 @@ class WelcomePresenter @Inject constructor(
         private val userRepository: UserRepository)
     : WelcomeContract.Presenter {
 
-    override fun registerUser(user: User) {
-        userRepository.registryUser(user).subscribe({
-            val userId = it.body().id
+    override fun registerUserFacebook(user: UserFacebookRegistryRequest) {
+        userRepository.registryUserFacebook(user).subscribe({
+            val userId = it.id
             val userCache = User(
                     userId,
                     user.name,
                     user.email,
-                    user.phone,
-                    user.birthday,
+                    null,
+                    null,
                     user.facebookId,
-                    user.photo)
+                    null)
 
             userRepository.saveUserCache(userCache).subscribe({
                 view.redirectMainActivity(userCache)

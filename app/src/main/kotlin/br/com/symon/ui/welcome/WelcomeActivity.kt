@@ -8,6 +8,7 @@ import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.toast
 import br.com.symon.data.model.User
+import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.injection.components.DaggerWelcomeActivityComponent
 import br.com.symon.injection.components.WelcomeActivityComponent
 import br.com.symon.injection.modules.WelcomeActivityModule
@@ -75,16 +76,12 @@ class WelcomeActivity :
             val email = jsonObject.getString(getString(R.string.facebook_email))
             val name = jsonObject.getString(getString(R.string.facebook_name))
 
-            val user = User(
-                    id = null,
+            val user = UserFacebookRegistryRequest(
                     name =  name,
                     email = email,
-                    phone = "",
-                    birthday = null,
-                    facebookId = result?.accessToken?.userId,
-                    photo = "https://graph.facebook.com/${result?.accessToken?.userId}/picture?type=large")
+                    facebookId = result?.accessToken?.userId)
 
-            welcomeActivityComponent.welcomePresenter().registerUser(user)
+            welcomeActivityComponent.welcomePresenter().registerUserFacebook(user)
         }
 
         val parameters = Bundle()

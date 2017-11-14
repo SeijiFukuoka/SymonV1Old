@@ -8,7 +8,7 @@ import dagger.Component
 
 @ActivityScope
 @Component(dependencies = arrayOf(ApplicationComponent::class), modules = arrayOf(SplashActivityModule::class))
-interface SplashComponent {
+interface SplashActivityComponent {
     fun inject(splashActivity: SplashActivity)
     fun splashPresenter(): SplashPresenter
 }
