@@ -11,14 +11,14 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
-  @Provides
-  @Named("provideBaseApi")
-  @Singleton
-  fun provideBaseApi(): Retrofit = ApiManager.initRetrofit(
-      ApiSettings.API_URL)
+    @Provides
+    @Named("provideBaseApi")
+    @Singleton
+    fun provideBaseApi(): Retrofit = ApiManager.initRetrofit(
+            ApiSettings.API_URL)
 
-  @Provides
-  @Singleton
-  fun providesUserApiService(@Named("provideBaseApi") retrofit: Retrofit) : UserApiService =
-          retrofit.create<UserApiService>(UserApiService::class.java)
+    @Provides
+    @Singleton
+    fun providesUserApiService(@Named("provideBaseApi") retrofit: Retrofit): UserApiService =
+            retrofit.create<UserApiService>(UserApiService::class.java)
 }

@@ -1,6 +1,5 @@
 package br.com.symon.data.webservice
 
-import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,15 +25,11 @@ object ApiManager {
             addInterceptor(interceptor)
         }
 
-        return Retrofit.Builder().baseUrl(serverUrl)
+        return Retrofit.Builder()
+                .baseUrl(serverUrl)
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(createGsonConverter())
                 .client(client.build())
                 .build()
-    }
-
-    private fun createGsonConverter(): GsonConverterFactory {
-        val builder = GsonBuilder().serializeNulls()
-        return GsonConverterFactory.create(builder.create())
     }
 }

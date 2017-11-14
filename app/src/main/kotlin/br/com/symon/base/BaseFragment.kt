@@ -9,7 +9,6 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 
 open class BaseFragment : Fragment(), BaseView {
-
     var fragmentId: String? = null
 
     private var progressContainer: RelativeLayout? = null
@@ -37,7 +36,7 @@ open class BaseFragment : Fragment(), BaseView {
         progressContainer?.visibility = View.GONE
     }
 
-    override fun showError(stringResId: Int) {
+    override fun showError(message: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

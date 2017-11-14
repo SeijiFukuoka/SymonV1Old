@@ -5,5 +5,5 @@ import android.support.annotation.StringRes
 interface BaseView {
     fun showLoading()
     fun hideLoading()
-    fun showError(@StringRes stringResId: Int)
+    fun showError(@StringRes message: Int)
 }

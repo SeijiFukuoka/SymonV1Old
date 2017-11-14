@@ -12,7 +12,6 @@ import android.widget.RelativeLayout
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 open class BaseActivity : AppCompatActivity(), BaseView {
-
     private var progressContainer: RelativeLayout? = null
 
     var errorMessage: String? = null
@@ -45,7 +44,7 @@ open class BaseActivity : AppCompatActivity(), BaseView {
         progressContainer?.visibility = View.GONE
     }
 
-    override fun showError(stringResId: Int) {
-        errorMessage = getString(stringResId)
+    override fun showError(message: Int) {
+        errorMessage = getString(message)
     }
 }

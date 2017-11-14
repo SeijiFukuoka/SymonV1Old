@@ -10,7 +10,9 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 
-class GeneralErrorHandler(private val throwable: Throwable, view: BaseView? = null, private val onFailure: () -> Unit) : Throwable() {
+class GeneralErrorHandler(private val throwable: Throwable,
+                          view: BaseView? = null,
+                          private val onFailure: () -> Unit) : Throwable() {
 
     private val viewReference: WeakReference<BaseView> = WeakReference<BaseView>(view)
 

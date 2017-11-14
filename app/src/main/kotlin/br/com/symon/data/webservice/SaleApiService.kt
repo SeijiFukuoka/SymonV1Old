@@ -10,27 +10,27 @@ import retrofit2.http.*
 
 interface SaleApiService {
 
-  @GET("/sale")
-  fun getSalesList(): Observable<Response<List<Sale>>>
+    @GET("/sale")
+    fun getSalesList(): Observable<Response<List<Sale>>>
 
-  @GET("/sale/{sale_id}")
-  fun getSaleDetail(@Path("sale_id") saleId: Int): Observable<Response<Sale>>
+    @GET("/sale/{sale_id}")
+    fun getSaleDetail(@Path("sale_id") saleId: Int): Observable<Response<Sale>>
 
-  @FormUrlEncoded
-  @POST("/sale")
-  fun postSaleMessage(@Body sale: Sale): Observable<Response<Sale>>
+    @FormUrlEncoded
+    @POST("/sale")
+    fun postSaleMessage(@Body sale: Sale): Observable<Response<Sale>>
 
-  @Multipart
-  @POST("/sale/photo")
-  fun uploaSalePhoto(
-      @Part photo: MultipartBody.Part,
-      @Part("resource") name: RequestBody,
-      @Field("sale_id") saleId: Int): Observable<Response<ResponseBody>>
+    @Multipart
+    @POST("/sale/photo")
+    fun uploaSalePhoto(
+            @Part photo: MultipartBody.Part,
+            @Part("resource") name: RequestBody,
+            @Field("sale_id") saleId: Int): Observable<Response<ResponseBody>>
 
-  @FormUrlEncoded
-  @PUT("/sale/{sale_id}")
-  fun updateSale(@Body sale: Sale): Observable<Response<Void>>
+    @FormUrlEncoded
+    @PUT("/sale/{sale_id}")
+    fun updateSale(@Body sale: Sale): Observable<Response<Void>>
 
-  @DELETE("/sale/{sale_id}")
-  fun deleteSale(@Path("sale_id") saleId: Int): Observable<Response<Void>>
+    @DELETE("/sale/{sale_id}")
+    fun deleteSale(@Path("sale_id") saleId: Int): Observable<Response<Void>>
 }

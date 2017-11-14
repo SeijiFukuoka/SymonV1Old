@@ -1,4 +1,4 @@
-package br.com.symon.common
+package br.com.symon.common.widget
 
 import android.content.Context
 import android.support.v4.view.ViewPager
