@@ -3,6 +3,7 @@ package br.com.symon.data.repository
 import br.com.symon.base.BaseRepository
 import br.com.symon.data.cache.UserCacheManagerImpl
 import br.com.symon.data.model.User
+import br.com.symon.data.model.UserTokenRequest
 import br.com.symon.data.webservice.UserApiService
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -17,6 +18,7 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
 
     fun getUser(userId: Int) = call(userApiService.getUser(userId))
     fun checkUser(userEmail: String) = call(userApiService.checkUser(userEmail))
+    fun getUserToken(userTokenRequest: UserTokenRequest) = call((userApiService.getToken(userTokenRequest)))
     fun registryUser(user: User) = call(userApiService.registryUser(user))
     fun deleteUser(userId: Int) = call(userApiService.deleteUser(userId))
     fun updateUser(user: User) = call(userApiService.updateUser(user))
