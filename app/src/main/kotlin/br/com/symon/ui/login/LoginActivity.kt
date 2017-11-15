@@ -12,7 +12,7 @@ import br.com.symon.injection.components.LoginActivityComponent
 import br.com.symon.injection.modules.LoginActivityModule
 import br.com.symon.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
+import kotlinx.android.synthetic.main.view_custom_toolbar.*
 
 class LoginActivity : BaseActivity(), LoginContract.View {
 
@@ -28,11 +28,11 @@ class LoginActivity : BaseActivity(), LoginContract.View {
 
         loginComponent.inject(this)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(customToolbar)
         supportActionBar?.setDisplayShowHomeEnabled(false)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        imageBackArrow.setOnClickListener {
+        customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }
 

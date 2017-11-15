@@ -5,6 +5,7 @@ import br.com.symon.data.cache.UserCacheManagerImpl
 import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
+import br.com.symon.data.model.requests.UserUpdateRequest
 import br.com.symon.data.webservice.UserApiService
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -34,7 +35,8 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
 
     fun deleteUser(userId: Int) = call(userApiService.deleteUser(userId))
 
-    fun updateUser(user: User) = call(userApiService.updateUser(user))
+    fun updateUser(userId: Int, userUpdateRequest: UserUpdateRequest) =
+            call(userApiService.updateUser(userId, userUpdateRequest))
 
     fun uploadUserPhoto(photo: MultipartBody.Part, name: RequestBody)
             = call(userApiService.uploadUserPhoto(photo, name))

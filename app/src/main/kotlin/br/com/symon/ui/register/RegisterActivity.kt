@@ -10,6 +10,7 @@ import br.com.symon.injection.components.DaggerRegisterComponent
 import br.com.symon.injection.components.RegisterComponent
 import br.com.symon.injection.modules.RegisterActivityModule
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.view_custom_toolbar.*
 import java.util.regex.Pattern
 
 
@@ -27,6 +28,14 @@ class RegisterActivity : BaseActivity(), RegisterContract.View {
         setContentView(R.layout.activity_register)
 
         registerComponent.inject(this)
+
+        setSupportActionBar(customToolbar)
+        supportActionBar?.setDisplayShowHomeEnabled(false)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        customToolbarBackImageView.setOnClickListener {
+            onBackPressed()
+        }
 
         registerEmailEditText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
@@ -58,11 +67,12 @@ class RegisterActivity : BaseActivity(), RegisterContract.View {
     }
 
     override fun goToNextStep(id: Int?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        startActivity(RegisterComplementActivity.newIntent(this, id))
+        finish()
     }
 
     override fun showErrorMessage(message: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        toast(message)
     }
 
     override fun showError(message: Int) {

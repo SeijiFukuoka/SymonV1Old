@@ -115,6 +115,9 @@ dependencies {
     // Facebook
     compile "com.facebook.android:facebook-login:$facebookVersion"
 
+    // PhoneMask
+    compile "com.github.vacxe:phonemask:$maskEditTextVersion"
+
     // Fabric
     compile("com.crashlytics.sdk.android:crashlytics:$fabricVersion") {
         transitive = true

@@ -14,7 +14,7 @@ import br.com.symon.injection.components.DaggerLoginActivityConfirmationComponen
 import br.com.symon.injection.components.LoginActivityConfirmationComponent
 import br.com.symon.injection.modules.LoginActivityConfirmationModule
 import kotlinx.android.synthetic.main.activity_login_confirmation.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
+import kotlinx.android.synthetic.main.view_custom_toolbar.*
 
 class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View {
     companion object {
@@ -42,7 +42,7 @@ class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View
 
         loginActivityConfirmationComponent.inject(this)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(customToolbar)
         supportActionBar?.setDisplayShowHomeEnabled(false)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
@@ -50,7 +50,7 @@ class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View
         registerEmailEditText.setText(email)
         registerPasswordEditText.requestFocus()
 
-        imageBackArrow.setOnClickListener {
+        customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }
 

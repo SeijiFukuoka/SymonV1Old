@@ -37,10 +37,17 @@
     <string name="register_title_label">Cadastre-se</string>
     <string name="register_password_hint">Defina uma senha</string>
 
+    <string name="register_complement_name_hint">Nome completo</string>
+    <string name="register_complement_birthday_hint">Data de nascimento</string>
+    <string name="register_complement_phone_hint">Telefone com DDD</string>
+    <string name="register_complement_title_label">Completar perfil</string>
+    <string name="register_complement_phone_mask">(##) # #### ####</string>
+
     <string name="welcome_facebook_button">Entre com o Facebook</string>
     <string name="welcome_title">Bem-vindo(a) ao</string>
     <string name="welcome_message">Compartilhe\ne consulte ofertas reais</string>
     <string name="welcome_facebook_error_msg">Ops, ocorreu um erro ao entrar com o Facebook =(</string>
     <string name="welcome_continue_with_email_text">Continuar com email</string>
     <string name="register_email_invalid_msg">E-mail invalido</string>
+    <string name="general_required_field">Campo obrigatório</string>
 </resources>

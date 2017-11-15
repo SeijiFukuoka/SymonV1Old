@@ -17,7 +17,7 @@ RegisterContract.Presenter {
     override fun register(userAuthenticateRequest: UserAuthenticateRequest) {
         view.showLoading()
         userRepository.registryUser(userAuthenticateRequest).subscribe({
-            if (it.code() == 200) {
+            if (it.code() == 201) {
                 view.hideLoading()
                 view.goToNextStep(it.body()?.id)
             } else {

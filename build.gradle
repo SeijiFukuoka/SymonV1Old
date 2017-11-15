@@ -18,6 +18,7 @@ buildscript {
     ext.facebookVersion = "4.28.0"
 
     ext.ahBottomNavigationVersion = "2.1.0"
+    ext.maskEditTextVersion = "1.0.5"
 
     ext.fabricVersion = '2.7.1@aar'
     ext.junitVersion = '4.12'
