@@ -32,7 +32,7 @@
         android:layout_marginLeft="@dimen/margin_10_dp"
         android:layout_marginStart="@dimen/margin_10_dp"
         android:lineSpacingExtra="3sp"
-        android:text="@string/confirm_action_login"
+        android:text="@string/login_confirm_action"
         android:textAppearance="@style/TextAppearance.Regular"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_14_sp"

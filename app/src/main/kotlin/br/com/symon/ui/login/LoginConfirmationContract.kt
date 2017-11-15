@@ -1,7 +1,7 @@
 package br.com.symon.ui.login
 
 import br.com.symon.base.BaseView
-import br.com.symon.data.model.requests.UserTokenRequest
+import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.data.model.responses.UserTokenResponse
 
 class LoginConfirmationContract {
@@ -11,6 +11,6 @@ class LoginConfirmationContract {
     }
 
     interface Presenter {
-        fun getUserToken(userTokenRequest: UserTokenRequest)
+        fun getUserToken(userAuthenticateRequest: UserAuthenticateRequest)
     }
 }

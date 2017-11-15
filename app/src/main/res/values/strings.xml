@@ -5,8 +5,9 @@
 
     <string name="general_internet_connection_unavailable">Ops! Por favor, verifique sua conexão à internet e tente novamente.</string>
     <string name="general_server_error">Ops! Ocorreu um erro. Por favor, tente novamente.</string>
-    <string name="general_continue">CONTINUAR</string>
+    <string name="general_continue">Continuar</string>
     <string name="general_enter">Entrar</string>
+    <string name="general_email">E-mail</string>
 
     <string name="fb_login_protocol_scheme">fb1548485508507561</string>
     <string name="facebook_app_id">1548485508507561</string>
@@ -24,23 +25,22 @@
     <string name="tab_profile">Perfil</string>
 
     <string name="login_hint">Seu e-mail</string>
-    <string name="password_hint">Digite sua senha</string>
-
-    <string name="all_continue">Continuar</string>
-
-    <string name="register_now">Cadastre-se agora</string>
-    <string name="register_email">E-mail de cadastro</string>
-    <string name="register_new_label">Novo por aqui?</string>
-    <string name="register_login_password_title_label">Agora, sua senha</string>
-    <string name="register_forget_password">Esqueceu sua senha?</string>
-    <string name="register_confirm_login">Confirmar login</string>
-
-    <string name="confirm_action_login">Login realizado!\nConsulte e publique ofertas ;)</string>
-    <string name="all_email">E-mail</string>
+    <string name="login_password_hint">Digite sua senha</string>
+    <string name="login_register_now">Cadastre-se agora</string>
+    <string name="login_register_email">E-mail de cadastro</string>
+    <string name="login_register_new_label">Novo por aqui?</string>
+    <string name="login_password_title_label">Agora, sua senha</string>
+    <string name="login_forget_password">Esqueceu sua senha?</string>
+    <string name="login_confirm_login">Confirmar login</string>
+    <string name="login_confirm_action">Login realizado!\nConsulte e publique ofertas ;)</string>
+    
+    <string name="register_title_label">Cadastre-se</string>
+    <string name="register_password_hint">Defina uma senha</string>
 
     <string name="welcome_facebook_button">Entre com o Facebook</string>
     <string name="welcome_title">Bem-vindo(a) ao</string>
     <string name="welcome_message">Compartilhe\ne consulte ofertas reais</string>
     <string name="welcome_facebook_error_msg">Ops, ocorreu um erro ao entrar com o Facebook =(</string>
     <string name="welcome_continue_with_email_text">Continuar com email</string>
+    <string name="register_email_invalid_msg">E-mail invalido</string>
 </resources>

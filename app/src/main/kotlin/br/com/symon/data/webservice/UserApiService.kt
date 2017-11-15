@@ -1,10 +1,10 @@
 package br.com.symon.data.webservice
 
-import br.com.symon.data.model.responses.CheckUserResponse
 import br.com.symon.data.model.User
+import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
+import br.com.symon.data.model.responses.CheckUserResponse
 import br.com.symon.data.model.responses.RegisterUserResponse
-import br.com.symon.data.model.requests.UserTokenRequest
 import br.com.symon.data.model.responses.UserTokenResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -21,19 +21,20 @@ interface UserApiService {
     @GET("/user/check/{user_email}")
     fun checkUser(@Path("user_email") userEmail: String?): Observable<CheckUserResponse>
 
-  @POST("/user")
-  fun registryUser(@Body user: User): Observable<Response<RegisterUserResponse>>
+    @POST("/user")
+    fun registryUser(@Body userAuthenticateRequest: UserAuthenticateRequest)
+            : Observable<Response<RegisterUserResponse>>
 
-  @POST("/user")
-  fun registryUserFacebook(@Body user: UserFacebookRegistryRequest)
-          : Observable<RegisterUserResponse>
+    @POST("/user")
+    fun registryUserFacebook(@Body user: UserFacebookRegistryRequest)
+            : Observable<RegisterUserResponse>
 
-  @DELETE("/user/{user_id}")
-  fun deleteUser(@Path("user_id") userId: Int): Observable<Response<Void>>
+    @DELETE("/user/{user_id}")
+    fun deleteUser(@Path("user_id") userId: Int): Observable<Response<Void>>
 
-  @PUT("/user/{user_id}")
-  @FormUrlEncoded
-  fun updateUser(@Body user: User): Observable<Response<Void>>
+    @PUT("/user/{user_id}")
+    @FormUrlEncoded
+    fun updateUser(@Body user: User): Observable<Response<Void>>
 
     @Multipart
     @POST("/user/photo")
@@ -41,5 +42,5 @@ interface UserApiService {
                         @Part("resource") name: RequestBody): Observable<ResponseBody>
 
     @POST("/token")
-    fun getToken(@Body userTokenRequest: UserTokenRequest): Observable<Response<UserTokenResponse>>
+    fun getToken(@Body userAuthenticateRequest: UserAuthenticateRequest): Observable<Response<UserTokenResponse>>
 }

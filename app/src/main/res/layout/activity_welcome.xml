@@ -1,8 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/content_welcome"/>
+    <TextView
+        android:id="@+id/welcomeTitleTextView"
+        style="@style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_60_dp"
+        android:text="@string/welcome_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_15_sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/welcomeBrandImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10_dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTitleTextView"
+        app:srcCompat="@drawable/ic_brand" />
+
+    <TextView
+        android:id="@+id/welcomeMessageTextView"
+        style="@style/TextAppearance.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_50_dp"
+        android:layout_marginRight="@dimen/margin_50_dp"
+        android:layout_marginTop="@dimen/margin_90_dp"
+        android:gravity="center_horizontal"
+        android:text="@string/welcome_message"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_22_sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeBrandImageView" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/white_F5F5F5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLoginFacebookButtonContainer"
+            android:layout_width="0dp"
+            android:layout_height="53dp"
+            android:layout_marginLeft="@dimen/margin_20_dp"
+            android:layout_marginRight="@dimen/margin_20_dp"
+            android:layout_marginTop="@dimen/margin_40_dp"
+            android:background="@drawable/button_facebook_selector"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewRegisterFacebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_10_dp"
+                android:layout_marginRight="@dimen/margin_10_dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/welcomeFacebookTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_facebook" />
+
+            <TextView
+                android:id="@+id/welcomeFacebookTextView"
+                style="@style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10_dp"
+                android:layout_marginStart="@dimen/margin_10_dp"
+                android:text="@string/welcome_facebook_button"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_20_sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewRegisterFacebook"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageViewRegisterFacebook" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <Button
+            android:id="@+id/welcomeContinueWithEmailButton"
+            style="@style/CustomButtonTextMedium"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="@dimen/margin_20_dp"
+            android:layout_marginRight="@dimen/margin_20_dp"
+            android:layout_marginTop="@dimen/margin_20_dp"
+            android:background="@drawable/button_accent_selector"
+            android:text="@string/welcome_continue_with_email_text"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.Medium"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLoginFacebookButtonContainer" />
+
+
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
