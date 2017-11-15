@@ -15,15 +15,15 @@
         android:id="@+id/layoutCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_post_sponsored"
+        android:background="@drawable/bg_sale_sponsored"
         android:padding="@dimen/margin_5_dp">
 
         <ImageView
-            android:id="@+id/imagePost"
+            android:id="@+id/imageSale"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/content_description_image_post"
+            android:contentDescription="@string/content_description_image_sale"
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="H,16:9"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,24 +34,24 @@
             android:id="@+id/textSponsoredLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_post_label_sponsored"
+            android:background="@drawable/bg_sale_label_sponsored"
             android:padding="@dimen/margin_10_dp"
-            android:text="@string/post_sponsored"
+            android:text="@string/sale_sponsored"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_10_sp"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <RelativeLayout
-            android:id="@+id/layoutPostDetail"
+            android:id="@+id/layoutSaleDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:padding="@dimen/margin_15_dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imagePost">
+            app:layout_constraintTop_toBottomOf="@id/imageSale">
 
             <TextView
-                android:id="@+id/textPostTitle"
+                android:id="@+id/textSaleTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -63,7 +63,7 @@
                 tools:text="Maionese Vigor" />
 
             <TextView
-                android:id="@+id/textPostValue"
+                android:id="@+id/textSaleValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -75,15 +75,15 @@
                 tools:text="R$ 0,89" />
 
             <LinearLayout
-                android:id="@+id/layoutLikePost"
+                android:id="@+id/layoutLikeSale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/margin_15_dp"
                 android:layout_marginRight="@dimen/margin_15_dp"
-                android:layout_toLeftOf="@id/layoutDislikePost"
-                android:layout_toStartOf="@id/layoutDislikePost"
-                android:background="@drawable/ic_post_action_layout_background_selector"
+                android:layout_toLeftOf="@id/layoutDislikeSale"
+                android:layout_toStartOf="@id/layoutDislikeSale"
+                android:background="@drawable/ic_sale_action_layout_background_selector"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
@@ -97,20 +97,20 @@
                 tools:ignore="RelativeOverlap">
 
                 <ImageView
-                    android:id="@+id/imagePostLike"
+                    android:id="@+id/imageSaleLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_5_dp"
                     android:layout_marginRight="@dimen/margin_5_dp"
-                    android:background="@drawable/ic_post_action_icon_selector"
-                    android:contentDescription="@string/content_description_image_post_like" />
+                    android:background="@drawable/ic_sale_action_icon_selector"
+                    android:contentDescription="@string/content_description_image_sale_like" />
 
                 <TextView
-                    android:id="@+id/textPostLikeQuantity"
+                    android:id="@+id/textSaleLikeQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.Bold"
-                    android:textColor="@drawable/ic_post_action_text_selector"
+                    android:textColor="@drawable/ic_sale_action_text_selector"
                     android:textSize="@dimen/text_size_15_sp"
                     android:textStyle="bold"
                     tools:text="99" />
@@ -118,13 +118,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutDislikePost"
+                android:id="@+id/layoutDislikeSale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/ic_post_action_layout_background_selector"
+                android:background="@drawable/ic_sale_action_layout_background_selector"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
@@ -137,16 +137,16 @@
                 android:paddingTop="@dimen/margin_10_dp">
 
                 <ImageView
-                    android:id="@+id/imagePostDislike"
+                    android:id="@+id/imageSaleDislike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_5_dp"
                     android:layout_marginRight="@dimen/margin_5_dp"
-                    android:background="@drawable/ic_post_action_icon_selector"
-                    android:contentDescription="@string/content_description_image_post_dislike" />
+                    android:background="@drawable/ic_sale_action_icon_selector"
+                    android:contentDescription="@string/content_description_image_sale_dislike" />
 
                 <TextView
-                    android:id="@+id/textPostDislikeQuantity"
+                    android:id="@+id/textSaleDislikeQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.Bold"
@@ -166,7 +166,7 @@
             android:background="@color/gray_F8F8F8"
             android:padding="@dimen/margin_15_dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutPostDetail">
+            app:layout_constraintTop_toBottomOf="@id/layoutSaleDetail">
 
             <ImageView
                 android:id="@+id/imageUserAvatar"
@@ -178,7 +178,7 @@
                 app:srcCompat="@drawable/ic_profile" />
 
             <LinearLayout
-                android:id="@+id/layoutUserPostDetail"
+                android:id="@+id/layoutUserSaleDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -203,7 +203,7 @@
                     tools:text="Nome do usuário" />
 
                 <TextView
-                    android:id="@+id/textPostTime"
+                    android:id="@+id/textSaleTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.Regular"
@@ -223,7 +223,7 @@
                 android:contentDescription="@string/content_description_image_user_options"
                 android:padding="@dimen/margin_10_dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_post_user_options" />
+                app:srcCompat="@drawable/ic_sale_user_options" />
 
         </RelativeLayout>
 
