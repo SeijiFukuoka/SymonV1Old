@@ -12,18 +12,17 @@
     app:cardElevation="@dimen/margin_10_dp">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/layoutCard"
+        android:id="@+id/itemSaleCardLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_sale_sponsored"
-        android:padding="@dimen/margin_5_dp">
+        android:background="@drawable/bg_item_sale_label_normal">
 
         <ImageView
-            android:id="@+id/imageSale"
+            android:id="@+id/itemSaleImageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/content_description_image_sale"
+            android:contentDescription="@string/item_sale_image_sale_image_content_description"
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="H,16:9"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,27 +30,29 @@
             tools:src="@drawable/com_facebook_button_background" />
 
         <TextView
-            android:id="@+id/textSponsoredLabel"
+            android:id="@+id/itemSaleSponsoredLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_sale_label_sponsored"
+            android:background="@drawable/bg_item_sale_label_sponsored"
             android:padding="@dimen/margin_10_dp"
-            android:text="@string/sale_sponsored"
+            android:text="@string/item_sale_sponsored_label"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_10_sp"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:visibility="visible" />
 
         <RelativeLayout
-            android:id="@+id/layoutSaleDetail"
+            android:id="@+id/itemSaleSaleDetailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:padding="@dimen/margin_15_dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageSale">
+            app:layout_constraintTop_toBottomOf="@id/itemSaleImageView">
 
             <TextView
-                android:id="@+id/textSaleTitle"
+                android:id="@+id/itemSaleSaleTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -63,7 +64,7 @@
                 tools:text="Maionese Vigor" />
 
             <TextView
-                android:id="@+id/textSaleValue"
+                android:id="@+id/itemSaleSaleValueTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -75,15 +76,15 @@
                 tools:text="R$ 0,89" />
 
             <LinearLayout
-                android:id="@+id/layoutLikeSale"
+                android:id="@+id/itemSaleLikeLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/margin_15_dp"
                 android:layout_marginRight="@dimen/margin_15_dp"
-                android:layout_toLeftOf="@id/layoutDislikeSale"
-                android:layout_toStartOf="@id/layoutDislikeSale"
-                android:background="@drawable/ic_sale_action_layout_background_selector"
+                android:layout_toLeftOf="@id/itemSaleDislikeLayout"
+                android:layout_toStartOf="@id/itemSaleDislikeLayout"
+                android:background="@drawable/selector_ic_sale_action_layout_background"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
@@ -97,20 +98,20 @@
                 tools:ignore="RelativeOverlap">
 
                 <ImageView
-                    android:id="@+id/imageSaleLike"
+                    android:id="@+id/itemSaleLikeImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_5_dp"
                     android:layout_marginRight="@dimen/margin_5_dp"
-                    android:background="@drawable/ic_sale_action_icon_selector"
-                    android:contentDescription="@string/content_description_image_sale_like" />
+                    android:background="@drawable/selector_ic_sale_like_action"
+                    android:contentDescription="@string/item_sale_like_sale_image_content_description" />
 
                 <TextView
-                    android:id="@+id/textSaleLikeQuantity"
+                    android:id="@+id/itemSaleLikeQuantityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.Bold"
-                    android:textColor="@drawable/ic_sale_action_text_selector"
+                    android:textColor="@drawable/selector_ic_sale_action_text"
                     android:textSize="@dimen/text_size_15_sp"
                     android:textStyle="bold"
                     tools:text="99" />
@@ -118,13 +119,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutDislikeSale"
+                android:id="@+id/itemSaleDislikeLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/ic_sale_action_layout_background_selector"
+                android:background="@drawable/selector_ic_sale_action_layout_background"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
@@ -137,20 +138,20 @@
                 android:paddingTop="@dimen/margin_10_dp">
 
                 <ImageView
-                    android:id="@+id/imageSaleDislike"
+                    android:id="@+id/itemSaleDislikeImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_5_dp"
                     android:layout_marginRight="@dimen/margin_5_dp"
-                    android:background="@drawable/ic_sale_action_icon_selector"
-                    android:contentDescription="@string/content_description_image_sale_dislike" />
+                    android:background="@drawable/selector_ic_sale_dislike_action"
+                    android:contentDescription="@string/item_sale_dislike_sale_image_content_description" />
 
                 <TextView
-                    android:id="@+id/textSaleDislikeQuantity"
+                    android:id="@+id/itemSaleDislikeQuantityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.Bold"
-                    android:textColor="@color/gray_4A4A4A"
+                    android:textColor="@drawable/selector_ic_sale_action_text"
                     android:textSize="@dimen/text_size_15_sp"
                     android:textStyle="bold"
                     tools:text="12" />
@@ -166,19 +167,19 @@
             android:background="@color/gray_F8F8F8"
             android:padding="@dimen/margin_15_dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutSaleDetail">
+            app:layout_constraintTop_toBottomOf="@id/itemSaleSaleDetailLayout">
 
             <ImageView
-                android:id="@+id/imageUserAvatar"
+                android:id="@+id/itemSaleUserPhotoImageView"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_centerVertical="true"
-                android:contentDescription="@string/content_description_image_user_avatar"
+                android:contentDescription="@string/item_sale_user_avatar_image_content_description"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_profile" />
 
             <LinearLayout
-                android:id="@+id/layoutUserSaleDetail"
+                android:id="@+id/itemSaleUserDetailLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -186,14 +187,14 @@
                 android:layout_marginLeft="@dimen/margin_15_dp"
                 android:layout_marginRight="@dimen/margin_15_dp"
                 android:layout_marginStart="@dimen/margin_15_dp"
-                android:layout_toEndOf="@id/imageUserAvatar"
-                android:layout_toLeftOf="@id/imageUserOptions"
-                android:layout_toRightOf="@id/imageUserAvatar"
-                android:layout_toStartOf="@id/imageUserOptions"
+                android:layout_toEndOf="@id/itemSaleUserPhotoImageView"
+                android:layout_toLeftOf="@id/itemSaleUserOptionsImageView"
+                android:layout_toRightOf="@id/itemSaleUserPhotoImageView"
+                android:layout_toStartOf="@id/itemSaleUserOptionsImageView"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textUserName"
+                    android:id="@+id/itemSaleUserNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.Bold"
@@ -203,7 +204,7 @@
                     tools:text="Nome do usuário" />
 
                 <TextView
-                    android:id="@+id/textSaleTime"
+                    android:id="@+id/itemSaleSaleTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.Regular"
@@ -214,13 +215,15 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageUserOptions"
+                android:id="@+id/itemSaleUserOptionsImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:contentDescription="@string/content_description_image_user_options"
+                android:clickable="true"
+                android:contentDescription="@string/item_sale_user_options_image_content_description"
+                android:focusable="true"
                 android:padding="@dimen/margin_10_dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_sale_user_options" />

@@ -43,11 +43,11 @@
     <string name="welcome_facebook_error_msg">Ops, ocorreu um erro ao entrar com o Facebook =(</string>
     <string name="welcome_continue_with_email_text">Continuar com email</string>
 
-    <string name="sale_sponsored">Patrocinado</string>
+    <string name="item_sale_sponsored_label">Patrocinado</string>
 
-    <string name="content_description_image_sale_dislike">imageSaleDislike</string>
-    <string name="content_description_image_sale_like">imageSaleLike</string>
-    <string name="content_description_image_user_avatar">imageUserAvatar</string>
-    <string name="content_description_image_sale">imageSale</string>
-    <string name="content_description_image_user_options">imageUserOptions</string>
+    <string name="item_sale_dislike_sale_image_content_description">imageSaleDislike</string>
+    <string name="item_sale_like_sale_image_content_description">imageSaleLike</string>
+    <string name="item_sale_user_avatar_image_content_description">imageUserAvatar</string>
+    <string name="item_sale_image_sale_image_content_description">imageSale</string>
+    <string name="item_sale_user_options_image_content_description">imageUserOptions</string>
 </resources>
