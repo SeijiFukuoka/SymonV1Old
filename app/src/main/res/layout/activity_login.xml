@@ -69,7 +69,7 @@
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="2"
-        android:text="@string/all_continue"
+        android:text="@string/general_continue_lower_case"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_20_sp"
