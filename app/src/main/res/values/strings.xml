@@ -50,4 +50,12 @@
     <string name="item_sale_user_avatar_image_content_description">imageUserAvatar</string>
     <string name="item_sale_image_sale_image_content_description">imageSale</string>
     <string name="item_sale_user_options_image_content_description">imageUserOptions</string>
+
+    <string name="settings_notification_label">Notificações</string>
+    <string name="settings_its_cheap_label">Está Barato</string>
+    <string name="settings_its_expensive_label">Está Caro</string>
+    <string name="settings_comments_label">Comentários</string>
+    <string name="settings_complaints_label">Denúncias</string>
+    <string name="settings_blocked_users_label">Usuários bloqueados</string>
+    <string name="settings_blocked_users_right_arrow_image_content_description">settingsBlockedUsersArrowImageView</string>
 </resources>
