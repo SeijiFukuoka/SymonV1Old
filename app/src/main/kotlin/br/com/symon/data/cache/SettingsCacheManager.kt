@@ -5,6 +5,6 @@ import io.reactivex.Observable
 
 
 interface SettingsCacheManager {
-    fun saveNotificationsSettings(settings: Settings): Observable<Void>
+    fun saveNotificationsSettings(settings: Settings): Observable<Unit>
     fun getNotificationsSettings(): Observable<Settings?>
 }

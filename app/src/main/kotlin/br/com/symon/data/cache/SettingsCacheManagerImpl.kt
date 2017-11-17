@@ -17,12 +17,21 @@ class SettingsCacheManagerImpl @Inject constructor(context: Context) : SettingsC
         cacheManager = CacheManagerImpl(context, SETTINGS_CACHE_NAME)
     }
 
-    override fun saveNotificationsSettings(settings: Settings): Observable<Void> = Observable.create {
+    override fun saveNotificationsSettings(settings: Settings): Observable<Unit> = Observable.create<Unit> { emitter ->
         deleteSettings()
-        cacheManager?.put(SETTINGS_KEY, settings)
+        emitter.onNext(cacheManager?.put(CacheSettings.SETTINGS_KEY, settings)!!)
+        emitter.onComplete()
     }
 
-    override fun getNotificationsSettings(): Observable<Settings?> = Observable.just(cacheManager?.get(SETTINGS_KEY, Settings::class.java))
+    override fun getNotificationsSettings(): Observable<Settings?> = Observable.create<Settings> { emitter ->
+        var settingsCache: Settings? = cacheManager?.get(CacheSettings.SETTINGS_KEY, Settings::class.java)
+
+        if (settingsCache == null)
+            settingsCache = Settings()
+
+        emitter.onNext(settingsCache)
+        emitter.onComplete()
+    }
 
     private fun deleteSettings() {
         cacheManager?.delete(SETTINGS_KEY)
