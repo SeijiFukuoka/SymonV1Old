@@ -2,6 +2,7 @@ package br.com.symon.injection.components
 
 import android.content.Context
 import br.com.symon.CustomApplication
+import br.com.symon.data.repository.SettingsRepository
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.modules.ApplicationModule
 import br.com.symon.injection.modules.CacheModule
@@ -18,4 +19,5 @@ interface ApplicationComponent {
     fun inject(customApplication: CustomApplication)
     fun context(): Context
     fun userRepository(): UserRepository
+    fun settingsRepository(): SettingsRepository
 }

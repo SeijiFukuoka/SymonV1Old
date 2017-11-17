@@ -6,6 +6,7 @@ import android.util.Log
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
+import br.com.symon.common.startIntent
 import br.com.symon.common.toast
 import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
@@ -24,12 +25,12 @@ class WelcomeActivity :
         WelcomeContract.View,
         FacebookCallback<LoginResult> {
 
-    private val welcomeActivityComponent : WelcomeActivityComponent
-    get() = DaggerWelcomeActivityComponent
-            .builder()
-            .applicationComponent((this.application as CustomApplication).applicationComponent)
-            .welcomeActivityModule(WelcomeActivityModule(this))
-            .build()
+    private val welcomeActivityComponent: WelcomeActivityComponent
+        get() = DaggerWelcomeActivityComponent
+                .builder()
+                .applicationComponent((this.application as CustomApplication).applicationComponent)
+                .welcomeActivityModule(WelcomeActivityModule(this))
+                .build()
 
     private var callbackManager: CallbackManager? = null
 
@@ -42,6 +43,8 @@ class WelcomeActivity :
         constraintLoginFacebookButtonContainer.setOnClickListener {
             facebookLogin()
         }
+
+        welcomeContinueWithEmailButton.setOnClickListener { startIntent(MainActivity::class.java) }
 
         callbackManager = CallbackManager.Factory.create()
         LoginManager.getInstance().registerCallback(callbackManager, this)
@@ -65,19 +68,18 @@ class WelcomeActivity :
     }
 
     override fun onError(error: FacebookException?) {
-        Log.d("facebookEvent:", error?.message )
+        Log.d("facebookEvent:", error?.message)
         toast(getString(R.string.facebook_error_message))
     }
 
     override fun onSuccess(result: LoginResult?) {
         Log.d("facebookEvent:", "Success")
-        val request: GraphRequest = GraphRequest.newMeRequest(result?.accessToken) {
-            jsonObject, _ ->
+        val request: GraphRequest = GraphRequest.newMeRequest(result?.accessToken) { jsonObject, _ ->
             val email = jsonObject.getString(getString(R.string.facebook_email))
             val name = jsonObject.getString(getString(R.string.facebook_name))
 
             val user = UserFacebookRegistryRequest(
-                    name =  name,
+                    name = name,
                     email = email,
                     facebookId = result?.accessToken?.userId)
 
