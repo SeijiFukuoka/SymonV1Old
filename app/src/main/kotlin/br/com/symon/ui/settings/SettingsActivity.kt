@@ -4,6 +4,7 @@ import android.os.Bundle
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
+import br.com.symon.common.toast
 import br.com.symon.data.model.Settings
 import br.com.symon.injection.components.DaggerSettingsComponent
 import br.com.symon.injection.components.SettingsComponent
@@ -38,36 +39,41 @@ class SettingsActivity : BaseActivity(), SettingsContract.View {
 
         settingsItsCheapSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (buttonView.isPressed) {
-                settingsComponent.settingsPresenter().saveNotificationsSettings(Settings(itsCheapPushNotificationEnable = isChecked))
+                settingsComponent.settingsPresenter().saveNotificationsSettings(
+                        Settings(itsExpensivePushNotificationEnable = settingsItsExpensiveSwitch.isChecked,
+                                itsCheapPushNotificationEnable = isChecked,
+                                commentsPushNotificationEnable = settingsCommentsSwitch.isChecked))
             }
         }
 
         settingsItsExpensiveSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (buttonView.isPressed) {
-                settingsComponent.settingsPresenter().saveNotificationsSettings(Settings(itsExpensivePushNotificationEnable = isChecked))
+                settingsComponent.settingsPresenter().saveNotificationsSettings(
+                        Settings(itsExpensivePushNotificationEnable = isChecked,
+                                itsCheapPushNotificationEnable = settingsItsCheapSwitch.isChecked,
+                                commentsPushNotificationEnable = settingsCommentsSwitch.isChecked))
             }
         }
 
         settingsCommentsSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (buttonView.isPressed) {
-                settingsComponent.settingsPresenter().saveNotificationsSettings(Settings(commentsPushNotificationEnable = isChecked))
+                settingsComponent.settingsPresenter().saveNotificationsSettings(
+                        Settings(itsExpensivePushNotificationEnable = settingsItsExpensiveSwitch.isChecked,
+                                itsCheapPushNotificationEnable = settingsItsCheapSwitch.isChecked,
+                                commentsPushNotificationEnable = isChecked))
             }
         }
         settingsBlockedUsersLayout.setOnClickListener {
-            TODO("PENDENTE CRIAR ACTIVITY")
+            toast("Pendente")
+//            TODO("PENDENTE CRIAR ACTIVITY")
         }
     }
 
     override fun showNotificationsSettings(settings: Settings?) {
-        if (settings == null) {
-            settingsComponent.settingsPresenter().saveNotificationsSettings(Settings())
-        } else {
-            settings?.apply {
-                settingsItsCheapSwitch.isChecked = itsCheapPushNotificationEnable
-                settingsItsExpensiveSwitch.isChecked = itsExpensivePushNotificationEnable
-                settingsCommentsSwitch.isChecked = commentsPushNotificationEnable
-            }
+        settings?.apply {
+            settingsItsCheapSwitch.isChecked = itsCheapPushNotificationEnable
+            settingsItsExpensiveSwitch.isChecked = itsExpensivePushNotificationEnable
+            settingsCommentsSwitch.isChecked = commentsPushNotificationEnable
         }
-
     }
 }
