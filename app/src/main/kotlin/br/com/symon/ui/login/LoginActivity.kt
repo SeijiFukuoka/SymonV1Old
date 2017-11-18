@@ -37,7 +37,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         }
 
         buttonLogin.setOnClickListener({
-            loginComponent.loginPresenter().checkUser(registerEmailEditText.text.toString())
+            loginComponent.loginPresenter().checkUser(editTextLoginEmail.text.toString())
         })
 
         buttonRegister.setOnClickListener {
@@ -48,7 +48,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     override fun handleCheckResponse(checkResponse: CheckUserResponse) {
         if (checkResponse.exists!!) {
             val recipeDetailActivity = LoginConfirmationActivity.newIntent(this,
-                    registerEmailEditText.text.toString())
+                    editTextLoginEmail.text.toString())
             startActivity(recipeDetailActivity)
         } else {
             Toast.makeText(this, "usuário não encontrado", Toast.LENGTH_SHORT).show()

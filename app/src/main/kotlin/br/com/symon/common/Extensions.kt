@@ -3,11 +3,15 @@ package br.com.symon.common
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -38,3 +42,11 @@ fun Date.dateFormat(): String = format("dd/MM/yyyy")
 private fun Date.format(format: String): String = asString(SimpleDateFormat(format, Locale("pt", "BR")))
 
 private fun Date.asString(format: DateFormat): String = format.format(this)
+
+fun dpToPixels(dp: Float): Int {
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().displayMetrics).toInt()
+}
+
+fun ImageView.loadUrl(url: String) {
+    Glide.with(context).load(url).into(this)
+}
