@@ -8,13 +8,13 @@ import br.com.symon.CustomApplication
 import br.com.symon.R.layout
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.toast
-import br.com.symon.data.model.requests.UserTokenRequest
+import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.data.model.responses.UserTokenResponse
-import br.com.symon.injection.components.DaggerLoginConfirmationComponent
-import br.com.symon.injection.components.LoginConfirmationComponent
-import br.com.symon.injection.modules.LoginConfirmationModule
+import br.com.symon.injection.components.DaggerLoginActivityConfirmationComponent
+import br.com.symon.injection.components.LoginActivityConfirmationComponent
+import br.com.symon.injection.modules.LoginActivityConfirmationModule
 import kotlinx.android.synthetic.main.activity_login_confirmation.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
+import kotlinx.android.synthetic.main.view_custom_toolbar.*
 
 class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View {
     companion object {
@@ -30,33 +30,33 @@ class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View
         }
     }
 
-    private val loginConfirmationComponent: LoginConfirmationComponent
-        get() = DaggerLoginConfirmationComponent.builder()
+    private val loginActivityConfirmationComponent: LoginActivityConfirmationComponent
+        get() = DaggerLoginActivityConfirmationComponent.builder()
                 .applicationComponent((this.application as CustomApplication).applicationComponent)
-                .loginConfirmationModule(LoginConfirmationModule(this))
+                .loginActivityConfirmationModule(LoginActivityConfirmationModule(this))
                 .build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_login_confirmation)
 
-        loginConfirmationComponent.inject(this)
+        loginActivityConfirmationComponent.inject(this)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(customToolbar)
         supportActionBar?.setDisplayShowHomeEnabled(false)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         email = intent.extras.getString(INTENT_EMAIL_EXTRA)
-        editTextLoginEmail.setText(email)
-        editTextPassword.requestFocus()
+        registerEmailEditText.setText(email)
+        registerPasswordEditText.requestFocus()
 
-        imageBackArrow.setOnClickListener {
+        customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }
 
-        buttonConfirmLogin.setOnClickListener {
-            val userTokenRequest = UserTokenRequest(email, editTextPassword.text.toString())
-            loginConfirmationComponent.loginConfirmationPresenter().getUserToken(userTokenRequest)
+        registerContinueButton.setOnClickListener {
+            val userTokenRequest = UserAuthenticateRequest(email, registerPasswordEditText.text.toString())
+            loginActivityConfirmationComponent.loginConfirmationPresenter().getUserToken(userTokenRequest)
         }
 
         textButtonForgetPassword.setOnClickListener {

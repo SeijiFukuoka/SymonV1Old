@@ -4,8 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-data class UserTokenRequest(
-        @SerializedName("username") var userName: String?,
+data class UserAuthenticateRequest(
+        @SerializedName("email") var email: String?,
         @SerializedName("password") var password: String?) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
@@ -15,15 +15,15 @@ data class UserTokenRequest(
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeString(userName)
+        writeString(email)
         writeString(password)
     }
 
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<UserTokenRequest> = object : Parcelable.Creator<UserTokenRequest> {
-            override fun createFromParcel(source: Parcel): UserTokenRequest = UserTokenRequest(source)
-            override fun newArray(size: Int): Array<UserTokenRequest?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<UserAuthenticateRequest> = object : Parcelable.Creator<UserAuthenticateRequest> {
+            override fun createFromParcel(source: Parcel): UserAuthenticateRequest = UserAuthenticateRequest(source)
+            override fun newArray(size: Int): Array<UserAuthenticateRequest?> = arrayOfNulls(size)
         }
     }
 }

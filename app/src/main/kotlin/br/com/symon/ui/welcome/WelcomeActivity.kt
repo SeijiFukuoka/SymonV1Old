@@ -6,6 +6,7 @@ import android.util.Log
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
+import br.com.symon.common.startIntent
 import br.com.symon.common.toast
 import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
@@ -13,10 +14,11 @@ import br.com.symon.injection.components.DaggerWelcomeActivityComponent
 import br.com.symon.injection.components.WelcomeActivityComponent
 import br.com.symon.injection.modules.WelcomeActivityModule
 import br.com.symon.ui.MainActivity
+import br.com.symon.ui.login.LoginActivity
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import kotlinx.android.synthetic.main.content_welcome.*
+import kotlinx.android.synthetic.main.activity_welcome.*
 import java.util.*
 
 class WelcomeActivity :
@@ -41,6 +43,10 @@ class WelcomeActivity :
 
         constraintLoginFacebookButtonContainer.setOnClickListener {
             facebookLogin()
+        }
+
+        welcomeContinueWithEmailButton.setOnClickListener {
+            startIntent(LoginActivity::class.java)
         }
 
         callbackManager = CallbackManager.Factory.create()

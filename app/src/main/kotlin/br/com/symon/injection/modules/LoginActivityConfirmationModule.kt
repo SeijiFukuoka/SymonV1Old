@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class LoginConfirmationModule(val view: LoginConfirmationContract.View) {
+class LoginActivityConfirmationModule(val view: LoginConfirmationContract.View) {
 
     @Provides
     @ActivityScope

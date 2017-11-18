@@ -9,12 +9,11 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import br.com.symon.common.toast
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 open class BaseActivity : AppCompatActivity(), BaseView {
     private var progressContainer: RelativeLayout? = null
-
-    var errorMessage: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +44,6 @@ open class BaseActivity : AppCompatActivity(), BaseView {
     }
 
     override fun showError(message: Int) {
-        errorMessage = getString(message)
+        toast(getString(message))
     }
 }
