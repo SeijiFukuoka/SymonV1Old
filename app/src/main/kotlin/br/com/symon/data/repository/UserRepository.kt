@@ -2,19 +2,21 @@ package br.com.symon.data.repository
 
 import br.com.symon.base.BaseRepository
 import br.com.symon.data.cache.UserCacheManagerImpl
-import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.data.model.requests.UserUpdateRequest
+import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.data.webservice.UserApiService
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepository @Inject constructor(private val userApiService: UserApiService, private val userCacheManagerImpl: UserCacheManagerImpl) : BaseRepository() {
-    fun saveUserCache(user: User) = call(userCacheManagerImpl.save(user))
+class UserRepository @Inject constructor(private val userApiService: UserApiService,
+                                         private val userCacheManagerImpl: UserCacheManagerImpl)
+    : BaseRepository() {
+
+    fun saveUserCache(user: UserTokenResponse?) = call(userCacheManagerImpl.save(user))
 
     fun getUserCache() = call(userCacheManagerImpl.getUser())
 
@@ -38,6 +40,6 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
     fun updateUser(userId: Int, userUpdateRequest: UserUpdateRequest) =
             call(userApiService.updateUser(userId, userUpdateRequest))
 
-    fun uploadUserPhoto(photo: MultipartBody.Part, name: RequestBody)
-            = call(userApiService.uploadUserPhoto(photo, name))
+    fun uploadUserPhoto(userId: Int, photo: MultipartBody.Part)
+            = call(userApiService.uploadUserPhoto(userId, photo))
 }

@@ -1,6 +1,5 @@
 package br.com.symon.ui.welcome
 
-import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.ActivityScope
@@ -13,7 +12,7 @@ class WelcomePresenter @Inject constructor(
     : WelcomeContract.Presenter {
 
     override fun registerUserFacebook(user: UserFacebookRegistryRequest) {
-        userRepository.registryUserFacebook(user).subscribe({
+       /* userRepository.registryUserFacebook(user).subscribe({
             val userId = it.id
             val userCache = User(
                     userId,
@@ -32,7 +31,7 @@ class WelcomePresenter @Inject constructor(
         }, {
             //Error
             it.printStackTrace()
-        })
+        })*/
     }
 
 

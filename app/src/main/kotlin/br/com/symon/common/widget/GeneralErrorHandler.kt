@@ -30,7 +30,7 @@ class GeneralErrorHandler(private val throwable: Throwable,
         } else if (throwable is HttpException) {
             handleError(throwable)
         }
-
+        viewReference.get()?.hideLoading()
         onFailure()
     }
 

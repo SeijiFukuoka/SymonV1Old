@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.common.startIntent
-import br.com.symon.data.model.User
+import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSplashActivityComponent
 import br.com.symon.injection.components.SplashActivityComponent
 import br.com.symon.injection.modules.SplashActivityModule
@@ -40,8 +40,8 @@ class SplashActivity : AppCompatActivity(), View {
                 }, SPLASH_TIME_OUT.toLong())
     }
 
-    override fun setupNavigation(user: User) {
-        if (user.id == null) {
+    override fun setupNavigation(user: UserTokenResponse) {
+        if (user.token.isEmpty()) {
             startIntent(WelcomeActivity::class.java)
         } else {
             val intent = Intent(this, MainActivity::class.java)

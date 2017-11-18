@@ -14,8 +14,6 @@ data class User(
         @SerializedName("facebookId") var facebookId: String?,
         @SerializedName("photo") var photo: String?) : Parcelable {
 
-    constructor() : this (id = null, name = null, email = null, phone = null, birthday = null, facebookId = null, photo = null)
-
     constructor(source: Parcel) : this(
             source.readValue(Int::class.java.classLoader) as Int?,
             source.readString(),

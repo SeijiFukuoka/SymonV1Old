@@ -1,11 +1,11 @@
 package br.com.symon.ui.splash
 
-import br.com.symon.data.model.User
+import br.com.symon.data.model.responses.UserTokenResponse
 
 
 interface SplashContract {
     interface View {
-        fun setupNavigation(user: User)
+        fun setupNavigation(user: UserTokenResponse)
     }
 
     interface Presenter {

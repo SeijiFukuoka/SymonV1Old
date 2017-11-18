@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
 data class UserTokenResponse(
         @SerializedName("user") var user: User?,
         @SerializedName("token") var token: String) : Parcelable {
+
     constructor(source: Parcel) : this(
             source.readParcelable<User>(User::class.java.classLoader),
             source.readString()

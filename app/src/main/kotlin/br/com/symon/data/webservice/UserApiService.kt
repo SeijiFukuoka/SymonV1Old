@@ -6,11 +6,10 @@ import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.data.model.requests.UserUpdateRequest
 import br.com.symon.data.model.responses.CheckUserResponse
 import br.com.symon.data.model.responses.RegisterUserResponse
+import br.com.symon.data.model.responses.UploadUserPhotoResponse
 import br.com.symon.data.model.responses.UserTokenResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -35,12 +34,12 @@ interface UserApiService {
 
     @PUT("/user/{user_id}")
     fun updateUser(@Path("user_id") userId: Int,
-                   @Body userUpdateRequest: UserUpdateRequest): Observable<Response<Void>>
+                   @Body userUpdateRequest: UserUpdateRequest): Observable<Response<UserTokenResponse>>
 
     @Multipart
-    @POST("/user/photo")
-    fun uploadUserPhoto(@Part photo: MultipartBody.Part,
-                        @Part("resource") name: RequestBody): Observable<ResponseBody>
+    @POST("/user/photo/{user_id}")
+    fun uploadUserPhoto(@Path("user_id") userId: Int,
+                        @Part photo: MultipartBody.Part): Observable<UploadUserPhotoResponse>
 
     @POST("/token")
     fun getToken(@Body userAuthenticateRequest: UserAuthenticateRequest): Observable<Response<UserTokenResponse>>

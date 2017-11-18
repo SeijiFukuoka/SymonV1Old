@@ -7,7 +7,7 @@ import android.support.v4.content.ContextCompat
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.toast
-import br.com.symon.data.model.User
+import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.ui.login.LoginActivity
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
@@ -17,9 +17,9 @@ class MainActivity : BaseActivity() {
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
 
-        lateinit var user: User
+        lateinit var user: UserTokenResponse
 
-        fun newIntent(context: Context, user: User?): Intent {
+        fun newIntent(context: Context, user: UserTokenResponse?): Intent {
             val intent = Intent(context, MainActivity::class.java)
             intent.putExtra(EXTRA_USER, user)
             return intent
