@@ -33,6 +33,8 @@ class SettingsActivity : BaseActivity(), SettingsContract.View {
 
         settingsComponent.settingsPresenter().getNotificationsSettings()
 
+        textToolbarTitle.text = getString(R.string.settings_toolbar_title)
+
         imageBackArrow.setOnClickListener {
             onBackPressed()
         }

@@ -47,19 +47,19 @@ class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         email = intent.extras.getString(INTENT_EMAIL_EXTRA)
-        editTextLoginEmail.setText(email)
-        editTextPassword.requestFocus()
+        loginConfirmationEmailEditText.setText(email)
+        loginConfirmationPasswordEditText.requestFocus()
 
         imageBackArrow.setOnClickListener {
             onBackPressed()
         }
 
-        buttonConfirmLogin.setOnClickListener {
-            val userTokenRequest = UserTokenRequest(email, editTextPassword.text.toString())
+        loginConfirmationConfirmLoginButton.setOnClickListener {
+            val userTokenRequest = UserTokenRequest(email, loginConfirmationPasswordEditText.text.toString())
             loginConfirmationComponent.loginConfirmationPresenter().getUserToken(userTokenRequest)
         }
 
-        textButtonForgetPassword.setOnClickListener {
+        loginConfirmationForgetPasswordTextButton.setOnClickListener {
             Toast.makeText(this, "Em progresso", Toast.LENGTH_SHORT).show()
         }
     }
