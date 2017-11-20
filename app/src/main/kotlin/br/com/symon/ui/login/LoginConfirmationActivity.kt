@@ -14,6 +14,7 @@ import br.com.symon.injection.components.DaggerLoginActivityConfirmationComponen
 import br.com.symon.injection.components.LoginActivityConfirmationComponent
 import br.com.symon.injection.modules.LoginActivityConfirmationModule
 import br.com.symon.ui.MainActivity
+import br.com.symon.ui.retrievePassword.RetrieverPasswordActivity
 import kotlinx.android.synthetic.main.activity_login_confirmation.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
 
@@ -47,7 +48,7 @@ class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View
         supportActionBar?.setDisplayShowHomeEnabled(false)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        email = intent.extras.getString(INTENT_EMAIL_EXTRA)
+        LoginConfirmationActivity.email = intent.extras.getString(INTENT_EMAIL_EXTRA)
         loginConfirmationEmailEditText.setText(email)
         loginConfirmationPasswordEditText.requestFocus()
 
@@ -61,7 +62,9 @@ class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View
         }
 
         loginConfirmationForgetPasswordTextButton.setOnClickListener {
-            Toast.makeText(this, "Em progresso", Toast.LENGTH_SHORT).show()
+            val retrievePasswordActivity = RetrieverPasswordActivity.newIntent(this,
+                    loginConfirmationEmailEditText.text.toString())
+            startActivity(retrievePasswordActivity)
         }
     }
 

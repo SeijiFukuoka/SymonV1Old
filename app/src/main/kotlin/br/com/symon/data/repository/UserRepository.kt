@@ -42,4 +42,6 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
 
     fun uploadUserPhoto(userId: Int, photo: MultipartBody.Part)
             = call(userApiService.uploadUserPhoto(userId, photo))
+
+    fun retrievePassword(userEmail: String) = call(userApiService.retrievePassword(userEmail))
 }

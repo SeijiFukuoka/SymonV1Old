@@ -9,6 +9,8 @@
     <string name="general_enter">Entrar</string>
     <string name="general_email">E-mail</string>
     <string name="general_continue_lower_case">Continuar</string>
+    <string name="general_required_field">Campo obrigatório</string>
+    <string name="general_permissions_message">Por favor libere as permissões de acesso ;)</string>
 
     <string name="fb_login_protocol_scheme">fb1548485508507561</string>
     <string name="facebook_app_id">1548485508507561</string>
@@ -43,6 +45,7 @@
     <string name="register_complement_phone_hint">Telefone com DDD</string>
     <string name="register_complement_title_label">Completar perfil</string>
     <string name="register_complement_phone_mask">(##) # #### ####</string>
+
     <string name="password_hint">Digite sua senha</string>
     <string name="login_email_invalid_msg">E-mail inválido</string>
 
@@ -52,6 +55,7 @@
     <string name="register_login_password_title_label">Agora, sua senha</string>
     <string name="register_forget_password">Esqueceu sua senha?</string>
     <string name="register_confirm_login">Confirmar login</string>
+    <string name="register_email_invalid_msg">E-mail invalido</string>
 
     <string name="confirm_action_login">Login realizado!\nConsulte e publique ofertas ;)</string>
 
@@ -77,7 +81,8 @@
     <string name="settings_complaints_label">Denúncias</string>
     <string name="settings_blocked_users_label">Usuários bloqueados</string>
     <string name="settings_blocked_users_right_arrow_image_content_description">settingsBlockedUsersArrowImageView</string>
-    <string name="register_email_invalid_msg">E-mail invalido</string>
-    <string name="general_required_field">Campo obrigatório</string>
-    <string name="general_permissions_message">Por favor libere as permissões de acesso ;)</string>
+
+    <string name="retrieve_password_text_input_label">Recupere sua senha</string>
+    <string name="retrieve_password_text_input_hint">Confirmar e-mail cadastrado</string>
+    <string name="retrieve_password_text_button">Enviar nova senha</string>
 </resources>
