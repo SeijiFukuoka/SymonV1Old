@@ -85,4 +85,5 @@
     <string name="retrieve_password_text_input_label">Recupere sua senha</string>
     <string name="retrieve_password_text_input_hint">Confirmar e-mail cadastrado</string>
     <string name="retrieve_password_text_button">Enviar nova senha</string>
+    <string name="retrieve_password_text_confirm_action">Verifique seu e-mail e insira\nsua nova senha abaixo</string>
 </resources>

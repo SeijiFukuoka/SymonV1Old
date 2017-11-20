@@ -1,7 +1,6 @@
 package br.com.symon.ui.retrievePassword
 
 import br.com.gold360.financas.common.GeneralErrorHandler
-import br.com.symon.data.model.User
 import br.com.symon.data.model.responses.ErrorResponse
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.ActivityScope
@@ -22,9 +21,12 @@ class RetrievePasswordPresenter @Inject constructor(
                 view.hideLoading()
                 view.goToNextStep()
             } else {
-                val errorResponse = Gson().fromJson(it.errorBody().toString(), ErrorResponse::class.java)
-                view.hideLoading()
-                view.showErrorMessage(errorResponse?.error)
+//                TODO(Aguardando API)
+                view.goToNextStep()
+//                TODO(FIM - Aguardando API)
+//                val errorResponse = Gson().fromJson(it.errorBody().toString(), ErrorResponse::class.java)
+//                view.hideLoading()
+//                view.showErrorMessage(errorResponse?.error)
             }
         }, {
             view.hideLoading()

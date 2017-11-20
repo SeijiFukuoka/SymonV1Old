@@ -11,17 +11,15 @@ import br.com.symon.common.toast
 import br.com.symon.injection.components.DaggerRetrieverPasswordActivityComponent
 import br.com.symon.injection.components.RetrieverPasswordActivityComponent
 import br.com.symon.injection.modules.RetrievePasswordActivityModule
+import br.com.symon.ui.login.LoginConfirmationActivity
 import kotlinx.android.synthetic.main.activity_retrieve_password.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
 
 
 class RetrieverPasswordActivity : BaseActivity(), RetrievePasswordContract.View {
     companion object {
-
         private val INTENT_EMAIL_EXTRA = "email_extra"
-
         lateinit var email: String
-
         fun newIntent(context: Context, email: String?): Intent {
             val intent = Intent(context, RetrieverPasswordActivity::class.java)
             intent.putExtra(INTENT_EMAIL_EXTRA, email)
@@ -50,6 +48,7 @@ class RetrieverPasswordActivity : BaseActivity(), RetrievePasswordContract.View 
 
         RetrieverPasswordActivity.email = intent.extras.getString(RetrieverPasswordActivity.INTENT_EMAIL_EXTRA)
         retrievePasswordEmailEditText.setText(RetrieverPasswordActivity.email)
+        retrievePasswordEmailEditText.requestFocus()
 
         customToolbarBackImageView.setOnClickListener {
             onBackPressed()
@@ -78,7 +77,10 @@ class RetrieverPasswordActivity : BaseActivity(), RetrievePasswordContract.View 
     }
 
     override fun goToNextStep() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val loginConfirmationActivity = LoginConfirmationActivity.newIntent(this,
+                retrievePasswordEmailEditText.text.toString(), getString(R.string.retrieve_password_text_confirm_action))
+        loginConfirmationActivity.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(loginConfirmationActivity)
     }
 
     override fun showErrorMessage(message: String?) {

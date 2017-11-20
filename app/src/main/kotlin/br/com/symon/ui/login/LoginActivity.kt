@@ -33,6 +33,8 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         supportActionBar?.setDisplayShowHomeEnabled(false)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        loginViewHeaderProgress.bind(1)
+
         customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }
