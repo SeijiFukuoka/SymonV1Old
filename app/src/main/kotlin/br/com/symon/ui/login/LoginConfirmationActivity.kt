@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import br.com.symon.CustomApplication
+import br.com.symon.R
 import br.com.symon.R.layout
 import br.com.symon.base.BaseActivity
+import br.com.symon.common.toast
 import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerLoginActivityConfirmationComponent
@@ -91,6 +93,6 @@ class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View
     }
 
     override fun handleUserNotFoundResponse() {
-        Toast.makeText(this, "usuário ou senha incorretos", Toast.LENGTH_SHORT).show()
+        toast(getString(R.string.login_invalid_message))
     }
 }

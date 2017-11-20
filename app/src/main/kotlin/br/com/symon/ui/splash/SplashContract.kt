@@ -5,7 +5,7 @@ import br.com.symon.data.model.responses.UserTokenResponse
 
 interface SplashContract {
     interface View {
-        fun setupNavigation(user: UserTokenResponse)
+        fun setupNavigation(userTokenResponse: UserTokenResponse)
     }
 
     interface Presenter {

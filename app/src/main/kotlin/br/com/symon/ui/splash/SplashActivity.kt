@@ -12,10 +12,9 @@ import br.com.symon.injection.components.DaggerSplashActivityComponent
 import br.com.symon.injection.components.SplashActivityComponent
 import br.com.symon.injection.modules.SplashActivityModule
 import br.com.symon.ui.MainActivity
-import br.com.symon.ui.splash.SplashContract.View
 import br.com.symon.ui.welcome.WelcomeActivity
 
-class SplashActivity : AppCompatActivity(), View {
+class SplashActivity : AppCompatActivity(), SplashContract.View {
 
     private val splashActivityComponent: SplashActivityComponent
         get() = DaggerSplashActivityComponent
@@ -40,12 +39,12 @@ class SplashActivity : AppCompatActivity(), View {
                 }, SPLASH_TIME_OUT.toLong())
     }
 
-    override fun setupNavigation(user: UserTokenResponse) {
-        if (user.token.isEmpty()) {
+    override fun setupNavigation(userTokenResponse: UserTokenResponse) {
+        if (userTokenResponse.token.isEmpty()) {
             startIntent(WelcomeActivity::class.java)
         } else {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(MainActivity.EXTRA_USER, user)
+            val intent = Intent(this@SplashActivity, MainActivity::class.java)
+            intent.putExtra(MainActivity.EXTRA_USER, userTokenResponse)
             startActivity(intent)
         }
 

@@ -11,6 +11,7 @@
     <string name="general_continue_lower_case">Continuar</string>
     <string name="general_required_field">Campo obrigatório</string>
     <string name="general_permissions_message">Por favor libere as permissões de acesso ;)</string>
+    <string name="general_password_hint">Digite sua senha</string>
 
     <string name="fb_login_protocol_scheme">fb1548485508507561</string>
     <string name="facebook_app_id">1548485508507561</string>
@@ -36,10 +37,12 @@
     <string name="login_forget_password">Esqueceu sua senha?</string>
     <string name="login_confirm_login">Confirmar login</string>
     <string name="login_confirm_action">Login realizado!\nConsulte e publique ofertas ;)</string>
+    <string name="login_invalid_message">usuário ou senha incorretos</string>
+    <string name="login_email_invalid_msg">E-mail inválido</string>
+    <string name="login_confirm_action_login">Login realizado!\nConsulte e publique ofertas ;)</string>
 
     <string name="register_title_label">Cadastre-se</string>
     <string name="register_password_hint">Defina uma senha</string>
-
     <string name="register_complement_name_hint">Nome completo</string>
     <string name="register_complement_birthday_hint">Data de nascimento</string>
     <string name="register_complement_phone_hint">Telefone com DDD</string>
@@ -47,7 +50,6 @@
     <string name="register_complement_phone_mask">(##) # #### ####</string>
 
     <string name="password_hint">Digite sua senha</string>
-    <string name="login_email_invalid_msg">E-mail inválido</string>
 
     <string name="register_now">Cadastre-se agora</string>
     <string name="register_email">E-mail de cadastro</string>
@@ -66,7 +68,6 @@
     <string name="welcome_continue_with_email_text">Continuar com email</string>
 
     <string name="item_sale_sponsored_label">Patrocinado</string>
-
     <string name="item_sale_dislike_sale_image_content_description">imageSaleDislike</string>
     <string name="item_sale_like_sale_image_content_description">imageSaleLike</string>
     <string name="item_sale_user_avatar_image_content_description">imageUserAvatar</string>
@@ -86,4 +87,5 @@
     <string name="retrieve_password_text_input_hint">Confirmar e-mail cadastrado</string>
     <string name="retrieve_password_text_button">Enviar nova senha</string>
     <string name="retrieve_password_text_confirm_action">Verifique seu e-mail e insira\nsua nova senha abaixo</string>
+
 </resources>
