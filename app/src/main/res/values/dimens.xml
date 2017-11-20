@@ -26,4 +26,6 @@
     <dimen name="text_size_26_sp">26sp</dimen>
     <dimen name="text_size_28_sp">28sp</dimen>
     <dimen name="text_size_30_sp">30sp</dimen>
+
+    <dimen name="header_progress_view_height">20dp</dimen>
 </resources>

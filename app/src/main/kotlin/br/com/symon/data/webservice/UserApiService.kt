@@ -43,4 +43,7 @@ interface UserApiService {
 
     @POST("/token")
     fun getToken(@Body userAuthenticateRequest: UserAuthenticateRequest): Observable<Response<UserTokenResponse>>
+
+    @POST("/user/retrievePassword/{user_email}")
+    fun retrievePassword(@Path("user_email") userEmail: String?): Observable<Response<Void>>
 }

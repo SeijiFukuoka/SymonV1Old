@@ -58,35 +58,35 @@
         <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
     </style>
 
-  <style name="CustomEditText" parent="TextAppearance.Regular">
-    <!-- Hint color and label color in FALSE state -->
-    <item name="android:textColorHint">@color/gray_737373</item>
-    <item name="android:textSize">@dimen/text_size_14_sp</item>
-    <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
-    <item name="colorAccent">@color/colorPrimary</item>
-    <item name="colorControlNormal">@color/colorPrimary</item>
-    <item name="colorControlActivated">@color/colorPrimaryDark</item>
+    <style name="CustomEditText" parent="TextAppearance.Regular">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/gray_737373</item>
+        <item name="android:textSize">@dimen/text_size_14_sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
 
-      <item name="textColorError">#FFD50000</item>
-      <item name="android:textColorHighlight">#FFD50000</item>
-      <item name="android:textColorLink">#FFD50000</item>
-  </style>
+        <item name="textColorError">#FFD50000</item>
+        <item name="android:textColorHighlight">#FFD50000</item>
+        <item name="android:textColorLink">#FFD50000</item>
+    </style>
 
-  <style name="CustomEditTextDisable" parent="TextAppearance.Bold">
-    <!-- Hint color and label color in FALSE state -->
-    <item name="android:textColorHint">@color/gray_737373</item>
-    <item name="android:textSize">@dimen/text_size_14_sp</item>
-    <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
-    <item name="colorAccent">@color/colorPrimary</item>
-    <item name="colorControlNormal">@color/black_202020</item>
-    <item name="colorControlActivated">@color/colorPrimaryDark</item>
+    <style name="CustomEditTextDisable" parent="TextAppearance.Bold">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/gray_737373</item>
+        <item name="android:textSize">@dimen/text_size_14_sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/black_202020</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
 
 
-      <item name="textColorError">#FFD50000</item>
-      <item name="android:textColorHighlight">#FFD50000</item>
-      <item name="android:textColorLink">#FFD50000</item>
+        <item name="textColorError">#FFD50000</item>
+        <item name="android:textColorHighlight">#FFD50000</item>
+        <item name="android:textColorLink">#FFD50000</item>
 
-  </style>
+    </style>
 
     <style name="CustomButtonTextMedium" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="fontPath">fonts/Montserrat-Medium.ttf</item>
