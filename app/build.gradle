@@ -4,9 +4,16 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'alias'
+            keyPassword 'ppnl2017'
+            storeFile file('C:/Users/seiji/AndroidStudioProjects/symon-android/keystore.jks')
+            storePassword 'ppnl2017'
+        }
+    }
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
-
     defaultConfig {
         applicationId "br.com.symon"
         minSdkVersion 16
@@ -17,21 +24,19 @@ android {
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] }
     }
-
     buildTypes {
         release {
             debuggable false
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
-
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested
@@ -42,7 +47,6 @@ android {
             }
         }
     }
-
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
