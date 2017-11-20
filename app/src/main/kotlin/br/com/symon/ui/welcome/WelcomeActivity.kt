@@ -14,6 +14,7 @@ import br.com.symon.injection.components.DaggerWelcomeActivityComponent
 import br.com.symon.injection.components.WelcomeActivityComponent
 import br.com.symon.injection.modules.WelcomeActivityModule
 import br.com.symon.ui.MainActivity
+import br.com.symon.ui.login.LoginActivity
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -44,7 +45,7 @@ class WelcomeActivity :
             facebookLogin()
         }
 
-        welcomeContinueWithEmailButton.setOnClickListener { startIntent(MainActivity::class.java) }
+        welcomeContinueWithEmailButton.setOnClickListener { startIntent(LoginActivity::class.java) }
 
         callbackManager = CallbackManager.Factory.create()
         LoginManager.getInstance().registerCallback(callbackManager, this)

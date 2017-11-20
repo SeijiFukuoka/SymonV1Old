@@ -23,6 +23,7 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
     fun registryUser(user: User) = call(userApiService.registryUser(user))
     fun registryUserFacebook(user: UserFacebookRegistryRequest)
             = call(userApiService.registryUserFacebook(user))
+
     fun deleteUser(userId: Int) = call(userApiService.deleteUser(userId))
     fun updateUser(user: User) = call(userApiService.updateUser(user))
     fun uploadUserPhoto(photo: MultipartBody.Part, name: RequestBody) =

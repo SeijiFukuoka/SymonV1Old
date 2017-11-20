@@ -6,7 +6,6 @@ import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.startIntent
 import br.com.symon.common.toast
-import br.com.symon.ui.login.LoginActivity
 import br.com.symon.ui.settings.SettingsActivity
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
@@ -51,9 +50,8 @@ class MainActivity : BaseActivity() {
         mainBottomNavigation.setOnTabSelectedListener { position, _ ->
             toast("$position")
 
-            when (position){
+            when (position) {
                 3 -> startIntent(SettingsActivity::class.java)
-                4 -> startIntent(LoginActivity::class.java)
             }
             true
         }

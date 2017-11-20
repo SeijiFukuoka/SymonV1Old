@@ -7,12 +7,13 @@ import android.widget.Toast
 import br.com.symon.CustomApplication
 import br.com.symon.R.layout
 import br.com.symon.base.BaseActivity
-import br.com.symon.common.toast
+import br.com.symon.common.startIntent
 import br.com.symon.data.model.requests.UserTokenRequest
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerLoginConfirmationComponent
 import br.com.symon.injection.components.LoginConfirmationComponent
 import br.com.symon.injection.modules.LoginConfirmationModule
+import br.com.symon.ui.MainActivity
 import kotlinx.android.synthetic.main.activity_login_confirmation.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
@@ -65,7 +66,7 @@ class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View
     }
 
     override fun handleTokenResponse(userTokenResponse: UserTokenResponse?) {
-        toast("Login de ${userTokenResponse?.user?.name} realizado com sucesso")
+        startIntent(MainActivity::class.java)
     }
 
     override fun handleUserNotFoundResponse() {
