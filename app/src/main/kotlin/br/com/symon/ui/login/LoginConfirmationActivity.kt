@@ -7,12 +7,13 @@ import android.widget.Toast
 import br.com.symon.CustomApplication
 import br.com.symon.R.layout
 import br.com.symon.base.BaseActivity
-import br.com.symon.common.toast
+import br.com.symon.common.startIntent
 import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerLoginActivityConfirmationComponent
 import br.com.symon.injection.components.LoginActivityConfirmationComponent
 import br.com.symon.injection.modules.LoginActivityConfirmationModule
+import br.com.symon.ui.MainActivity
 import kotlinx.android.synthetic.main.activity_login_confirmation.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
 
@@ -47,25 +48,25 @@ class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         email = intent.extras.getString(INTENT_EMAIL_EXTRA)
-        registerEmailEditText.setText(email)
-        registerPasswordEditText.requestFocus()
+        loginConfirmationEmailEditText.setText(email)
+        loginConfirmationPasswordEditText.requestFocus()
 
         customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }
 
-        registerContinueButton.setOnClickListener {
-            val userTokenRequest = UserAuthenticateRequest(email, registerPasswordEditText.text.toString())
+        loginConfirmationConfirmLoginButton.setOnClickListener {
+            val userTokenRequest = UserAuthenticateRequest(email, loginConfirmationPasswordEditText.text.toString())
             loginActivityConfirmationComponent.loginConfirmationPresenter().getUserToken(userTokenRequest)
         }
 
-        textButtonForgetPassword.setOnClickListener {
+        loginConfirmationForgetPasswordTextButton.setOnClickListener {
             Toast.makeText(this, "Em progresso", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun handleTokenResponse(userTokenResponse: UserTokenResponse?) {
-        toast("Login de ${userTokenResponse?.user?.name} realizado com sucesso")
+        startIntent(MainActivity::class.java)
     }
 
     override fun handleUserNotFoundResponse() {

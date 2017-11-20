@@ -103,7 +103,7 @@
             android:layout_marginLeft="@dimen/margin_20_dp"
             android:layout_marginRight="@dimen/margin_20_dp"
             android:layout_marginTop="@dimen/margin_20_dp"
-            android:background="@drawable/button_accent_selector"
+            android:background="@drawable/button_color_accent_selector"
             android:text="@string/welcome_continue_with_email_text"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.Medium"

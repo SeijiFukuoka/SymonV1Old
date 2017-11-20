@@ -45,7 +45,7 @@ class WelcomeActivity :
             facebookLogin()
         }
 
-        welcomeContinueWithEmailButton.setOnClickListener { startIntent(MainActivity::class.java) }
+        welcomeContinueWithEmailButton.setOnClickListener { startIntent(LoginActivity::class.java) }
 
         callbackManager = CallbackManager.Factory.create()
         LoginManager.getInstance().registerCallback(callbackManager, this)

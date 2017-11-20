@@ -93,7 +93,7 @@
         android:layout_marginEnd="@dimen/margin_30_dp"
         android:layout_marginStart="@dimen/margin_30_dp"
         android:layout_marginTop="@dimen/margin_35_dp"
-        android:background="@drawable/button_accent_selector"
+        android:background="@drawable/button_color_accent_selector"
         android:shadowColor="@color/buttonShadow"
         android:shadowDx="2"
         android:shadowDy="2"

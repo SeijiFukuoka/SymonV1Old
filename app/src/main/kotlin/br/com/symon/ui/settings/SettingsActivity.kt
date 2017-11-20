@@ -33,6 +33,8 @@ class SettingsActivity : BaseActivity(), SettingsContract.View {
 
         settingsComponent.settingsPresenter().getNotificationsSettings()
 
+        customToolbarTitleTextView.text = getString(R.string.settings_toolbar_title)
+
         settingsBlockedUsersArrowImageView.setOnClickListener {
             onBackPressed()
         }

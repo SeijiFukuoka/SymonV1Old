@@ -62,9 +62,8 @@ class MainActivity : BaseActivity() {
         mainBottomNavigation.setOnTabSelectedListener { position, _ ->
             toast("$position")
 
-            when (position){
+            when (position) {
                 3 -> startIntent(SettingsActivity::class.java)
-                4 -> startIntent(LoginActivity::class.java)
             }
             true
         }

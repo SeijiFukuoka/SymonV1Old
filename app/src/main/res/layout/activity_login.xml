@@ -6,20 +6,20 @@
     android:background="@color/white">
 
     <include
-        android:id="@+id/view_header_progress"
+        android:id="@+id/loginViewHeaderProgress"
         layout="@layout/view_header_progress" />
 
     <include
-        android:id="@+id/appBarLayout"
+        android:id="@+id/loginAppBarLayout"
         layout="@layout/view_custom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_header_progress" />
+        app:layout_constraintTop_toBottomOf="@id/loginViewHeaderProgress" />
 
     <TextView
-        android:id="@+id/textInputEmailLabel"
+        android:id="@+id/loginEmailTextInputLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_40_dp"
@@ -31,22 +31,23 @@
         android:textSize="@dimen/text_size_24_sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+        app:layout_constraintTop_toBottomOf="@id/loginAppBarLayout" />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputEditLoginEmail"
+        android:id="@+id/loginEmailTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_40_dp"
         android:layout_marginStart="@dimen/margin_40_dp"
         android:layout_marginTop="@dimen/margin_30_dp"
-        android:theme="@style/CustomEditText"
+        android:theme="@style/LoginEmailTextInputLayoutTheme"
+        app:errorTextAppearance="@style/LoginEmailTextInputErrorLayoutStyle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputEmailLabel">
+        app:layout_constraintTop_toBottomOf="@id/loginEmailTextInputLabel">
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/editTextLoginEmail"
+            android:id="@+id/loginEmailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login_hint"
@@ -56,7 +57,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/buttonLogin"
+        android:id="@+id/loginDoLoginButton"
         style="@style/CustomButtonTextMedium"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_50_dp"
@@ -64,7 +65,7 @@
         android:layout_marginEnd="@dimen/margin_30_dp"
         android:layout_marginStart="@dimen/margin_30_dp"
         android:layout_marginTop="@dimen/margin_35_dp"
-        android:background="@drawable/button_accent_selector"
+        android:background="@drawable/button_color_accent_selector"
         android:shadowColor="@color/buttonShadow"
         android:shadowDx="2"
         android:shadowDy="2"
@@ -73,10 +74,10 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_20_sp"
-        app:layout_constraintTop_toBottomOf="@id/textInputEditLoginEmail" />
+        app:layout_constraintTop_toBottomOf="@id/loginEmailTextInputLayout" />
 
     <TextView
-        android:id="@+id/textRegisterNowLabel"
+        android:id="@+id/loginRegisterNowTextLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_20_dp"
@@ -88,11 +89,11 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/text_size_24_sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/buttonRegister"
+        app:layout_constraintBottom_toTopOf="@id/loginRegisterButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonRegister"
+        android:id="@+id/loginRegisterButton"
         style="@style/CustomButtonTextMedium"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -100,7 +101,7 @@
         android:layout_marginBottom="@dimen/margin_40_dp"
         android:layout_marginEnd="@dimen/margin_30_dp"
         android:layout_marginStart="@dimen/margin_30_dp"
-        android:background="@drawable/button_accent_selector"
+        android:background="@drawable/button_color_accent_selector"
         android:shadowColor="@color/buttonShadow"
         android:shadowDx="2"
         android:shadowDy="2"

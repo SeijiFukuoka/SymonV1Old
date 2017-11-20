@@ -44,6 +44,7 @@
     <string name="register_complement_title_label">Completar perfil</string>
     <string name="register_complement_phone_mask">(##) # #### ####</string>
     <string name="password_hint">Digite sua senha</string>
+    <string name="login_email_invalid_msg">E-mail inválido</string>
 
     <string name="register_now">Cadastre-se agora</string>
     <string name="register_email">E-mail de cadastro</string>
@@ -68,6 +69,7 @@
     <string name="item_sale_image_sale_image_content_description">imageSale</string>
     <string name="item_sale_user_options_image_content_description">imageUserOptions</string>
 
+    <string name="settings_toolbar_title">Configurações</string>
     <string name="settings_notification_label">Notificações</string>
     <string name="settings_its_cheap_label">Está Barato</string>
     <string name="settings_its_expensive_label">Está Caro</string>
