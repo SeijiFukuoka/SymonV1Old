@@ -2,6 +2,8 @@ package br.com.symon.ui.sales
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +31,18 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemCli
                 .salesFragmentModule(SalesFragmentModule(this))
                 .build()
 
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var salesAdapter: SalesAdapter
+    private var currentPage: Int = Constants.FIRST_PAGE
+
+    private val lastVisibleItemPosition: Int
+        get() = linearLayoutManager.findLastVisibleItemPosition()
+
+    private var loading = true
+    var pastVisiblesItems: Int = 0
+    var visibleItemCount: Int = 0
+    var totalItemCount: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         salesFragmentComponent.inject(this)
@@ -44,13 +58,32 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemCli
         showLoading()
 
         setUpRecyclersViews()
-        fetchData()
+        fetchData(Constants.FIRST_PAGE)
+//        setRecyclerViewScrollListener()
     }
 
     override fun showSales(salesListResponse: SalesListResponse) {
         salesListResponse.salesList.whenNotNullNorEmpty {
+            salesAdapter = SalesAdapter(salesListResponse.salesList, this)
+            salesFragmentSalesRecyclerView.adapter = salesAdapter
 
-            salesFragmentSalesRecyclerView.adapter = SalesAdapter(salesListResponse.salesList, this)
+            salesFragmentSalesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                    if (dy > 0) //check for scroll down
+                    {
+                        visibleItemCount = linearLayoutManager.childCount
+                        totalItemCount = linearLayoutManager.itemCount
+                        pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition()
+
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            Log.v("...", "Last Item Wow !");
+                            //Do pagination.. i.e. fetch new data
+                            fetchData(currentPage)
+                            loading = false
+                        }
+                    }
+                }
+            })
 
             hideLoading()
             salesFragmentSalesRecyclerView.visibility = View.VISIBLE
@@ -73,12 +106,34 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemCli
         activity.toast("onOptionsSaleClick")
     }
 
-    private fun fetchData() {
-        salesFragmentComponent.salesPresenter().loadSales(Constants.FIRST_PAGE, Constants.RESULTS_PER_PAGE)
+    private fun fetchData(page: Int) {
+        salesFragmentComponent.salesPresenter().loadSales(
+                if (page > 1) page else Constants.FIRST_PAGE,
+                Constants.RESULTS_PER_PAGE
+        )
     }
 
     private fun setUpRecyclersViews() {
-        salesFragmentSalesRecyclerView?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        salesFragmentSalesRecyclerView?.isNestedScrollingEnabled = false
+        linearLayoutManager = LinearLayoutManager(context)
+        salesFragmentSalesRecyclerView.setHasFixedSize(true)
+        salesFragmentSalesRecyclerView.layoutManager = linearLayoutManager
+        salesFragmentSalesRecyclerView.isNestedScrollingEnabled = false
+    }
+
+    private fun setRecyclerViewScrollListener() {
+        salesFragmentSalesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                val totalItemCount = recyclerView!!.layoutManager.itemCount
+                if (totalItemCount == lastVisibleItemPosition + 1) {
+                    currentPage++
+                    fetchData(currentPage)
+                }
+            }
+        })
     }
 }
