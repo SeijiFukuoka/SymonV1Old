@@ -73,6 +73,7 @@
     <string name="item_sale_user_avatar_image_content_description">imageUserAvatar</string>
     <string name="item_sale_image_sale_image_content_description">imageSale</string>
     <string name="item_sale_user_options_image_content_description">imageUserOptions</string>
+    <string name="item_sale_price_formatted">R$ %.2f</string>
 
     <string name="settings_toolbar_title">Configurações</string>
     <string name="settings_notification_label">Notificações</string>
@@ -88,4 +89,5 @@
     <string name="retrieve_password_text_button">Enviar nova senha</string>
     <string name="retrieve_password_text_confirm_action">Verifique seu e-mail e insira\nsua nova senha abaixo</string>
 
+    <string name="main_brand_logo_image_view_content_description">mainBrandImageView</string>
 </resources>

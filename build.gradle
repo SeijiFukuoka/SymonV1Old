@@ -13,7 +13,7 @@ buildscript {
     ext.rxKotlinVersion = '2.1.0'
     ext.daggerVersion = '2.4'
     ext.calligraphyVersion = '2.2.0'
-    ext.glideVersion = '3.7.0'
+    ext.glideVersion = '4.3.1'
     ext.glideTransformationsVersion = "2.0.2"
     ext.rxPermissionsVersion = "0.9.4@aar"
     ext.facebookVersion = "4.28.0"

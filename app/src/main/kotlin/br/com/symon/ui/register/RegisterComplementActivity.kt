@@ -5,15 +5,14 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.dateFormat
 import br.com.symon.common.hideKeyboard
+import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.toast
 import br.com.symon.data.model.requests.UserUpdateRequest
 import br.com.symon.data.model.responses.UserTokenResponse
@@ -21,15 +20,11 @@ import br.com.symon.injection.components.DaggerRegisterComplementActivityCompone
 import br.com.symon.injection.components.RegisterComplementActivityComponent
 import br.com.symon.injection.modules.RegisterComplementActivityModule
 import br.com.symon.ui.MainActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.github.vacxe.phonemask.PhoneMaskManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_register_complement.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
 import java.util.*
-
-
 
 
 class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.View {
@@ -149,17 +144,7 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
     }
 
     override fun showPhoto(photo: String?) {
-        Glide.with(this)
-                .load(photo)
-                .asBitmap()
-                .centerCrop()
-                .into(object : BitmapImageViewTarget(registerProfileImageView) {
-                    override fun setResource(resource: Bitmap) {
-                        val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, resource)
-                        circularBitmapDrawable.isCircular = true
-                        registerProfileImageView.setImageDrawable(circularBitmapDrawable)
-                    }
-                })
+        photo?.let { registerProfileImageView.loadUrlToBeRounded(it) }
     }
 
     override fun goToMain(userTokenResponse: UserTokenResponse?) {

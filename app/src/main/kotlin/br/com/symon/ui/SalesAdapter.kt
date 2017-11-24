@@ -6,22 +6,23 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import br.com.symon.R
-import br.com.symon.common.dpToPixels
 import br.com.symon.common.inflate
 import br.com.symon.common.loadUrl
+import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
 import kotlinx.android.synthetic.main.item_sale.view.*
+import java.util.*
 
-class SalesAdapter(private val user: User,
-                   private val list: MutableList<Sale>,
+class SalesAdapter(private val list: MutableList<Sale>,
                    private val listener: onItemClickListener)
     : RecyclerView.Adapter<SalesAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder =
-            SalesAdapter.ViewHolder(parent?.inflate(R.layout.item_sale), listener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent.inflate(R.layout.item_sale), listener)
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(list[position], position, user)
+    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
+        holder?.bind(list[position], position)
+    }
 
     override fun getItemCount(): Int = list.size
 
@@ -41,49 +42,53 @@ class SalesAdapter(private val user: User,
                      private val listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
         @SuppressLint("NewApi")
-        fun bind(sale: Sale, position: Int, user: User) = with(itemView) {
+        fun bind(sale: Sale, position: Int) = with(itemView) {
             with(sale) {
 
-                if (isSponsored!!) {
-                    itemSaleCardLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_item_sale_label_sponsored, null)
-                    var padding = dpToPixels(resources.getDimension(R.dimen.margin_3_dp))
-                    itemSaleCardLayout.setPadding(padding, padding, padding, padding)
-                    itemSaleSponsoredLabelTextView.visibility = View.VISIBLE
-                } else {
-                    itemSaleCardLayout.background = ResourcesCompat.getDrawable(resources, R.color.orange_F5A623, null)
-                    itemSaleCardLayout.setPadding(0, 0, 0, 0)
-                    itemSaleSponsoredLabelTextView.visibility = View.GONE
-                }
+                //                TODO("Aguardando resposta na API")
+//                if (isSponsored!!) {
+//                    itemSaleCardLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_item_sale_label_sponsored, null)
+//                    var padding = dpToPixels(resources.getDimension(R.dimen.margin_3_dp))
+//                    itemSaleCardLayout.setPadding(padding, padding, padding, padding)
+//                    itemSaleSponsoredLabelTextView.visibility = View.VISIBLE
+//                } else {
+                itemSaleCardLayout.background = ResourcesCompat.getDrawable(resources, R.color.orange_F5A623, null)
+                itemSaleCardLayout.setPadding(0, 0, 0, 0)
+                itemSaleSponsoredLabelTextView.visibility = View.GONE
+//                }
 
                 with(itemSaleImageView) {
-                    sale.photo?.let { loadUrl(it.uri!!) }
+                    sale.photo?.let { loadUrl(it) }
                 }
 
                 itemSaleSaleTitleTextView.text = sale.message
-                itemSaleSaleValueTextView.text = sale.value
+                itemSaleSaleValueTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.item_sale_price_formatted), sale.price)
 
                 itemSaleSaleTimeTextView.text = sale.updatedAt
+                itemSaleLikeQuantityTextView.text = sale.likes
+                itemSaleDislikeQuantityTextView.text = sale.dislikes
 
-                itemSaleLikeLayout.isSelected = isLiked!!
-                itemSaleLikeImageView.isSelected = isLiked!!
-                itemSaleLikeQuantityTextView.isSelected = isLiked!!
-
-                itemSaleDislikeLayout.isSelected = isDisliked!!
-                itemSaleDislikeImageView.isSelected = isDisliked!!
-                itemSaleDislikeQuantityTextView.isSelected = isDisliked!!
+//                TODO("Aguardando comportamento da API")
+//                itemSaleLikeLayout.isSelected = isLiked!!
+//                itemSaleLikeImageView.isSelected = isLiked!!
+//                itemSaleLikeQuantityTextView.isSelected = isLiked!!
+//
+//                itemSaleDislikeLayout.isSelected = isDisliked!!
+//                itemSaleDislikeImageView.isSelected = isDisliked!!
+//                itemSaleDislikeQuantityTextView.isSelected = isDisliked!!
 
                 itemSaleImageView.setOnClickListener { listener.onSaleImageClick(sale) }
                 itemSaleLikeLayout.setOnClickListener { listener.onLikeSaleClick(sale) }
                 itemSaleDislikeLayout.setOnClickListener { listener.onDislikeSaleClick(sale) }
             }
 
-            with(user) {
+            with(sale.user) {
                 with(itemSaleUserPhotoImageView) {
-                    user.phone?.let { loadUrl(it) }
+                    photo?.let { loadUrlToBeRounded(it) }
                 }
 
-                itemSaleUserNameTextView.text = user.name
-                itemSaleUserOptionsImageView.setOnClickListener { listener.onOptionsSaleClick(user) }
+                itemSaleUserNameTextView.text = sale.user.name
+                itemSaleUserOptionsImageView.setOnClickListener { listener.onOptionsSaleClick(sale.user) }
             }
         }
     }

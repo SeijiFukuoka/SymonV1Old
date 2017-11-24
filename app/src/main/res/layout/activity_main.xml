@@ -24,7 +24,13 @@
             <ImageView
                 android:id="@+id/mainBrandImageView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/main_brand_logo_image_view_content_description"
+                android:paddingEnd="@dimen/margin_10_dp"
+                android:paddingLeft="@dimen/margin_10_dp"
+                android:paddingRight="@dimen/margin_10_dp"
+                android:paddingStart="@dimen/margin_10_dp"
+                app:srcCompat="@drawable/ic_symon_logo_toolbar_image" />
 
         </android.support.v7.widget.Toolbar>
 

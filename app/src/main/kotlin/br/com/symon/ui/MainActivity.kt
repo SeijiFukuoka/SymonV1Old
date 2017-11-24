@@ -4,18 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
-import br.com.symon.common.startIntent
+import br.com.symon.common.isDisplayedByTag
+import br.com.symon.common.replace
 import br.com.symon.common.toast
+import br.com.symon.data.model.User
 import br.com.symon.data.model.responses.UserTokenResponse
-import br.com.symon.ui.login.LoginActivity
-import br.com.symon.ui.settings.SettingsActivity
+import br.com.symon.injection.components.DaggerMainActivityComponent
+import br.com.symon.injection.components.MainActivityComponent
+import br.com.symon.injection.modules.MainActivityModule
+import br.com.symon.ui.main.MainContract
+import br.com.symon.ui.sales.SalesFragment
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), MainContract.View {
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
 
@@ -28,11 +34,28 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private val mainActivityComponent: MainActivityComponent
+        get() = DaggerMainActivityComponent
+                .builder()
+                .applicationComponent((this.application as CustomApplication).applicationComponent)
+                .mainActivityModule(MainActivityModule(this))
+                .build()
+
+    private var user: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        mainActivityComponent.inject(this)
+        mainActivityComponent.mainPresenter().getUserCache()
+
         setupBottomMenu()
+        openSales()
+    }
+
+    override fun setUser(user: User?) {
+        this.user = user
     }
 
     private fun setupBottomMenu() {
@@ -59,13 +82,39 @@ class MainActivity : BaseActivity() {
                 ContextCompat.getColor(this, R.color.colorAccent))
         mainBottomNavigation.setNotification("!", 3)
 
-        mainBottomNavigation.setOnTabSelectedListener { position, _ ->
-            toast("$position")
+        mainBottomNavigation.isBehaviorTranslationEnabled = true
 
+        mainBottomNavigation.setOnTabSelectedListener { position, _ ->
             when (position) {
-                3 -> startIntent(SettingsActivity::class.java)
+                0 -> openSales()
+                1 -> openRatings()
+                2 -> openSendSale()
+                3 -> openNotifications()
+                4 -> openProfile()
             }
             true
         }
+    }
+
+    private fun openSales() {
+        if (!isDisplayedByTag(this, SalesFragment::class.java.canonicalName)) {
+            replace(this, R.id.mainFrameContent, SalesFragment())
+        }
+    }
+
+    private fun openRatings() {
+        toast("Avaliações - Em progresso")
+    }
+
+    private fun openSendSale() {
+        toast("Enviar - Em progresso")
+    }
+
+    private fun openNotifications() {
+        toast("Notificações - Em progresso")
+    }
+
+    private fun openProfile() {
+        toast("Perfil - Em progresso")
     }
 }

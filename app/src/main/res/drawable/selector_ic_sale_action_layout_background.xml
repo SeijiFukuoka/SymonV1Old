@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/green_54983A" android:state_pressed="true" />
-    <item android:color="@color/green_54983A" android:state_selected="true" />
-    <item android:color="@android:color/white" />
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:exitFadeDuration="@android:integer/config_mediumAnimTime">
+    <item android:drawable="@drawable/bg_ic_sale_action_layout_background_pressed_selected" android:state_pressed="true" />
+    <item android:drawable="@drawable/bg_ic_sale_action_layout_background_pressed_selected" android:state_selected="true" />
+    <item android:drawable="@drawable/bg_ic_sale_action_layout_background_normal" />
 </selector>
