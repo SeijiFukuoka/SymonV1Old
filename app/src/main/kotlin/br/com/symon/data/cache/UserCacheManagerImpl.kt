@@ -17,9 +17,9 @@ class UserCacheManagerImpl @Inject constructor(context: Context) : UserCacheMana
         cacheManager = CacheManagerImpl(context, CacheSettings.USER_CACHE_NAME)
     }
 
-    override fun save(user: UserTokenResponse?) : Observable<Unit> = Observable.create<Unit> { emitter ->
+    override fun save(userTokenResponse: UserTokenResponse?) : Observable<Unit> = Observable.create<Unit> { emitter ->
         deleteUser()
-        emitter.onNext(cacheManager?.put(CacheSettings.USER_KEY, user)!!)
+        emitter.onNext(cacheManager?.put(CacheSettings.USER_KEY, userTokenResponse)!!)
         emitter.onComplete()
     }
 

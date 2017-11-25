@@ -16,7 +16,7 @@ class LoginConfirmationPresenter @Inject constructor(val view: LoginConfirmation
                     when (it.code()) {
                         200 -> {
                             val userTokenResponse = it.body()
-                            userRepository.saveUserCache(it.body()).subscribe ({
+                            userRepository.saveUserCache(userTokenResponse).subscribe ({
                                 view.handleTokenResponse(userTokenResponse)
                             }, {
                                 GeneralErrorHandler(it, view, {})

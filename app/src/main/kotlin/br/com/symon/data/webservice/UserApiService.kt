@@ -37,7 +37,7 @@ interface UserApiService {
                    @Body userUpdateRequest: UserUpdateRequest): Observable<Response<UserTokenResponse>>
 
     @Multipart
-    @POST("/user/photo/{user_id}")
+    @POST("/user/photoUri/{user_id}")
     fun uploadUserPhoto(@Path("user_id") userId: Int,
                         @Part photo: MultipartBody.Part): Observable<UploadUserPhotoResponse>
 

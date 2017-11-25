@@ -77,5 +77,8 @@
     <string name="settings_complaints_label">Denúncias</string>
     <string name="settings_blocked_users_label">Usuários bloqueados</string>
     <string name="settings_blocked_users_right_arrow_image_content_description">settingsBlockedUsersArrowImageView</string>
+    <string name="prodile_edit_label">Editar perfil</string>
+    <string name="profile_my_posts_label">Minhas publicações</string>
+    <string name="profile_message">Publique sua primeira oferta acessando a opção “Enviar” abaixo.</string>
 
 </resources>

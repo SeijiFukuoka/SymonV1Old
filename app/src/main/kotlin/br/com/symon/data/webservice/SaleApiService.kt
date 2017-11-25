@@ -21,7 +21,7 @@ interface SaleApiService {
     fun postSaleMessage(@Body sale: Sale): Observable<Response<Sale>>
 
     @Multipart
-    @POST("/sale/photo")
+    @POST("/sale/photoUri")
     fun uploaSalePhoto(
             @Part photo: MultipartBody.Part,
             @Part("resource") name: RequestBody,

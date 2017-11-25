@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
+import br.com.symon.common.isDisplayedByTag
+import br.com.symon.common.replace
 import br.com.symon.common.startIntent
 import br.com.symon.common.toast
 import br.com.symon.data.model.responses.UserTokenResponse
-import br.com.symon.ui.login.LoginActivity
+import br.com.symon.ui.profile.ProfileFragment
 import br.com.symon.ui.settings.SettingsActivity
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
@@ -19,7 +21,7 @@ class MainActivity : BaseActivity() {
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
 
-        lateinit var user: UserTokenResponse
+        lateinit var userTokenResponse: UserTokenResponse
 
         fun newIntent(context: Context, user: UserTokenResponse?): Intent {
             val intent = Intent(context, MainActivity::class.java)
@@ -31,6 +33,8 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        userTokenResponse = intent.getParcelableExtra(EXTRA_USER)
 
         setupBottomMenu()
     }
@@ -60,12 +64,21 @@ class MainActivity : BaseActivity() {
         mainBottomNavigation.setNotification("!", 3)
 
         mainBottomNavigation.setOnTabSelectedListener { position, _ ->
-            toast("$position")
-
             when (position) {
+                0 -> toast("$position")
+                1 -> toast("$position")
+                2 -> toast("$position")
                 3 -> startIntent(SettingsActivity::class.java)
+                4 -> openProfile()
             }
             true
+        }
+    }
+
+    private fun openProfile() {
+        val profileFragment = ProfileFragment.newInstance(user = userTokenResponse.user)
+        if (!isDisplayedByTag(this, ProfileFragment::class.java.canonicalName)) {
+            replace(this, R.id.mainFrameContent, profileFragment)
         }
     }
 }
