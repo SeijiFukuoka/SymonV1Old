@@ -31,4 +31,10 @@ interface SaleApiService {
 
     @DELETE("/sale/{sale_id}")
     fun deleteSale(@Path("sale_id") saleId: Int): Observable<Response<Void>>
+
+    @POST("/sale/{sale_id}/like")
+    fun likeSale(@Path("sale_id") saleId: Int, @Header("Authorization") userToken: String): Observable<Response<Void>>
+
+    @POST("/sale/{sale_id}/dislike")
+    fun disLikeSale(@Path("sale_id") saleId: Int, @Header("Authorization") userToken: String): Observable<Response<Void>>
 }

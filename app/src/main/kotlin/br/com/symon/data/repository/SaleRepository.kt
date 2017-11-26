@@ -15,4 +15,7 @@ class SaleRepository @Inject constructor(private val saleApiService: SaleApiServ
     fun uploadSalePhoto(saleId: Int, photo: MultipartBody.Part) = call(saleApiService.uploaSalePhoto(saleId, photo))
     fun updateSale(sale: Sale) = call((saleApiService.uploadSale(sale)))
     fun deleteSale(saleId: Int) = call(saleApiService.deleteSale(saleId))
+
+    fun likeSale(saleId: Int, userToken: String) = call(saleApiService.likeSale(saleId, userToken))
+    fun disLikeSale(saleId: Int, userToken: String) = call(saleApiService.disLikeSale(saleId, userToken))
 }

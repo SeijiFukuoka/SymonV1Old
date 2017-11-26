@@ -16,13 +16,14 @@ import br.com.symon.data.model.Constants
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
 import br.com.symon.data.model.responses.SalesListResponse
+import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSalesFragmentComponent
 import br.com.symon.injection.components.SalesFragmentComponent
 import br.com.symon.injection.modules.SalesFragmentModule
 import br.com.symon.ui.SalesAdapter
 import kotlinx.android.synthetic.main.fragment_sales.*
 
-class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemClickListener {
+class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemClickListener {
 
     private val salesFragmentComponent: SalesFragmentComponent
         get() = DaggerSalesFragmentComponent.builder()
@@ -33,6 +34,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemCli
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var salesAdapter: SalesAdapter
     private var currentPage: Int = Constants.FIRST_PAGE
+    private var user: UserTokenResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +47,14 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemCli
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         showLoading()
-
         setUpRecyclersViews()
-        showLoading()
+        getUser()
         fetchData(Constants.FIRST_PAGE)
+    }
+
+    override fun setUser(userTokenResponse: UserTokenResponse) {
+        user = userTokenResponse
     }
 
     override fun showSales(salesListResponse: SalesListResponse) {
@@ -67,27 +71,26 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemCli
         }
     }
 
-    override fun onSaleImageClick(sale: Sale) {
-        activity.toast("onSaleImageClick")
+    override fun updateActionSAle(position: Int, isLike: Boolean, isAdd: Boolean) {
+        salesAdapter.updateItem(position, isLike, isAdd)
     }
 
-    override fun onLikeSaleClick(sale: Sale) {
+    override fun onSaleImageClick(sale: Sale) {
+        activity.toast("onSaleImageClick ID = ${sale.id}")
+    }
+
+    override fun onLikeSaleClick(position: Int, sale: Sale) {
+        salesFragmentComponent.salesPresenter().likeSale(position, sale.id!!, user?.token!!)
         activity.toast("onLikeSaleClick")
     }
 
-    override fun onDislikeSaleClick(sale: Sale) {
+    override fun onDislikeSaleClick(position: Int, sale: Sale) {
+        salesFragmentComponent.salesPresenter().disLikeSale(position, sale.id!!, user?.token!!)
         activity.toast("onDislikeSaleClick")
     }
 
     override fun onOptionsSaleClick(user: User) {
-        activity.toast("onOptionsSaleClick")
-    }
-
-    private fun fetchData(page: Int) {
-        salesFragmentComponent.salesPresenter().loadSales(
-                if (page > 1) page else Constants.FIRST_PAGE,
-                Constants.RESULTS_PER_PAGE
-        )
+        activity.toast("onOptionsSaleClick - User Id = ${user.id}")
     }
 
     private fun setUpRecyclersViews() {
@@ -95,6 +98,18 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemCli
         salesFragmentSalesRecyclerView.setHasFixedSize(true)
         salesFragmentSalesRecyclerView.layoutManager = linearLayoutManager
         salesFragmentSalesRecyclerView.isNestedScrollingEnabled = false
+        salesFragmentSalesRecyclerView.itemAnimator.changeDuration = 0
+    }
+
+    private fun getUser() {
+        salesFragmentComponent.salesPresenter().getUser()
+    }
+
+    private fun fetchData(page: Int) {
+        salesFragmentComponent.salesPresenter().loadSales(
+                if (page > 1) page else Constants.FIRST_PAGE,
+                Constants.RESULTS_PER_PAGE
+        )
     }
 
     private fun setRecyclerViewScrollListener(salesListResponse: SalesListResponse) {

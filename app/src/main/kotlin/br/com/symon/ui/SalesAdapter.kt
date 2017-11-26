@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.item_sale.view.*
 import java.util.*
 
 class SalesAdapter(private val list: MutableList<Sale>,
-                   private val listener: onItemClickListener)
+                   private val listener: OnItemClickListener)
     : RecyclerView.Adapter<SalesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent.inflate(R.layout.item_sale), listener)
@@ -26,10 +26,10 @@ class SalesAdapter(private val list: MutableList<Sale>,
 
     override fun getItemCount(): Int = list.size
 
-    interface onItemClickListener {
+    interface OnItemClickListener {
         fun onSaleImageClick(sale: Sale)
-        fun onLikeSaleClick(sale: Sale)
-        fun onDislikeSaleClick(sale: Sale)
+        fun onLikeSaleClick(position: Int, sale: Sale)
+        fun onDislikeSaleClick(position: Int, sale: Sale)
         fun onOptionsSaleClick(user: User)
     }
 
@@ -38,8 +38,38 @@ class SalesAdapter(private val list: MutableList<Sale>,
         notifyDataSetChanged()
     }
 
+    fun updateItem(position: Int, isLike: Boolean, isAdd: Boolean) {
+        val saleToBeChanged = list[position]
+        if (isLike) {
+            if ((isAdd)) {
+                val likesQuantity: Int = saleToBeChanged.likes!!.toInt() + 1
+                val likesQuantityString: String = likesQuantity.toString()
+                saleToBeChanged.likes = likesQuantityString
+                list[position] = saleToBeChanged
+            } else {
+                val likesQuantity: Int = saleToBeChanged.likes!!.toInt() - 1
+                val likesQuantityString: String = likesQuantity.toString()
+                saleToBeChanged.likes = likesQuantityString
+                list[position] = saleToBeChanged
+            }
+        } else {
+            if (isAdd) {
+                val disLikesQuantity: Int = saleToBeChanged.dislikes!!.toInt() + 1
+                val disLikesQuantityString: String = disLikesQuantity.toString()
+                saleToBeChanged.dislikes = disLikesQuantityString
+                list[position] = saleToBeChanged
+            } else {
+                val disLikesQuantity: Int = saleToBeChanged.dislikes!!.toInt() - 1
+                val disLikesQuantityString: String = disLikesQuantity.toString()
+                saleToBeChanged.dislikes = disLikesQuantityString
+                list[position] = saleToBeChanged
+            }
+        }
+        notifyItemChanged(position)
+    }
+
     class ViewHolder(itemView: View?,
-                     private val listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
+                     private val listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
         @SuppressLint("NewApi")
         fun bind(sale: Sale, position: Int) = with(itemView) {
@@ -78,8 +108,8 @@ class SalesAdapter(private val list: MutableList<Sale>,
 //                itemSaleDislikeQuantityTextView.isSelected = isDisliked!!
 
                 itemSaleImageView.setOnClickListener { listener.onSaleImageClick(sale) }
-                itemSaleLikeLayout.setOnClickListener { listener.onLikeSaleClick(sale) }
-                itemSaleDislikeLayout.setOnClickListener { listener.onDislikeSaleClick(sale) }
+                itemSaleLikeLayout.setOnClickListener { listener.onLikeSaleClick(position, sale) }
+                itemSaleDislikeLayout.setOnClickListener { listener.onDislikeSaleClick(position, sale) }
             }
 
             with(sale.user) {
