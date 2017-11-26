@@ -1,10 +1,12 @@
 package br.com.symon.ui.sales
 
 import android.os.Bundle
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseFragment
@@ -13,6 +15,8 @@ import br.com.symon.common.toast
 import br.com.symon.common.whenNotNullNorEmpty
 import br.com.symon.common.widget.EndlessScrollListener
 import br.com.symon.data.model.Constants
+import br.com.symon.data.model.Constants.Companion.SEEK_BAR_MAX
+import br.com.symon.data.model.Constants.Companion.SEEK_BAR_MIN
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
 import br.com.symon.data.model.responses.SalesListResponse
@@ -22,8 +26,9 @@ import br.com.symon.injection.components.SalesFragmentComponent
 import br.com.symon.injection.modules.SalesFragmentModule
 import br.com.symon.ui.SalesAdapter
 import kotlinx.android.synthetic.main.fragment_sales.*
+import java.util.*
 
-class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemClickListener {
+class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
 
     private val salesFragmentComponent: SalesFragmentComponent
         get() = DaggerSalesFragmentComponent.builder()
@@ -50,6 +55,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         showLoading()
         setUpRecyclersViews()
         getUser()
+        setUpSeekBar()
         fetchData(Constants.FIRST_PAGE)
     }
 
@@ -93,6 +99,37 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         activity.toast("onOptionsSaleClick - User Id = ${user.id}")
     }
 
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) =
+            when (progress) {
+                in 0..5 -> {
+                    salesFragmentHeaderRangeSeekBar.progress = Constants.SEEK_BAR_MIN
+                    salesFragmentHeaderRangeTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), 5)
+                    salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_low, null))
+//                    TODO("PENDENTE CHAMADA DA API")
+                }
+                6 -> {
+                    salesFragmentHeaderRangeTextView.text = getRangeFilterText()
+                    salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_low, null))
+//                    TODO("PENDENTE CHAMADA DA API")
+                }
+                in 7..12 -> {
+                    salesFragmentHeaderRangeTextView.text = getRangeFilterText()
+                    salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_medium, null))
+//                    TODO("PENDENTE CHAMADA DA API")
+                }
+                else -> {
+                    salesFragmentHeaderRangeTextView.text = getRangeFilterText()
+                    salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_high, null))
+//                    TODO("PENDENTE CHAMADA DA API")
+                }
+            }
+
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+    }
+
+    override fun onStopTrackingTouch(seekBar: SeekBar?) {
+    }
+
     private fun setUpRecyclersViews() {
         linearLayoutManager = LinearLayoutManager(context)
         salesFragmentSalesRecyclerView.setHasFixedSize(true)
@@ -103,6 +140,13 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
 
     private fun getUser() {
         salesFragmentComponent.salesPresenter().getUser()
+    }
+
+    private fun setUpSeekBar() {
+        salesFragmentHeaderRangeSeekBar.progress = SEEK_BAR_MIN
+        salesFragmentHeaderRangeTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), salesFragmentHeaderRangeSeekBar.progress)
+        salesFragmentHeaderRangeSeekBar!!.max = SEEK_BAR_MAX
+        salesFragmentHeaderRangeSeekBar!!.setOnSeekBarChangeListener(this)
     }
 
     private fun fetchData(page: Int) {
@@ -122,6 +166,8 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
                 activity.toast("Fim da lista")
             }
         }, linearLayoutManager))
-
     }
+
+    private fun getRangeFilterText(): String =
+            String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), salesFragmentHeaderRangeSeekBar.progress)
 }

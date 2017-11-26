@@ -90,4 +90,7 @@
     <string name="retrieve_password_text_confirm_action">Verifique seu e-mail e insira\nsua nova senha abaixo</string>
 
     <string name="main_brand_logo_image_view_content_description">mainBrandImageView</string>
+
+    <string name="sales_fragment_range_filter_text_formatted">%2dkm</string>
+
 </resources>

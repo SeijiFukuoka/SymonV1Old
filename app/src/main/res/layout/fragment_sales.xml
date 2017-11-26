@@ -1,10 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/salesFragmentSalesRecyclerView"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/salesFragmentHeaderLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_25_dp">
+
+        <TextView
+            android:id="@+id/salesFragmentHeaderRangeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:lineSpacingExtra="5sp"
+            android:textAppearance="@style/TextAppearance.Bold"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_10_sp"
+            android:textStyle="bold"
+            tools:text="5km" />
+
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/salesFragmentHeaderRangeSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/margin_10_dp"
+            android:layout_marginLeft="@dimen/margin_10_dp"
+            android:layout_marginRight="@dimen/margin_10_dp"
+            android:layout_marginStart="@dimen/margin_10_dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/salesFragmentHeaderRangeImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_range_filter_medium" />
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/salesFragmentSalesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/salesFragmentHeaderLinearLayout" />
+
+</RelativeLayout>
