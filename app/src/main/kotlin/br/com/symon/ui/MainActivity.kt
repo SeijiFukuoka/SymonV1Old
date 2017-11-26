@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.SearchView
+import android.view.Menu
+import android.view.View
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
@@ -19,9 +22,10 @@ import br.com.symon.ui.main.MainContract
 import br.com.symon.ui.sales.SalesFragment
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
-import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity(), MainContract.View {
+
+class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextListener {
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
 
@@ -50,12 +54,50 @@ class MainActivity : BaseActivity(), MainContract.View {
         mainActivityComponent.inject(this)
         mainActivityComponent.mainPresenter().getUserCache()
 
+        setupSearchView()
         setupBottomMenu()
         openSales()
     }
 
+    override fun onBackPressed() = if (!mainActivitySearchView.isIconified) {
+        mainActivitySearchView.setIconified(true)
+    } else {
+        super.onBackPressed()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val menuInflater = menuInflater
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        toast(query)
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean = true
+
     override fun setUser(user: User?) {
         this.user = user
+    }
+
+    private fun setupSearchView() {
+        mainActivitySearchView.setOnQueryTextListener(this)
+        mainActivitySearchView.setOnSearchClickListener({
+            toast("CLICK")
+            mainBrandImageView.visibility = View.GONE
+            mainFrameContent.visibility = View.GONE
+            mainActivityBackArrowImageView.visibility = View.VISIBLE
+        })
+
+        mainActivitySearchView.setOnCloseListener {
+            toast("CLOSE")
+            mainFrameContent.visibility = View.VISIBLE
+            mainBrandImageView.visibility = View.VISIBLE
+            mainActivityBackArrowImageView.visibility = View.GONE
+            false
+        }
     }
 
     private fun setupBottomMenu() {
