@@ -9,7 +9,6 @@ import javax.inject.Inject
 class SalesPresenter @Inject constructor(val view: SalesContract.View, private val saleRepository: SaleRepository) : SalesContract.Presenter {
 
     override fun loadSales(page: Int, pageSize: Int) {
-        view.showLoading()
         saleRepository.getSalesList(page, pageSize)
                 .subscribe({
                     view.showSales(it)

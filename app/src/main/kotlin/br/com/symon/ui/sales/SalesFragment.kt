@@ -2,8 +2,6 @@ package br.com.symon.ui.sales
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +11,7 @@ import br.com.symon.base.BaseFragment
 import br.com.symon.common.inflate
 import br.com.symon.common.toast
 import br.com.symon.common.whenNotNullNorEmpty
+import br.com.symon.common.widget.EndlessScrollListener
 import br.com.symon.data.model.Constants
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
@@ -35,14 +34,6 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemCli
     private lateinit var salesAdapter: SalesAdapter
     private var currentPage: Int = Constants.FIRST_PAGE
 
-    private val lastVisibleItemPosition: Int
-        get() = linearLayoutManager.findLastVisibleItemPosition()
-
-    private var loading = true
-    var pastVisiblesItems: Int = 0
-    var visibleItemCount: Int = 0
-    var totalItemCount: Int = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         salesFragmentComponent.inject(this)
@@ -58,35 +49,21 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemCli
         showLoading()
 
         setUpRecyclersViews()
+        showLoading()
         fetchData(Constants.FIRST_PAGE)
-//        setRecyclerViewScrollListener()
     }
 
     override fun showSales(salesListResponse: SalesListResponse) {
         salesListResponse.salesList.whenNotNullNorEmpty {
-            salesAdapter = SalesAdapter(salesListResponse.salesList, this)
-            salesFragmentSalesRecyclerView.adapter = salesAdapter
-
-            salesFragmentSalesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                    if (dy > 0) //check for scroll down
-                    {
-                        visibleItemCount = linearLayoutManager.childCount
-                        totalItemCount = linearLayoutManager.itemCount
-                        pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition()
-
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            Log.v("...", "Last Item Wow !");
-                            //Do pagination.. i.e. fetch new data
-                            fetchData(currentPage)
-                            loading = false
-                        }
-                    }
-                }
-            })
-
-            hideLoading()
-            salesFragmentSalesRecyclerView.visibility = View.VISIBLE
+            if (currentPage == Constants.FIRST_PAGE) {
+                salesAdapter = SalesAdapter(salesListResponse.salesList, this)
+                salesFragmentSalesRecyclerView.adapter = salesAdapter
+                hideLoading()
+                salesFragmentSalesRecyclerView.visibility = View.VISIBLE
+            } else {
+                salesAdapter.addList(salesListResponse.salesList)
+            }
+            setRecyclerViewScrollListener(salesListResponse)
         }
     }
 
@@ -120,20 +97,16 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.onItemCli
         salesFragmentSalesRecyclerView.isNestedScrollingEnabled = false
     }
 
-    private fun setRecyclerViewScrollListener() {
-        salesFragmentSalesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
+    private fun setRecyclerViewScrollListener(salesListResponse: SalesListResponse) {
+        salesFragmentSalesRecyclerView.addOnScrollListener(EndlessScrollListener({
+            if (currentPage <= salesListResponse.totalPages) {
+                currentPage++
+                fetchData(currentPage)
+            } else {
+                TODO("Verificar qual mensagem deve ser exibida")
+                activity.toast("Fim da lista")
             }
+        }, linearLayoutManager))
 
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                val totalItemCount = recyclerView!!.layoutManager.itemCount
-                if (totalItemCount == lastVisibleItemPosition + 1) {
-                    currentPage++
-                    fetchData(currentPage)
-                }
-            }
-        })
     }
 }
