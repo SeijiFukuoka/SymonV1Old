@@ -40,31 +40,27 @@ class SalesAdapter(private val list: MutableList<Sale>,
 
     fun updateItem(position: Int, isLike: Boolean, isAdd: Boolean) {
         val saleToBeChanged = list[position]
+
         if (isLike) {
-            if ((isAdd)) {
-                val likesQuantity: Int = saleToBeChanged.likes!!.toInt() + 1
-                val likesQuantityString: String = likesQuantity.toString()
-                saleToBeChanged.likes = likesQuantityString
-                list[position] = saleToBeChanged
+            if (isAdd) {
+                saleToBeChanged.likes!! + 1
             } else {
-                val likesQuantity: Int = saleToBeChanged.likes!!.toInt() - 1
-                val likesQuantityString: String = likesQuantity.toString()
-                saleToBeChanged.likes = likesQuantityString
-                list[position] = saleToBeChanged
+                saleToBeChanged.likes!! - 1
+                if (saleToBeChanged.likes!! < 0)
+                    saleToBeChanged.likes = 0
             }
+            saleToBeChanged.hasLiked = isAdd
         } else {
             if (isAdd) {
-                val disLikesQuantity: Int = saleToBeChanged.dislikes!!.toInt() + 1
-                val disLikesQuantityString: String = disLikesQuantity.toString()
-                saleToBeChanged.dislikes = disLikesQuantityString
-                list[position] = saleToBeChanged
+                saleToBeChanged.dislikes!! + 1
             } else {
-                val disLikesQuantity: Int = saleToBeChanged.dislikes!!.toInt() - 1
-                val disLikesQuantityString: String = disLikesQuantity.toString()
-                saleToBeChanged.dislikes = disLikesQuantityString
-                list[position] = saleToBeChanged
+                saleToBeChanged.dislikes!! - 1
+                if (saleToBeChanged.dislikes!! < 0)
+                    saleToBeChanged.dislikes = 0
             }
+            saleToBeChanged.hasDisliked = isAdd
         }
+        list[position] = saleToBeChanged
         notifyItemChanged(position)
     }
 
@@ -95,17 +91,16 @@ class SalesAdapter(private val list: MutableList<Sale>,
                 itemSaleSaleValueTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.item_sale_price_formatted), sale.price)
 
                 itemSaleSaleTimeTextView.text = sale.updatedAt
-                itemSaleLikeQuantityTextView.text = sale.likes
-                itemSaleDislikeQuantityTextView.text = sale.dislikes
+                itemSaleLikeQuantityTextView.text = sale.likes.toString()
+                itemSaleDislikeQuantityTextView.text = sale.dislikes.toString()
 
-//                TODO("Aguardando comportamento da API")
-//                itemSaleLikeLayout.isSelected = isLiked!!
-//                itemSaleLikeImageView.isSelected = isLiked!!
-//                itemSaleLikeQuantityTextView.isSelected = isLiked!!
-//
-//                itemSaleDislikeLayout.isSelected = isDisliked!!
-//                itemSaleDislikeImageView.isSelected = isDisliked!!
-//                itemSaleDislikeQuantityTextView.isSelected = isDisliked!!
+                itemSaleLikeLayout.isSelected = hasLiked!!
+                itemSaleLikeImageView.isSelected = hasLiked!!
+                itemSaleLikeQuantityTextView.isSelected = hasLiked!!
+
+                itemSaleDislikeLayout.isSelected = hasDisliked!!
+                itemSaleDislikeImageView.isSelected = hasDisliked!!
+                itemSaleDislikeQuantityTextView.isSelected = hasDisliked!!
 
                 itemSaleImageView.setOnClickListener { listener.onSaleImageClick(sale) }
                 itemSaleLikeLayout.setOnClickListener { listener.onLikeSaleClick(position, sale) }

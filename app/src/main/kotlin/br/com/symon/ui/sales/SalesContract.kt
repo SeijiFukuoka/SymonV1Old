@@ -13,7 +13,7 @@ interface SalesContract {
 
     interface Presenter {
         fun getUser()
-        fun loadSales(page: Int, pageSize: Int)
+        fun loadSales(userToken: String, page: Int, pageSize: Int)
         fun likeSale(position: Int, saleId: Int, userToken: String)
         fun disLikeSale(position: Int, saleId: Int, userToken: String)
     }

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:id="@+id/salesFragmentHeaderLinearLayout"
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:orientation="horizontal"
-        android:padding="@dimen/margin_25_dp">
+        android:padding="@dimen/margin_20_dp">
 
         <TextView
             android:id="@+id/salesFragmentHeaderRangeTextView"
@@ -46,11 +47,18 @@
 
     </LinearLayout>
 
+    <br.com.symon.common.widget.ConfirmActionView
+        android:id="@+id/salesFragmentConfirmActionView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/salesFragmentHeaderLinearLayout"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/salesFragmentSalesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/salesFragmentHeaderLinearLayout" />
+        android:layout_below="@id/salesFragmentConfirmActionView" />
 
 </RelativeLayout>

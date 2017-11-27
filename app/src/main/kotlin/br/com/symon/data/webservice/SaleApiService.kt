@@ -11,7 +11,7 @@ import retrofit2.http.*
 interface SaleApiService {
 
     @GET("/sale")
-    fun getSalesList(@Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
+    fun getSalesList(@Header("Authorization") userToken: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
 
     @GET("/sale/{sale_id}")
     fun getSaleDetail(@Path("sale_id") saleId: Int): Observable<Response<Sale>>

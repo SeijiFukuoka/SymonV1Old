@@ -56,11 +56,11 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         setUpRecyclersViews()
         getUser()
         setUpSeekBar()
-        fetchData(Constants.FIRST_PAGE)
     }
 
     override fun setUser(userTokenResponse: UserTokenResponse) {
         user = userTokenResponse
+        fetchData(Constants.FIRST_PAGE)
     }
 
     override fun showSales(salesListResponse: SalesListResponse) {
@@ -150,7 +150,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     private fun fetchData(page: Int) {
-        salesFragmentComponent.salesPresenter().loadSales(
+        salesFragmentComponent.salesPresenter().loadSales(user?.token!!,
                 if (page > 1) page else Constants.FIRST_PAGE,
                 Constants.RESULTS_PER_PAGE
         )
@@ -158,12 +158,9 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
 
     private fun setRecyclerViewScrollListener(salesListResponse: SalesListResponse) {
         salesFragmentSalesRecyclerView.addOnScrollListener(EndlessScrollListener({
-            if (currentPage <= salesListResponse.totalPages) {
+            if (currentPage < salesListResponse.totalPages) {
                 currentPage++
                 fetchData(currentPage)
-            } else {
-                TODO("Verificar qual mensagem deve ser exibida")
-                activity.toast("Fim da lista")
             }
         }, linearLayoutManager))
     }

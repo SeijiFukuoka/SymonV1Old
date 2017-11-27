@@ -85,14 +85,12 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     private fun setupSearchView() {
         mainActivitySearchView.setOnQueryTextListener(this)
         mainActivitySearchView.setOnSearchClickListener({
-            toast("CLICK")
             mainBrandImageView.visibility = View.GONE
             mainFrameContent.visibility = View.GONE
             mainActivityBackArrowImageView.visibility = View.VISIBLE
         })
 
         mainActivitySearchView.setOnCloseListener {
-            toast("CLOSE")
             mainFrameContent.visibility = View.VISIBLE
             mainBrandImageView.visibility = View.VISIBLE
             mainActivityBackArrowImageView.visibility = View.GONE
