@@ -13,7 +13,7 @@ import br.com.symon.base.BaseActivity
 import br.com.symon.common.isDisplayedByTag
 import br.com.symon.common.replace
 import br.com.symon.common.toast
-import br.com.symon.data.model.User
+import br.com.symon.data.model.Sale
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerMainActivityComponent
 import br.com.symon.injection.components.MainActivityComponent
@@ -45,7 +45,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
                 .mainActivityModule(MainActivityModule(this))
                 .build()
 
-    private var user: User? = null
+    private var user: UserTokenResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,15 +78,22 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        toast(query)
+    override fun onQueryTextSubmit(query: String): Boolean {
+        mainActivityComponent.mainPresenter().searchSales(query, user?.token!!)
         return true
     }
 
-    override fun onQueryTextChange(newText: String?): Boolean = true
+    override fun onQueryTextChange(newText: String): Boolean = true
 
-    override fun setUser(user: User?) {
+    override fun setUser(user: UserTokenResponse?) {
         this.user = user
+    }
+
+    override fun showSearchResults(searchResults: MutableList<Sale>) {
+        if (searchResults.size > 0)
+            toast("Resultados da procura = ${searchResults.get(0)} ")
+        else
+            toast("Nenhum resultado encontrado")
     }
 
     private fun setupSearchView() {

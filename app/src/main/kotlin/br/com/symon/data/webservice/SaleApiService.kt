@@ -37,4 +37,7 @@ interface SaleApiService {
 
     @POST("/sale/{sale_id}/dislike")
     fun disLikeSale(@Path("sale_id") saleId: Int, @Header("Authorization") userToken: String): Observable<Response<Void>>
+
+    @GET("/sale/search/{query}")
+    fun searchSale(@Path("query") query: String, @Header("Authorization") userToken: String): Observable<MutableList<Sale>>
 }
