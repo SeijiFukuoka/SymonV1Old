@@ -23,16 +23,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <ImageView
-                android:id="@+id/mainActivityBackArrowImageView"
-                android:layout_width="@dimen/margin_15_dp"
-                android:layout_height="@dimen/margin_15_dp"
-                android:adjustViewBounds="true"
-                android:tint="@android:color/white"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_back_arrow"
-                tools:visibility="visible" />
-
-            <ImageView
                 android:id="@+id/mainBrandImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:theme="@style/SearchViewTheme"
                 app:queryHint="O que está procurando ? " />
 
         </android.support.v7.widget.Toolbar>

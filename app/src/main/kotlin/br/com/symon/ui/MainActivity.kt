@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SearchView
-import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import br.com.symon.CustomApplication
 import br.com.symon.R
@@ -54,6 +54,9 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         mainActivityComponent.inject(this)
         mainActivityComponent.mainPresenter().getUserCache()
 
+        setSupportActionBar(mainToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         setupSearchView()
         setupBottomMenu()
         openSales()
@@ -65,10 +68,14 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         super.onBackPressed()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val menuInflater = menuInflater
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -87,13 +94,13 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         mainActivitySearchView.setOnSearchClickListener({
             mainBrandImageView.visibility = View.GONE
             mainFrameContent.visibility = View.GONE
-            mainActivityBackArrowImageView.visibility = View.VISIBLE
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
         })
 
         mainActivitySearchView.setOnCloseListener {
             mainFrameContent.visibility = View.VISIBLE
             mainBrandImageView.visibility = View.VISIBLE
-            mainActivityBackArrowImageView.visibility = View.GONE
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
             false
         }
     }
