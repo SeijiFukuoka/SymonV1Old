@@ -68,6 +68,9 @@
             android:name=".ui.register.RegisterComplementActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".ui.profile.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="066f0bf31d490ae351aa77b8fd2596e2a2a1f24b" />

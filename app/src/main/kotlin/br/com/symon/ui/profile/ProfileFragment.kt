@@ -8,6 +8,7 @@ import br.com.symon.R
 import br.com.symon.base.BaseFragment
 import br.com.symon.common.inflate
 import br.com.symon.common.loadUrlWithCircularImage
+import br.com.symon.common.startIntent
 import br.com.symon.data.model.User
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -50,7 +51,7 @@ class ProfileFragment: BaseFragment() {
         }
 
         profileEditTextView.setOnClickListener {
-
+            activity.startIntent(ProfileActivity::class.java)
         }
 
         profileMessageTextView.text = getString(R.string.profile_message)

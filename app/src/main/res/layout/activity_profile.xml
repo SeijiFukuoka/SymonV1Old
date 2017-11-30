@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/profileAppBarLayout"
+        layout="@layout/view_custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_40_dp"
+            android:paddingBottom="@dimen/margin_60_dp">
+
+            <ImageView
+                android:id="@+id/profileImageView"
+                style="@style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@drawable/ic_profile_placeholder"
+                android:clickable="true"
+                android:focusable="true"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileNameTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:paddingBottom="5dp"
+                android:theme="@style/CustomEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileImageView">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/profileNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/register_complement_name_hint"
+                    android:inputType="textPersonName"
+                    android:paddingBottom="@dimen/margin_15_dp"
+                    android:textColor="@color/black_202020"
+                    android:textSize="@dimen/text_size_16_sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileBirthdayTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:paddingBottom="5dp"
+                android:theme="@style/CustomEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileNameTextInput">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/profileBirthdayEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:editable="false"
+                    android:focusable="true"
+                    android:hint="@string/register_complement_birthday_hint"
+                    android:inputType="date"
+                    android:paddingBottom="@dimen/margin_15_dp"
+                    android:textColor="@color/black_202020"
+                    android:textSize="@dimen/text_size_16_sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profilePhoneTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:paddingBottom="5dp"
+                android:theme="@style/CustomEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileBirthdayTextInput">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/registerComplementPhoneEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/register_complement_phone_hint"
+                    android:inputType="phone"
+                    android:paddingBottom="@dimen/margin_15_dp"
+                    android:textColor="@color/black_202020"
+                    android:textSize="@dimen/text_size_16_sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/profileAccessDataTextView"
+                style="@style/TextAppearance.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_25_dp"
+                android:text="@string/profile_access_data_label"
+                android:textColor="@color/gray_737373"
+                android:textSize="@dimen/text_size_15_sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profilePhoneTextInput" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileEmailTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:theme="@style/CustomEditText"
+                app:hintAnimationEnabled="false"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileAccessDataTextView">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/profileEmailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_hint"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/gray_666666"
+                    android:textSize="@dimen/text_size_16_sp"
+                    android:textStyle="bold" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/profileFacebookButtonContainerConstraint"
+                android:layout_width="0dp"
+                android:layout_height="53dp"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:background="@drawable/button_facebook_selector"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileEmailTextInput">
+
+                <ImageView
+                    android:id="@+id/profileFacebookImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_10_dp"
+                    android:layout_marginRight="@dimen/margin_10_dp"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/profileFacebookTextView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_facebook" />
+
+                <TextView
+                    android:id="@+id/profileFacebookTextView"
+                    style="@style/TextAppearance.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_10_dp"
+                    android:layout_marginStart="@dimen/margin_10_dp"
+                    android:text="@string/welcome_facebook_button"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_20_sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/profileFacebookImageView"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/profileFacebookImageView" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profilePasswordTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:paddingBottom="5dp"
+                android:theme="@style/CustomEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileFacebookButtonContainerConstraint"
+                app:passwordToggleEnabled="true">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/profilePasswordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/profile_current_password_hint"
+                    android:inputType="textPassword"
+                    android:paddingBottom="@dimen/margin_15_dp"
+                    android:textColor="@color/black_202020"
+                    android:textSize="@dimen/text_size_16_sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileNewPasswordTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:paddingBottom="5dp"
+                android:theme="@style/CustomEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profilePasswordTextInput"
+                app:passwordToggleEnabled="true">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/profileNewPasswordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/profile_new_password_hint"
+                    android:inputType="textPassword"
+                    android:paddingBottom="@dimen/margin_15_dp"
+                    android:textColor="@color/black_202020"
+                    android:textSize="@dimen/text_size_16_sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileConfirmNewPasswordTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:paddingBottom="5dp"
+                android:theme="@style/CustomEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileNewPasswordTextInput"
+                app:passwordToggleEnabled="true">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/profileConfirmNewPasswordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/profile_confirm_new_password_hint"
+                    android:inputType="textPassword"
+                    android:paddingBottom="@dimen/margin_15_dp"
+                    android:textColor="@color/black_202020"
+                    android:textSize="@dimen/text_size_16_sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/profileContinueButton"
+                style="@style/CustomButtonTextMedium"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_50_dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_color_accent_selector"
+                android:shadowColor="@color/buttonShadow"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:text="@string/general_save"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_20_sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileConfirmNewPasswordTextInput" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>
