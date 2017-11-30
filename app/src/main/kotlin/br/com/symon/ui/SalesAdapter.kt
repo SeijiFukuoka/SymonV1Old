@@ -94,20 +94,25 @@ class SalesAdapter(private val list: MutableList<Sale>,
                 itemSaleLikeQuantityTextView.text = sale.likes.toString()
                 itemSaleDislikeQuantityTextView.text = sale.dislikes.toString()
 
-                itemSaleLikeLayout.isSelected = hasLiked!!
-                itemSaleLikeImageView.isSelected = hasLiked!!
-                itemSaleLikeQuantityTextView.isSelected = hasLiked!!
+                hasLiked?.let {
+                    itemSaleLikeLayout.isSelected = hasLiked as Boolean
+                    itemSaleLikeImageView.isSelected = hasLiked as Boolean
+                    itemSaleLikeQuantityTextView.isSelected = hasLiked as Boolean
+                }
 
-                itemSaleDislikeLayout.isSelected = hasDisliked!!
-                itemSaleDislikeImageView.isSelected = hasDisliked!!
-                itemSaleDislikeQuantityTextView.isSelected = hasDisliked!!
+                hasDisliked?.let {
+                    itemSaleDislikeLayout.isSelected = hasDisliked as Boolean
+                    itemSaleDislikeImageView.isSelected = hasDisliked as Boolean
+                    itemSaleDislikeQuantityTextView.isSelected = hasDisliked as Boolean
+                }
 
                 itemSaleImageView.setOnClickListener { listener.onSaleImageClick(sale) }
                 itemSaleLikeLayout.setOnClickListener { listener.onLikeSaleClick(position, sale) }
                 itemSaleDislikeLayout.setOnClickListener { listener.onDislikeSaleClick(position, sale) }
             }
 
-            with(sale.user) {
+            with(sale.user)
+            {
                 with(itemSaleUserPhotoImageView) {
                     photo?.let { loadUrlToBeRounded(it) }
                 }

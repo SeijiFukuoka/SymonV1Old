@@ -15,6 +15,7 @@ import br.com.symon.common.toast
 import br.com.symon.common.whenNotNullNorEmpty
 import br.com.symon.common.widget.EndlessScrollListener
 import br.com.symon.data.model.Constants
+import br.com.symon.data.model.Constants.Companion.FIRST_PAGE
 import br.com.symon.data.model.Constants.Companion.SEEK_BAR_MAX
 import br.com.symon.data.model.Constants.Companion.SEEK_BAR_MIN
 import br.com.symon.data.model.Sale
@@ -29,6 +30,20 @@ import kotlinx.android.synthetic.main.fragment_sales.*
 import java.util.*
 
 class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
+
+    private var extraSearchQuery: String? = ""
+
+    companion object {
+        private const val EXTRA_SEARCH_QUERY = "EXTRA_SEARCH_QUERY"
+
+        fun newInstance(searchQuery: String?): SalesFragment {
+            val f = SalesFragment()
+            val args = Bundle()
+            args.putString(EXTRA_SEARCH_QUERY, searchQuery)
+            f.arguments = args
+            return f
+        }
+    }
 
     private val salesFragmentComponent: SalesFragmentComponent
         get() = DaggerSalesFragmentComponent.builder()
@@ -47,20 +62,41 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         fragmentId = SalesFragment::class.java.canonicalName
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            container?.inflate(R.layout.fragment_sales)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return container?.inflate(R.layout.fragment_sales)
+    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (arguments != null && arguments.getString(EXTRA_SEARCH_QUERY) != null)
+            extraSearchQuery = arguments.getString(EXTRA_SEARCH_QUERY)
         showLoading()
         setUpRecyclersViews()
         getUser()
         setUpSeekBar()
+
+        salesFragmentSalesSearchCloseTextView.setOnClickListener {
+            showLoading()
+            salesFragmentSalesSearchHeaderLayout.visibility = View.GONE
+            salesFragmentSalesRecyclerView.visibility = View.GONE
+            fetchData(FIRST_PAGE)
+        }
+
+        salesFragmentSalesSearchCloseImageView.setOnClickListener {
+            showLoading()
+            salesFragmentSalesSearchHeaderLayout.visibility = View.GONE
+            salesFragmentSalesRecyclerView.visibility = View.GONE
+            fetchData(FIRST_PAGE)
+        }
     }
 
     override fun setUser(userTokenResponse: UserTokenResponse) {
         user = userTokenResponse
-        fetchData(Constants.FIRST_PAGE)
+        if (extraSearchQuery!!.isNotEmpty()) {
+            fetchSearchQuery()
+        } else {
+            fetchData(Constants.FIRST_PAGE)
+        }
     }
 
     override fun showSales(salesListResponse: SalesListResponse) {
@@ -130,6 +166,22 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
     }
 
+    override fun showSearchSales(salesList: MutableList<Sale>) {
+        if (salesList.isNotEmpty()) {
+            if (currentPage == Constants.FIRST_PAGE) {
+                salesAdapter = SalesAdapter(salesList, this)
+                salesFragmentSalesRecyclerView.adapter = salesAdapter
+                hideLoading()
+                salesFragmentSalesRecyclerView.visibility = View.VISIBLE
+            } else {
+                salesAdapter.addList(salesList)
+            }
+        } else {
+            activity.toast("Nenhum resultado encontrado para a palavra $extraSearchQuery")
+        }
+        hideLoading()
+    }
+
     private fun setUpRecyclersViews() {
         linearLayoutManager = LinearLayoutManager(context)
         salesFragmentSalesRecyclerView.setHasFixedSize(true)
@@ -154,6 +206,12 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
                 if (page > 1) page else Constants.FIRST_PAGE,
                 Constants.RESULTS_PER_PAGE
         )
+    }
+
+    private fun fetchSearchQuery() {
+        salesFragmentSalesSearchHeaderLayout.visibility = View.VISIBLE
+        salesFragmentSalesSearchQueryTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_search_query_formatted), extraSearchQuery)
+        salesFragmentComponent.salesPresenter().searchQuerySale(user?.token!!, extraSearchQuery!!)
     }
 
     private fun setRecyclerViewScrollListener(salesListResponse: SalesListResponse) {

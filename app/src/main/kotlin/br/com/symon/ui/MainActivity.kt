@@ -79,11 +79,13 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     }
 
     override fun onQueryTextSubmit(query: String): Boolean {
-        mainActivityComponent.mainPresenter().searchSales(query, user?.token!!)
-        return true
+        openSearchSales(query)
+        mainActivitySearchView.setQuery("", false)
+        mainActivitySearchView.isIconified = true
+        return false
     }
 
-    override fun onQueryTextChange(newText: String): Boolean = true
+    override fun onQueryTextChange(newText: String): Boolean = false
 
     override fun setUser(user: UserTokenResponse?) {
         this.user = user
@@ -154,6 +156,10 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         if (!isDisplayedByTag(this, SalesFragment::class.java.canonicalName)) {
             replace(this, R.id.mainFrameContent, SalesFragment())
         }
+    }
+
+    private fun openSearchSales(searchQuery: String) {
+        replace(this, R.id.mainFrameContent, SalesFragment.newInstance(searchQuery))
     }
 
     private fun openRatings() {

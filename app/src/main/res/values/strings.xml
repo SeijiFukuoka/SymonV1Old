@@ -92,6 +92,9 @@
     <string name="main_brand_logo_image_view_content_description">mainBrandImageView</string>
 
     <string name="sales_fragment_range_filter_text_formatted">%2dkm</string>
+    <string name="sales_fragment_search_label">Você buscou por: </string>
+    <string name="sales_fragment_search_query_formatted">""\"%s"\""</string>
+    <string name="sales_fragment_search_clen_label">Limpar</string>
     <string name="action_search">Search</string>
 
 </resources>
