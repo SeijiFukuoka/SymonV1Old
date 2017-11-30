@@ -38,28 +38,37 @@ class SalesAdapter(private val list: MutableList<Sale>,
         notifyDataSetChanged()
     }
 
-    fun updateItem(position: Int, isLike: Boolean, isAdd: Boolean) {
+    fun updateItem(position: Int, isLike: Boolean) {
         val saleToBeChanged = list[position]
 
         if (isLike) {
-            if (isAdd) {
-                saleToBeChanged.likes!! + 1
+            if (saleToBeChanged.hasLiked!!) {
+                saleToBeChanged.likes = saleToBeChanged.likes?.minus(1)
+                saleToBeChanged.hasLiked = false
             } else {
-                saleToBeChanged.likes!! - 1
-                if (saleToBeChanged.likes!! < 0)
-                    saleToBeChanged.likes = 0
+                saleToBeChanged.likes = saleToBeChanged.likes?.plus(1)
+                saleToBeChanged.hasLiked = true
+
+                if (saleToBeChanged.hasDisliked!!) {
+                    saleToBeChanged.dislikes = saleToBeChanged.dislikes?.minus(1)
+                    saleToBeChanged.hasDisliked = false
+                }
             }
-            saleToBeChanged.hasLiked = isAdd
         } else {
-            if (isAdd) {
-                saleToBeChanged.dislikes!! + 1
+            if (saleToBeChanged.hasDisliked!!) {
+                saleToBeChanged.dislikes = saleToBeChanged.dislikes?.minus(1)
+                saleToBeChanged.hasDisliked = false
             } else {
-                saleToBeChanged.dislikes!! - 1
-                if (saleToBeChanged.dislikes!! < 0)
-                    saleToBeChanged.dislikes = 0
+                saleToBeChanged.dislikes = saleToBeChanged.dislikes?.plus(1)
+                saleToBeChanged.hasDisliked = true
+
+                if (saleToBeChanged.hasLiked!!) {
+                    saleToBeChanged.likes = saleToBeChanged.likes?.minus(1)
+                    saleToBeChanged.hasLiked = false
+                }
             }
-            saleToBeChanged.hasDisliked = isAdd
         }
+
         list[position] = saleToBeChanged
         notifyItemChanged(position)
     }

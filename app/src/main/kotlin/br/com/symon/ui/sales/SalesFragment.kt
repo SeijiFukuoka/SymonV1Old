@@ -113,8 +113,8 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         }
     }
 
-    override fun updateActionSAle(position: Int, isLike: Boolean, isAdd: Boolean) {
-        salesAdapter.updateItem(position, isLike, isAdd)
+    override fun updateActionSAle(position: Int, isLike: Boolean) {
+        salesAdapter.updateItem(position, isLike)
     }
 
     override fun onSaleImageClick(sale: Sale) {

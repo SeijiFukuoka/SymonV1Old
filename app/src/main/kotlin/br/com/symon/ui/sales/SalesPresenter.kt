@@ -28,11 +28,8 @@ class SalesPresenter @Inject constructor(val view: SalesContract.View, private v
         saleRepository.likeSale(saleId, userToken)
                 .subscribe({
                     when (it.code()) {
-                        201 -> {
-                            view.updateActionSAle(position, true, true)
-                        }
-                        204 -> {
-                            view.updateActionSAle(position, true, false)
+                        in 200..204 -> {
+                            view.updateActionSAle(position, true)
                         }
                     }
                 }, {
@@ -44,11 +41,8 @@ class SalesPresenter @Inject constructor(val view: SalesContract.View, private v
         saleRepository.disLikeSale(saleId, userToken)
                 .subscribe({
                     when (it.code()) {
-                        201 -> {
-                            view.updateActionSAle(position, false, true)
-                        }
-                        204 -> {
-                            view.updateActionSAle(position, false, false)
+                        in 200..204 -> {
+                            view.updateActionSAle(position, false)
                         }
                     }
                 }, {

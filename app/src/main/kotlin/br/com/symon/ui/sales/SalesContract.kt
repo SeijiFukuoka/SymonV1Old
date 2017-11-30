@@ -9,7 +9,7 @@ interface SalesContract {
     interface View : BaseView {
         fun setUser(userTokenResponse: UserTokenResponse)
         fun showSales(salesListResponse: SalesListResponse)
-        fun updateActionSAle(position: Int, isLike: Boolean, isAdd: Boolean)
+        fun updateActionSAle(position: Int, isLike: Boolean)
 
         //        TODO("Utilizando até a API de search estar atualizada")
         fun showSearchSales(salesList: MutableList<Sale>)
