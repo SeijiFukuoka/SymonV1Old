@@ -104,7 +104,7 @@
                 app:layout_constraintTop_toBottomOf="@id/profileBirthdayTextInput">
 
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/registerComplementPhoneEditText"
+                    android:id="@+id/profilePhoneEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/register_complement_phone_hint"
