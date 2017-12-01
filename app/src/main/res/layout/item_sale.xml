@@ -44,193 +44,239 @@
             tools:visibility="visible" />
 
         <RelativeLayout
-            android:id="@+id/itemSaleSaleDetailLayout"
+            android:id="@+id/itemSaleSaleDetailBottomLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:padding="@dimen/margin_15_dp"
+            android:layout_below="@id/itemSaleImageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/itemSaleImageView">
 
-            <TextView
-                android:id="@+id/itemSaleSaleTitleTextView"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/itemSaleSaleDetailLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:paddingBottom="@dimen/margin_5_dp"
-                android:textAppearance="@style/TextAppearance.Bold"
-                android:textColor="@color/black_202020"
-                android:textSize="@dimen/text_size_12_sp"
-                android:textStyle="bold"
-                tools:text="Maionese Vigor" />
-
-            <TextView
-                android:id="@+id/itemSaleSaleValueTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingTop="@dimen/margin_10_dp"
-                android:textAppearance="@style/TextAppearance.Bold"
-                android:textColor="@color/green_54983A"
-                android:textSize="@dimen/text_size_14_sp"
-                android:textStyle="bold"
-                tools:text="R$ 0,89" />
-
-            <LinearLayout
-                android:id="@+id/itemSaleLikeLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/margin_15_dp"
-                android:layout_marginRight="@dimen/margin_15_dp"
-                android:layout_toLeftOf="@id/itemSaleDislikeLayout"
-                android:layout_toStartOf="@id/itemSaleDislikeLayout"
-                android:background="@drawable/selector_ic_sale_like_layout_background"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/margin_10_dp"
-                android:paddingEnd="@dimen/margin_5_dp"
-                android:paddingLeft="@dimen/margin_5_dp"
-                android:paddingRight="@dimen/margin_5_dp"
-                android:paddingStart="@dimen/margin_5_dp"
-                android:paddingTop="@dimen/margin_10_dp"
-                tools:ignore="RelativeOverlap">
-
-                <ImageView
-                    android:id="@+id/itemSaleLikeImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_5_dp"
-                    android:layout_marginRight="@dimen/margin_5_dp"
-                    android:background="@drawable/selector_ic_sale_like_action"
-                    android:contentDescription="@string/item_sale_like_sale_image_content_description" />
+                android:background="@android:color/white"
+                android:padding="@dimen/margin_15_dp">
 
                 <TextView
-                    android:id="@+id/itemSaleLikeQuantityTextView"
+                    android:id="@+id/itemSaleSaleTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Bold"
-                    android:textColor="@drawable/selector_ic_sale_action_text"
-                    android:textSize="@dimen/text_size_15_sp"
-                    android:textStyle="bold"
-                    tools:text="99" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/itemSaleDislikeLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/selector_ic_sale_dislike_layout_background"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/margin_10_dp"
-                android:paddingEnd="@dimen/margin_5_dp"
-                android:paddingLeft="@dimen/margin_5_dp"
-                android:paddingRight="@dimen/margin_5_dp"
-                android:paddingStart="@dimen/margin_5_dp"
-                android:paddingTop="@dimen/margin_10_dp">
-
-                <ImageView
-                    android:id="@+id/itemSaleDislikeImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_5_dp"
-                    android:layout_marginRight="@dimen/margin_5_dp"
-                    android:background="@drawable/selector_ic_sale_dislike_action"
-                    android:contentDescription="@string/item_sale_dislike_sale_image_content_description" />
-
-                <TextView
-                    android:id="@+id/itemSaleDislikeQuantityTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Bold"
-                    android:textColor="@drawable/selector_ic_sale_action_text"
-                    android:textSize="@dimen/text_size_15_sp"
-                    android:textStyle="bold"
-                    tools:text="12" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@color/gray_F8F8F8"
-            android:padding="@dimen/margin_15_dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/itemSaleSaleDetailLayout">
-
-            <ImageView
-                android:id="@+id/itemSaleUserPhotoImageView"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/item_sale_user_avatar_image_content_description"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_profile" />
-
-            <LinearLayout
-                android:id="@+id/itemSaleUserDetailLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/margin_15_dp"
-                android:layout_marginLeft="@dimen/margin_15_dp"
-                android:layout_marginRight="@dimen/margin_15_dp"
-                android:layout_marginStart="@dimen/margin_15_dp"
-                android:layout_toEndOf="@id/itemSaleUserPhotoImageView"
-                android:layout_toLeftOf="@id/itemSaleUserOptionsImageView"
-                android:layout_toRightOf="@id/itemSaleUserPhotoImageView"
-                android:layout_toStartOf="@id/itemSaleUserOptionsImageView"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/itemSaleUserNameTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:paddingBottom="@dimen/margin_5_dp"
                     android:textAppearance="@style/TextAppearance.Bold"
                     android:textColor="@color/black_202020"
-                    android:textSize="@dimen/text_size_10_sp"
+                    android:textSize="@dimen/text_size_12_sp"
                     android:textStyle="bold"
-                    tools:text="Nome do usuário" />
+                    tools:text="Maionese Vigor" />
 
                 <TextView
-                    android:id="@+id/itemSaleSaleTimeTextView"
+                    android:id="@+id/itemSaleSaleValueTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Regular"
-                    android:textColor="@color/gray_9B9B9B"
-                    android:textSize="@dimen/text_size_10_sp"
-                    tools:text="10 minutos atrás" />
+                    android:layout_centerVertical="true"
+                    android:paddingTop="@dimen/margin_10_dp"
+                    android:textAppearance="@style/TextAppearance.Bold"
+                    android:textColor="@color/green_54983A"
+                    android:textSize="@dimen/text_size_14_sp"
+                    android:textStyle="bold"
+                    tools:text="R$ 0,89" />
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/itemSaleLikeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/margin_15_dp"
+                    android:layout_marginRight="@dimen/margin_15_dp"
+                    android:layout_toLeftOf="@id/itemSaleDislikeLayout"
+                    android:layout_toStartOf="@id/itemSaleDislikeLayout"
+                    android:background="@drawable/selector_ic_sale_like_layout_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/margin_10_dp"
+                    android:paddingEnd="@dimen/margin_5_dp"
+                    android:paddingLeft="@dimen/margin_5_dp"
+                    android:paddingRight="@dimen/margin_5_dp"
+                    android:paddingStart="@dimen/margin_5_dp"
+                    android:paddingTop="@dimen/margin_10_dp"
+                    tools:ignore="RelativeOverlap">
 
-            <ImageView
-                android:id="@+id/itemSaleUserOptionsImageView"
+                    <ImageView
+                        android:id="@+id/itemSaleLikeImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_5_dp"
+                        android:layout_marginRight="@dimen/margin_5_dp"
+                        android:background="@drawable/selector_ic_sale_like_action"
+                        android:contentDescription="@string/item_sale_like_sale_image_content_description" />
+
+                    <TextView
+                        android:id="@+id/itemSaleLikeQuantityTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Bold"
+                        android:textColor="@drawable/selector_ic_sale_action_text"
+                        android:textSize="@dimen/text_size_15_sp"
+                        android:textStyle="bold"
+                        tools:text="99" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/itemSaleDislikeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/selector_ic_sale_dislike_layout_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/margin_10_dp"
+                    android:paddingEnd="@dimen/margin_5_dp"
+                    android:paddingLeft="@dimen/margin_5_dp"
+                    android:paddingRight="@dimen/margin_5_dp"
+                    android:paddingStart="@dimen/margin_5_dp"
+                    android:paddingTop="@dimen/margin_10_dp">
+
+                    <ImageView
+                        android:id="@+id/itemSaleDislikeImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_5_dp"
+                        android:layout_marginRight="@dimen/margin_5_dp"
+                        android:background="@drawable/selector_ic_sale_dislike_action"
+                        android:contentDescription="@string/item_sale_dislike_sale_image_content_description" />
+
+                    <TextView
+                        android:id="@+id/itemSaleDislikeQuantityTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Bold"
+                        android:textColor="@drawable/selector_ic_sale_action_text"
+                        android:textSize="@dimen/text_size_15_sp"
+                        android:textStyle="bold"
+                        tools:text="12" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/itemSaleBottomLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/itemSaleSaleDetailLayout"
+                android:layout_centerVertical="true"
+                android:background="@color/gray_F8F8F8"
+                android:padding="@dimen/margin_15_dp">
+
+                <ImageView
+                    android:id="@+id/itemSaleUserPhotoImageView"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/item_sale_user_avatar_image_content_description"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_profile" />
+
+                <LinearLayout
+                    android:id="@+id/itemSaleUserDetailLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/margin_15_dp"
+                    android:layout_marginLeft="@dimen/margin_15_dp"
+                    android:layout_marginRight="@dimen/margin_15_dp"
+                    android:layout_marginStart="@dimen/margin_15_dp"
+                    android:layout_toEndOf="@id/itemSaleUserPhotoImageView"
+                    android:layout_toLeftOf="@id/itemSaleUserOptionsImageView"
+                    android:layout_toRightOf="@id/itemSaleUserPhotoImageView"
+                    android:layout_toStartOf="@id/itemSaleUserOptionsImageView"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/itemSaleUserNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Bold"
+                        android:textColor="@color/black_202020"
+                        android:textSize="@dimen/text_size_10_sp"
+                        android:textStyle="bold"
+                        tools:text="Nome do usuário" />
+
+                    <TextView
+                        android:id="@+id/itemSaleSaleTimeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Regular"
+                        android:textColor="@color/gray_9B9B9B"
+                        android:textSize="@dimen/text_size_10_sp"
+                        tools:text="10 minutos atrás" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/itemSaleUserOptionsImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:contentDescription="@string/item_sale_user_options_image_content_description"
+                    android:focusable="true"
+                    android:padding="@dimen/margin_10_dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_sale_user_options" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/itemSaleUserOptionsCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:clickable="true"
-                android:contentDescription="@string/item_sale_user_options_image_content_description"
-                android:focusable="true"
-                android:padding="@dimen/margin_10_dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_sale_user_options" />
+                android:layout_marginEnd="@dimen/margin_15_dp"
+                android:layout_marginRight="@dimen/margin_15_dp"
+                android:background="@drawable/bg_rounded_user_optios_dialog"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="@dimen/margin_5_dp"
+                app:contentPaddingBottom="@dimen/margin_20_dp"
+                app:contentPaddingLeft="@dimen/margin_15_dp"
+                app:contentPaddingRight="@dimen/margin_35_dp"
+                app:contentPaddingTop="@dimen/margin_15_dp"
+                tools:visibility="gone">
 
+                <TextView
+                    android:id="@+id/itemSaleUserOptionsReportSaleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_sale_user_options_report_sale"
+                    android:textAppearance="@style/TextAppearance.Regular"
+                    android:textColor="@color/gray_4A4A4A"
+                    android:textSize="@dimen/text_size_14_sp" />
+
+                <TextView
+                    android:id="@+id/itemSaleUserOptionsBlockUserTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_30_dp"
+                    android:text="@string/item_sale_user_options_block_user"
+                    android:textAppearance="@style/TextAppearance.Regular"
+                    android:textColor="@color/gray_4A4A4A"
+                    android:textSize="@dimen/text_size_14_sp" />
+
+            </android.support.v7.widget.CardView>
         </RelativeLayout>
-
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

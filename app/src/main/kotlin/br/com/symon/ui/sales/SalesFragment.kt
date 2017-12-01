@@ -29,6 +29,7 @@ import br.com.symon.ui.SalesAdapter
 import kotlinx.android.synthetic.main.fragment_sales.*
 import java.util.*
 
+
 class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
 
     private var extraSearchQuery: String? = ""
@@ -102,7 +103,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     override fun showSales(salesListResponse: SalesListResponse) {
         salesListResponse.salesList.whenNotNullNorEmpty {
             if (currentPage == Constants.FIRST_PAGE) {
-                salesAdapter = SalesAdapter(salesListResponse.salesList, this)
+                salesAdapter = SalesAdapter(salesListResponse.salesList, user?.user!!, this)
                 salesFragmentSalesRecyclerView.adapter = salesAdapter
                 hideLoading()
                 salesFragmentSalesRecyclerView.visibility = View.VISIBLE
@@ -131,8 +132,12 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         activity.toast("onDislikeSaleClick")
     }
 
-    override fun onOptionsSaleClick(user: User) {
-        activity.toast("onOptionsSaleClick - User Id = ${user.id}")
+    override fun onReportSaleClick(sale: Sale) {
+        activity.toast("Report Sale - ${sale.message}")
+    }
+
+    override fun onBlockUserClick(user: User) {
+        activity.toast("Report Sale - ${user.name}")
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) =
@@ -169,7 +174,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     override fun showSearchSales(salesList: MutableList<Sale>) {
         if (salesList.isNotEmpty()) {
             if (currentPage == Constants.FIRST_PAGE) {
-                salesAdapter = SalesAdapter(salesList, this)
+                salesAdapter = SalesAdapter(salesList, user?.user!!, this)
                 salesFragmentSalesRecyclerView.adapter = salesAdapter
                 hideLoading()
                 salesFragmentSalesRecyclerView.visibility = View.VISIBLE

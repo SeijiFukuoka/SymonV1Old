@@ -97,4 +97,6 @@
     <string name="sales_fragment_search_clen_label">Limpar</string>
     <string name="action_search">Search</string>
 
+    <string name="item_sale_user_options_report_sale">Denunciar oferta</string>
+    <string name="item_sale_user_options_block_user">Bloquear usuário</string>
 </resources>

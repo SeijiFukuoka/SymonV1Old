@@ -15,13 +15,14 @@ import kotlinx.android.synthetic.main.item_sale.view.*
 import java.util.*
 
 class SalesAdapter(private val list: MutableList<Sale>,
+                   private val currentUser: User,
                    private val listener: OnItemClickListener)
     : RecyclerView.Adapter<SalesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent.inflate(R.layout.item_sale), listener)
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.bind(list[position], position)
+        holder?.bind(list[position], position, currentUser)
     }
 
     override fun getItemCount(): Int = list.size
@@ -30,7 +31,8 @@ class SalesAdapter(private val list: MutableList<Sale>,
         fun onSaleImageClick(sale: Sale)
         fun onLikeSaleClick(position: Int, sale: Sale)
         fun onDislikeSaleClick(position: Int, sale: Sale)
-        fun onOptionsSaleClick(user: User)
+        fun onReportSaleClick(sale: Sale)
+        fun onBlockUserClick(user: User)
     }
 
     fun addList(list: MutableList<Sale>) {
@@ -77,7 +79,7 @@ class SalesAdapter(private val list: MutableList<Sale>,
                      private val listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
         @SuppressLint("NewApi")
-        fun bind(sale: Sale, position: Int) = with(itemView) {
+        fun bind(sale: Sale, position: Int, currentUser: User) = with(itemView) {
             with(sale) {
 
                 //                TODO("Aguardando resposta na API")
@@ -118,6 +120,10 @@ class SalesAdapter(private val list: MutableList<Sale>,
                 itemSaleImageView.setOnClickListener { listener.onSaleImageClick(sale) }
                 itemSaleLikeLayout.setOnClickListener { listener.onLikeSaleClick(position, sale) }
                 itemSaleDislikeLayout.setOnClickListener { listener.onDislikeSaleClick(position, sale) }
+                itemSaleUserOptionsReportSaleTextView.setOnClickListener {
+                    itemSaleUserOptionsCardView.visibility = View.GONE
+                    listener.onReportSaleClick(sale)
+                }
             }
 
             with(sale.user)
@@ -127,7 +133,15 @@ class SalesAdapter(private val list: MutableList<Sale>,
                 }
 
                 itemSaleUserNameTextView.text = sale.user.name
-                itemSaleUserOptionsImageView.setOnClickListener { listener.onOptionsSaleClick(sale.user) }
+                itemSaleUserOptionsImageView.setOnClickListener { itemSaleUserOptionsCardView.visibility = View.VISIBLE }
+                itemSaleUserOptionsBlockUserTextView.setOnClickListener {
+                    itemSaleUserOptionsCardView.visibility = View.GONE
+                    listener.onBlockUserClick(sale.user)
+                }
+            }
+
+            if (currentUser.id == sale.user.id) {
+                itemSaleUserOptionsBlockUserTextView.visibility = View.GONE
             }
         }
     }
