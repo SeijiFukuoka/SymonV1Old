@@ -23,7 +23,6 @@ import br.com.symon.injection.modules.ProfileActivityModule
 import com.github.vacxe.phonemask.PhoneMaskManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_profile.*
-import kotlinx.android.synthetic.main.activity_register_complement.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
 import java.util.*
 
@@ -66,7 +65,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.View {
                 .withMask(getString(R.string.register_complement_phone_mask))
                 .bindTo(profilePhoneEditText)
 
-        registerProfileImageView.setOnClickListener {
+        profileImageView.setOnClickListener {
             RxPermissions(this)
                     .request(Manifest.permission.READ_EXTERNAL_STORAGE)
                     .subscribe { granted ->
@@ -108,7 +107,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.View {
         profileContinueButton.setOnClickListener {
             if (isValidUserData() && isValidUserPassword()) {
 
-                var userUpdateRequest = if (!isPasswordChange) {
+                val userUpdateRequest = if (!isPasswordChange) {
                     UserUpdateRequest(
                             name = profileNameEditText.text.toString(),
                             phone = profilePhoneEditText.text.toString(),
