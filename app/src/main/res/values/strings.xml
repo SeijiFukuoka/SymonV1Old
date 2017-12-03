@@ -86,7 +86,12 @@
     <string name="profile_current_password_hint">Senha atual</string>
     <string name="profile_new_password_hint">Digite Nova senha</string>
     <string name="profile_confirm_new_password_hint">Confirme a nova senha</string>
+    <string name="profile_change_password_label"><u>Alterar senha</u></string>
+
     <string name="menu_settings">Configurações</string>
     <string name="menu_search">Buscar</string>
+    <string name="profile_password_not_match">As senhas não correspondem</string>
+    <string name="general_cancel">Cancelar</string>
+    <string name="profile_data_updated_success">dados atualizados com sucesso =)</string>
 
 </resources>
