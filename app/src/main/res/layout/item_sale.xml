@@ -31,12 +31,13 @@
             tools:src="@color/white_F5F5F5" />
 
         <TextView
-            android:id="@+id/itemSaleSponsoredLabelTextView"
+            android:id="@+id/itemSaleMineSponsoredLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_item_sale_label_sponsored"
             android:padding="@dimen/margin_10_dp"
             android:text="@string/item_sale_sponsored_label"
+            android:textAppearance="@style/TextAppearance.Medium"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_10_sp"
             android:visibility="gone"
@@ -236,46 +237,6 @@
                     app:srcCompat="@drawable/ic_sale_user_options" />
 
             </RelativeLayout>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/itemSaleUserOptionsCardView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="@dimen/margin_15_dp"
-                android:layout_marginRight="@dimen/margin_15_dp"
-                android:background="@drawable/bg_rounded_user_optios_dialog"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:cardCornerRadius="3dp"
-                app:cardElevation="@dimen/margin_5_dp"
-                app:contentPaddingBottom="@dimen/margin_20_dp"
-                app:contentPaddingLeft="@dimen/margin_15_dp"
-                app:contentPaddingRight="@dimen/margin_35_dp"
-                app:contentPaddingTop="@dimen/margin_15_dp"
-                tools:visibility="gone">
-
-                <TextView
-                    android:id="@+id/itemSaleUserOptionsReportSaleTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/item_sale_user_options_report_sale"
-                    android:textAppearance="@style/TextAppearance.Regular"
-                    android:textColor="@color/gray_4A4A4A"
-                    android:textSize="@dimen/text_size_14_sp" />
-
-                <TextView
-                    android:id="@+id/itemSaleUserOptionsBlockUserTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_30_dp"
-                    android:text="@string/item_sale_user_options_block_user"
-                    android:textAppearance="@style/TextAppearance.Regular"
-                    android:textColor="@color/gray_4A4A4A"
-                    android:textSize="@dimen/text_size_14_sp" />
-
-            </android.support.v7.widget.CardView>
         </RelativeLayout>
     </android.support.constraint.ConstraintLayout>
 

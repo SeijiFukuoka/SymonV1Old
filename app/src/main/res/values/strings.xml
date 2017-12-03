@@ -68,6 +68,7 @@
     <string name="welcome_continue_with_email_text">Continuar com email</string>
 
     <string name="item_sale_sponsored_label">Patrocinado</string>
+    <string name="item_sale_mine_label">Sua promo</string>
     <string name="item_sale_dislike_sale_image_content_description">imageSaleDislike</string>
     <string name="item_sale_like_sale_image_content_description">imageSaleLike</string>
     <string name="item_sale_user_avatar_image_content_description">imageUserAvatar</string>

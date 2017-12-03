@@ -5,11 +5,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="popupMenuStyle">@style/MyPopupMenu</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="popupMenuStyle">@style/MyPopupMenu</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
@@ -110,4 +112,7 @@
         <item name="searchHintIcon">@null</item>
     </style>
 
+    <style name="MyPopupMenu" parent="@style/Widget.AppCompat.PopupMenu">
+        <!--<item name="android:dropDownHorizontalOffset">-180dp</item>-->
+    </style>
 </resources>

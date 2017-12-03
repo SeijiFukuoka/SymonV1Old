@@ -2,10 +2,13 @@ package br.com.symon.ui
 
 import android.annotation.SuppressLint
 import android.support.v4.content.res.ResourcesCompat
+import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import br.com.symon.R
+import br.com.symon.common.dpToPixels
 import br.com.symon.common.inflate
 import br.com.symon.common.loadUrl
 import br.com.symon.common.loadUrlToBeRounded
@@ -13,6 +16,7 @@ import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
 import kotlinx.android.synthetic.main.item_sale.view.*
 import java.util.*
+
 
 class SalesAdapter(private val list: MutableList<Sale>,
                    private val currentUser: User,
@@ -82,16 +86,25 @@ class SalesAdapter(private val list: MutableList<Sale>,
         fun bind(sale: Sale, position: Int, currentUser: User) = with(itemView) {
             with(sale) {
 
+                if (currentUser.id == sale.user.id) {
+                    itemSaleCardLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_item_sale_label_mine, null)
+                    itemSaleMineSponsoredLabelTextView.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_item_sale_label_mine, null)
+                    itemSaleMineSponsoredLabelTextView.setTextColor(ResourcesCompat.getColor(resources, R.color.gray_737373, null))
+                    var padding = dpToPixels(resources.getDimension(R.dimen.margin_2_dp))
+                    itemSaleCardLayout.setPadding(padding, padding, padding, padding)
+                    itemSaleMineSponsoredLabelTextView.text = resources.getString(R.string.item_sale_mine_label)
+                    itemSaleMineSponsoredLabelTextView.visibility = View.VISIBLE
+                } else {
+                    itemSaleCardLayout.background = ResourcesCompat.getDrawable(resources, R.color.orange_F5A623, null)
+                    itemSaleCardLayout.setPadding(0, 0, 0, 0)
+                    itemSaleMineSponsoredLabelTextView.visibility = View.GONE
+                }
                 //                TODO("Aguardando resposta na API")
 //                if (isSponsored!!) {
 //                    itemSaleCardLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_item_sale_label_sponsored, null)
 //                    var padding = dpToPixels(resources.getDimension(R.dimen.margin_3_dp))
 //                    itemSaleCardLayout.setPadding(padding, padding, padding, padding)
 //                    itemSaleSponsoredLabelTextView.visibility = View.VISIBLE
-//                } else {
-                itemSaleCardLayout.background = ResourcesCompat.getDrawable(resources, R.color.orange_F5A623, null)
-                itemSaleCardLayout.setPadding(0, 0, 0, 0)
-                itemSaleSponsoredLabelTextView.visibility = View.GONE
 //                }
 
                 with(itemSaleImageView) {
@@ -120,10 +133,6 @@ class SalesAdapter(private val list: MutableList<Sale>,
                 itemSaleImageView.setOnClickListener { listener.onSaleImageClick(sale) }
                 itemSaleLikeLayout.setOnClickListener { listener.onLikeSaleClick(position, sale) }
                 itemSaleDislikeLayout.setOnClickListener { listener.onDislikeSaleClick(position, sale) }
-                itemSaleUserOptionsReportSaleTextView.setOnClickListener {
-                    itemSaleUserOptionsCardView.visibility = View.GONE
-                    listener.onReportSaleClick(sale)
-                }
             }
 
             with(sale.user)
@@ -133,15 +142,27 @@ class SalesAdapter(private val list: MutableList<Sale>,
                 }
 
                 itemSaleUserNameTextView.text = sale.user.name
-                itemSaleUserOptionsImageView.setOnClickListener { itemSaleUserOptionsCardView.visibility = View.VISIBLE }
-                itemSaleUserOptionsBlockUserTextView.setOnClickListener {
-                    itemSaleUserOptionsCardView.visibility = View.GONE
-                    listener.onBlockUserClick(sale.user)
-                }
-            }
+                itemSaleUserOptionsImageView.setOnClickListener {
+                    val popup = PopupMenu(context, itemSaleUserOptionsImageView, Gravity.TOP)
+                    popup.inflate(R.menu.user_options_menu)
 
-            if (currentUser.id == sale.user.id) {
-                itemSaleUserOptionsBlockUserTextView.visibility = View.GONE
+                    if (currentUser.id == sale.user.id) {
+                        popup.menu.getItem(1).isVisible = false
+                    }
+
+                    popup.setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.userOptionsMenuReportSale -> {
+                                listener.onReportSaleClick(sale)
+                            }
+                            R.id.userOptionsMenuBlockUser -> {
+                                listener.onBlockUserClick(sale.user)
+                            }
+                        }
+                        false
+                    }
+                    popup.show()
+                }
             }
         }
     }
