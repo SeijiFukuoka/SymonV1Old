@@ -1,6 +1,8 @@
 package br.com.symon.ui.sales
 
 import br.com.gold360.financas.common.GeneralErrorHandler
+import br.com.symon.data.model.requests.BlockUserRequest
+import br.com.symon.data.model.requests.SaleReportRequest
 import br.com.symon.data.repository.SaleRepository
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.FragmentScope
@@ -58,5 +60,23 @@ class SalesPresenter @Inject constructor(val view: SalesContract.View, private v
                     GeneralErrorHandler(it, view, {})
                 })
 
+    }
+
+    override fun reportSale(userToken: String?, saleReportRequest: SaleReportRequest?) {
+        saleRepository.reportSale(saleReportRequest, userToken)
+                .subscribe({
+                    view.showReportSaleResponse()
+                }, {
+                    GeneralErrorHandler(it, view, {})
+                })
+    }
+
+    override fun blockUser(userToken: String?, userBlockedId: BlockUserRequest?) {
+        userRepository.blockUSer(userToken, userBlockedId)
+                .subscribe({
+                    view.showBlockUserResponse()
+                }, {
+                    GeneralErrorHandler(it, view, {})
+                })
     }
 }

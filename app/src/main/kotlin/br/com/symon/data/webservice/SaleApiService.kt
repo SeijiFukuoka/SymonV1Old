@@ -1,6 +1,7 @@
 package br.com.symon.data.webservice
 
 import br.com.symon.data.model.Sale
+import br.com.symon.data.model.requests.SaleReportRequest
 import br.com.symon.data.model.responses.SalesListResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -40,4 +41,7 @@ interface SaleApiService {
 
     @GET("/sale/search/{query}")
     fun searchSale(@Path("query") query: String, @Header("Authorization") userToken: String): Observable<MutableList<Sale>>
+
+    @POST("/sale/report")
+    fun reportSale(@Header("Authorization") userToken: String?, @Body saleReportRequest: SaleReportRequest?): Observable<Response<Void>>
 }

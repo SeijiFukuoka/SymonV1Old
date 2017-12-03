@@ -20,6 +20,8 @@ import br.com.symon.data.model.Constants.Companion.SEEK_BAR_MAX
 import br.com.symon.data.model.Constants.Companion.SEEK_BAR_MIN
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
+import br.com.symon.data.model.requests.BlockUserRequest
+import br.com.symon.data.model.requests.SaleReportRequest
 import br.com.symon.data.model.responses.SalesListResponse
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSalesFragmentComponent
@@ -133,11 +135,11 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     override fun onReportSaleClick(sale: Sale) {
-        activity.toast("Report Sale - ${sale.message}")
+        salesFragmentComponent.salesPresenter().reportSale(user?.token, saleReportRequest = SaleReportRequest(sale.id))
     }
 
-    override fun onBlockUserClick(user: User) {
-        activity.toast("Report Sale - ${user.name}")
+    override fun onBlockUserClick(blockUser: User) {
+        salesFragmentComponent.salesPresenter().blockUser(user?.token, userBlockedId = BlockUserRequest(blockUser.id))
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) =
@@ -185,6 +187,14 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
             activity.toast("Nenhum resultado encontrado para a palavra $extraSearchQuery")
         }
         hideLoading()
+    }
+
+    override fun showReportSaleResponse() {
+        activity.toast("showReportSaleResponse")
+    }
+
+    override fun showBlockUserResponse() {
+        activity.toast("showBlockUserResponse")
     }
 
     private fun setUpRecyclersViews() {

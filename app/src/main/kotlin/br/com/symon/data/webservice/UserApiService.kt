@@ -1,6 +1,7 @@
 package br.com.symon.data.webservice
 
 import br.com.symon.data.model.User
+import br.com.symon.data.model.requests.BlockUserRequest
 import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.data.model.requests.UserUpdateRequest
@@ -46,4 +47,7 @@ interface UserApiService {
 
     @POST("/user/retrievePassword/{user_email}")
     fun retrievePassword(@Path("user_email") userEmail: String?): Observable<Response<Void>>
+
+    @POST("/user/block")
+    fun blockUser(@Header("Authorization") userToken: String?, @Body userBlockedId: BlockUserRequest?): Observable<Response<Void>>
 }

@@ -2,6 +2,7 @@ package br.com.symon.data.repository
 
 import br.com.symon.base.BaseRepository
 import br.com.symon.data.model.Sale
+import br.com.symon.data.model.requests.SaleReportRequest
 import br.com.symon.data.webservice.SaleApiService
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -20,4 +21,5 @@ class SaleRepository @Inject constructor(private val saleApiService: SaleApiServ
     fun disLikeSale(saleId: Int, userToken: String) = call(saleApiService.disLikeSale(saleId, userToken))
 
     fun searchSale(query: String, userToken: String) = call(saleApiService.searchSale(query, userToken))
+    fun reportSale(saleReportRequest: SaleReportRequest?, userToken: String?) = call(saleApiService.reportSale(userToken, saleReportRequest))
 }
