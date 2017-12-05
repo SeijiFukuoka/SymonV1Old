@@ -122,12 +122,10 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
 
     override fun onLikeSaleClick(position: Int, sale: Sale) {
         salesFragmentComponent.salesPresenter().likeSale(position, sale.id!!, user?.token!!)
-        activity.toast("onLikeSaleClick")
     }
 
     override fun onDislikeSaleClick(position: Int, sale: Sale) {
         salesFragmentComponent.salesPresenter().disLikeSale(position, sale.id!!, user?.token!!)
-        activity.toast("onDislikeSaleClick")
     }
 
     override fun onReportSaleClick(sale: Sale) {
