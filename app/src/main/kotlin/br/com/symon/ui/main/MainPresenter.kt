@@ -13,8 +13,8 @@ class MainPresenter @Inject constructor(val view: MainContract.View, private val
         }
     }
 
-    override fun searchSales(query: String, userToken: String) {
-        saleRepository.searchSale(query, userToken)
+    override fun searchSales(userToken: String, query: String, page: Int, pageSize: Int) {
+        saleRepository.searchSale(userToken, query, page, pageSize)
                 .subscribe {
                     view.showSearchResults(it)
                 }

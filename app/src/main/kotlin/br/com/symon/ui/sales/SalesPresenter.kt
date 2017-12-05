@@ -52,14 +52,13 @@ class SalesPresenter @Inject constructor(val view: SalesContract.View, private v
                 })
     }
 
-    override fun searchQuerySale(userToken: String, query: String) {
-        saleRepository.searchSale(query, userToken)
+    override fun searchQuerySale(query: String, userToken: String, page: Int, pageSize: Int) {
+        saleRepository.searchSale(query, userToken, page, pageSize)
                 .subscribe({
                     view.showSearchSales(it)
                 }, {
                     GeneralErrorHandler(it, view, {})
                 })
-
     }
 
     override fun reportSale(userToken: String?, saleReportRequest: SaleReportRequest?) {

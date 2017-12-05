@@ -1,4 +1,4 @@
-package br.com.symon.ui
+package br.com.symon.ui.sales
 
 import android.annotation.SuppressLint
 import android.support.v4.content.res.ResourcesCompat

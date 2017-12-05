@@ -13,7 +13,7 @@ import br.com.symon.base.BaseActivity
 import br.com.symon.common.isDisplayedByTag
 import br.com.symon.common.replace
 import br.com.symon.common.toast
-import br.com.symon.data.model.Sale
+import br.com.symon.data.model.responses.SalesListResponse
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerMainActivityComponent
 import br.com.symon.injection.components.MainActivityComponent
@@ -91,9 +91,9 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         this.user = user
     }
 
-    override fun showSearchResults(searchResults: MutableList<Sale>) {
-        if (searchResults.size > 0)
-            toast("Resultados da procura = ${searchResults.get(0)} ")
+    override fun showSearchResults(salesListResponse: SalesListResponse) {
+        if (salesListResponse.salesList.size > 0)
+            toast("Resultados da procura = ${salesListResponse.salesList.get(0)} ")
         else
             toast("Nenhum resultado encontrado")
     }

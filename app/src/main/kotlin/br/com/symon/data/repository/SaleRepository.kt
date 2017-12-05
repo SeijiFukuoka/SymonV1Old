@@ -20,6 +20,6 @@ class SaleRepository @Inject constructor(private val saleApiService: SaleApiServ
     fun likeSale(saleId: Int, userToken: String) = call(saleApiService.likeSale(saleId, userToken))
     fun disLikeSale(saleId: Int, userToken: String) = call(saleApiService.disLikeSale(saleId, userToken))
 
-    fun searchSale(query: String, userToken: String) = call(saleApiService.searchSale(query, userToken))
+    fun searchSale(userToken: String, query: String, page: Int, pageSize: Int) = call(saleApiService.searchSale(userToken, query, page, pageSize))
     fun reportSale(saleReportRequest: SaleReportRequest?, userToken: String?) = call(saleApiService.reportSale(userToken, saleReportRequest))
 }

@@ -12,7 +12,6 @@ import br.com.symon.R
 import br.com.symon.base.BaseFragment
 import br.com.symon.common.inflate
 import br.com.symon.common.toast
-import br.com.symon.common.whenNotNullNorEmpty
 import br.com.symon.common.widget.EndlessScrollListener
 import br.com.symon.data.model.Constants
 import br.com.symon.data.model.Constants.Companion.FIRST_PAGE
@@ -27,7 +26,6 @@ import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSalesFragmentComponent
 import br.com.symon.injection.components.SalesFragmentComponent
 import br.com.symon.injection.modules.SalesFragmentModule
-import br.com.symon.ui.SalesAdapter
 import kotlinx.android.synthetic.main.fragment_sales.*
 import java.util.*
 
@@ -71,49 +69,47 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         if (arguments != null && arguments.getString(EXTRA_SEARCH_QUERY) != null)
             extraSearchQuery = arguments.getString(EXTRA_SEARCH_QUERY)
+
         showLoading()
         setUpRecyclersViews()
         getUser()
         setUpSeekBar()
 
         salesFragmentSalesSearchCloseTextView.setOnClickListener {
-            showLoading()
-            salesFragmentSalesSearchHeaderLayout.visibility = View.GONE
-            salesFragmentSalesRecyclerView.visibility = View.GONE
-            fetchData(FIRST_PAGE)
+            resetSaleData()
         }
 
         salesFragmentSalesSearchCloseImageView.setOnClickListener {
-            showLoading()
-            salesFragmentSalesSearchHeaderLayout.visibility = View.GONE
-            salesFragmentSalesRecyclerView.visibility = View.GONE
-            fetchData(FIRST_PAGE)
+            resetSaleData()
         }
     }
 
     override fun setUser(userTokenResponse: UserTokenResponse) {
         user = userTokenResponse
         if (extraSearchQuery!!.isNotEmpty()) {
-            fetchSearchQuery()
+            fetchSearchQuery(Constants.FIRST_PAGE)
         } else {
             fetchData(Constants.FIRST_PAGE)
         }
     }
 
     override fun showSales(salesListResponse: SalesListResponse) {
-        salesListResponse.salesList.whenNotNullNorEmpty {
-            if (currentPage == Constants.FIRST_PAGE) {
-                salesAdapter = SalesAdapter(salesListResponse.salesList, user?.user!!, this)
-                salesFragmentSalesRecyclerView.adapter = salesAdapter
-                hideLoading()
-                salesFragmentSalesRecyclerView.visibility = View.VISIBLE
-            } else {
-                salesAdapter.addList(salesListResponse.salesList)
-            }
-            setRecyclerViewScrollListener(salesListResponse)
+        if (!salesListResponse.salesList.isEmpty()) {
+            setSalesAdapter(salesListResponse)
         }
+        hideLoading()
+    }
+
+    override fun showSearchSales(salesListResponse: SalesListResponse) {
+        if (!salesListResponse.salesList.isEmpty()) {
+            setSalesAdapter(salesListResponse)
+        } else {
+            activity.toast("Nenhum resultado encontrado para a palavra $extraSearchQuery")
+        }
+        hideLoading()
     }
 
     override fun updateActionSAle(position: Int, isLike: Boolean) {
@@ -173,22 +169,6 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
     }
 
-    override fun showSearchSales(salesList: MutableList<Sale>) {
-        if (salesList.isNotEmpty()) {
-            if (currentPage == Constants.FIRST_PAGE) {
-                salesAdapter = SalesAdapter(salesList, user?.user!!, this)
-                salesFragmentSalesRecyclerView.adapter = salesAdapter
-                hideLoading()
-                salesFragmentSalesRecyclerView.visibility = View.VISIBLE
-            } else {
-                salesAdapter.addList(salesList)
-            }
-        } else {
-            activity.toast("Nenhum resultado encontrado para a palavra $extraSearchQuery")
-        }
-        hideLoading()
-    }
-
     override fun showReportSaleResponse() {
         activity.toast("showReportSaleResponse")
     }
@@ -223,21 +203,48 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         )
     }
 
-    private fun fetchSearchQuery() {
+    private fun fetchSearchQuery(page: Int) {
         salesFragmentSalesSearchHeaderLayout.visibility = View.VISIBLE
         salesFragmentSalesSearchQueryTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_search_query_formatted), extraSearchQuery)
-        salesFragmentComponent.salesPresenter().searchQuerySale(user?.token!!, extraSearchQuery!!)
+        salesFragmentComponent.salesPresenter().searchQuerySale(user?.token!!, extraSearchQuery!!,
+                if (page > 1) page else Constants.FIRST_PAGE,
+                Constants.RESULTS_PER_PAGE
+        )
+    }
+
+    private fun setSalesAdapter(salesListResponse: SalesListResponse) {
+        if (currentPage == Constants.FIRST_PAGE) {
+            salesAdapter = SalesAdapter(salesListResponse.salesList, user?.user!!, this)
+            salesFragmentSalesRecyclerView.adapter = salesAdapter
+            salesFragmentSalesRecyclerView.visibility = View.VISIBLE
+        } else {
+            salesAdapter.addList(salesListResponse.salesList)
+        }
+        setRecyclerViewScrollListener(salesListResponse)
     }
 
     private fun setRecyclerViewScrollListener(salesListResponse: SalesListResponse) {
         salesFragmentSalesRecyclerView.addOnScrollListener(EndlessScrollListener({
             if (currentPage < salesListResponse.totalPages) {
                 currentPage++
-                fetchData(currentPage)
+                if (extraSearchQuery!!.isNotEmpty()) {
+                    fetchSearchQuery(currentPage)
+                } else {
+                    fetchData(currentPage)
+                }
+
             }
         }, linearLayoutManager))
     }
 
     private fun getRangeFilterText(): String =
             String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), salesFragmentHeaderRangeSeekBar.progress)
+
+    private fun resetSaleData() {
+        showLoading()
+        salesFragmentSalesSearchHeaderLayout.visibility = View.GONE
+        salesFragmentSalesRecyclerView.visibility = View.GONE
+        extraSearchQuery = ""
+        fetchData(FIRST_PAGE)
+    }
 }
