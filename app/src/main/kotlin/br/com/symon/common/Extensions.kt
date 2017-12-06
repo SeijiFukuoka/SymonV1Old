@@ -4,12 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.support.annotation.DrawableRes
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory
 import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -19,20 +16,20 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.BitmapImageViewTarget
+import com.bumptech.glide.request.RequestOptions
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
 
 
-fun isDisplayedByTag(activity: AppCompatActivity, fragmentTag: String): Boolean {
-    val fragment = activity.supportFragmentManager.findFragmentByTag(fragmentTag)
+fun AppCompatActivity.isDisplayedByTag(fragmentTag: String): Boolean {
+    val fragment = this.supportFragmentManager.findFragmentByTag(fragmentTag)
     return fragment != null && fragment.isVisible
 }
 
-fun replace(activity: FragmentActivity, @IdRes id: Int, fragment: Fragment) {
-    activity.supportFragmentManager
+fun FragmentActivity.replace(@IdRes id: Int, fragment: Fragment) {
+    this.supportFragmentManager
             .beginTransaction()
             .replace(id, fragment, fragment.javaClass.canonicalName)
             .commit()
@@ -70,15 +67,13 @@ fun ImageView.loadUrl(url: String?) {
     Glide.with(context).load(url).into(this)
 }
 
-fun ImageView.loadUrlWithCircularImage(url: String?, @DrawableRes placeHolder: Int) = Glide.with(context)
-        .load(url)
-        .asBitmap()
-        .centerCrop()
-        .error(placeHolder)
-        .into(object : BitmapImageViewTarget(this) {
-            override fun setResource(resource: Bitmap) {
-                val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, resource)
-                circularBitmapDrawable.isCircular = true
-                this@loadUrlWithCircularImage.setImageDrawable(circularBitmapDrawable)
-            }
-        })
+fun ImageView.loadUrlToBeRounded(url: String?) {
+    Glide.with(context).load(url).apply(RequestOptions.circleCropTransform()).into(this)
+}
+
+fun String.isEmailValid(): Boolean {
+    val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
+    val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
+    val matcher = pattern.matcher(this)
+    return matcher.matches()
+}

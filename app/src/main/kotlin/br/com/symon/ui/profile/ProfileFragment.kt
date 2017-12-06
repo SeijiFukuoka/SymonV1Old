@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import br.com.symon.R
 import br.com.symon.base.BaseFragment
 import br.com.symon.common.inflate
-import br.com.symon.common.loadUrlWithCircularImage
+import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.startIntent
 import br.com.symon.data.model.User
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -47,7 +47,7 @@ class ProfileFragment: BaseFragment() {
 
         user?.apply {
             profileNameTextView.text = name
-            profileImageView.loadUrlWithCircularImage(photoUri, R.drawable.ic_profile_placeholder)
+            profileImageView.loadUrlToBeRounded(photoUri)
         }
 
         profileEditTextView.setOnClickListener {

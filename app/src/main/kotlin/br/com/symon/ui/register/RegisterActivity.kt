@@ -4,6 +4,7 @@ import android.os.Bundle
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
+import br.com.symon.common.isEmailValid
 import br.com.symon.common.toast
 import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.injection.components.DaggerRegisterComponent
@@ -11,17 +12,16 @@ import br.com.symon.injection.components.RegisterComponent
 import br.com.symon.injection.modules.RegisterActivityModule
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
-import java.util.regex.Pattern
 
 
 class RegisterActivity : BaseActivity(), RegisterContract.View {
 
     private val registerComponent: RegisterComponent
-    get() = DaggerRegisterComponent
-            .builder()
-            .applicationComponent((this.application as CustomApplication).applicationComponent)
-            .registerActivityModule(RegisterActivityModule(this))
-            .build()
+        get() = DaggerRegisterComponent
+                .builder()
+                .applicationComponent((this.application as CustomApplication).applicationComponent)
+                .registerActivityModule(RegisterActivityModule(this))
+                .build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,7 @@ class RegisterActivity : BaseActivity(), RegisterContract.View {
 
         registerEmailEditText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                if (!isEmailValid(registerEmailEditText.text.toString())) {
+                if (!registerEmailEditText.text.toString().isEmailValid()) {
                     registerEmailTextInput.isErrorEnabled = true
                     registerEmailTextInput.error = getString(R.string.register_email_invalid_msg)
                 }
@@ -50,7 +50,7 @@ class RegisterActivity : BaseActivity(), RegisterContract.View {
 
         registerContinueButton.setOnClickListener {
 
-            if (isEmailValid(registerEmailEditText.text.toString())) {
+            if (registerEmailEditText.text.toString().isEmailValid()) {
 
                 registerEmailTextInput.isErrorEnabled = false
 
@@ -77,12 +77,5 @@ class RegisterActivity : BaseActivity(), RegisterContract.View {
 
     override fun showError(message: Int) {
         toast(getString(message))
-    }
-
-    private fun isEmailValid(email: String): Boolean {
-        val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
-        val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
-        val matcher = pattern.matcher(email)
-        return matcher.matches()
     }
 }

@@ -10,9 +10,9 @@
     <string name="general_email">E-mail</string>
     <string name="general_save">Salvar</string>
     <string name="general_continue_lower_case">Continuar</string>
-    <string name="general_password_hint">Digite sua senha</string>
     <string name="general_required_field">Campo obrigatório</string>
     <string name="general_permissions_message">Por favor libere as permissões de acesso ;)</string>
+    <string name="general_password_hint">Digite sua senha</string>
     <string name="general_cancel">Cancelar</string>
 
     <string name="fb_login_protocol_scheme">fb1548485508507561</string>
@@ -58,6 +58,8 @@
     <string name="register_confirm_login">Confirmar login</string>
     <string name="register_email_invalid_msg">E-mail invalido</string>
 
+    <string name="confirm_action_login">Login realizado!\nConsulte e publique ofertas ;)</string>
+
     <string name="welcome_facebook_button">Entre com o Facebook</string>
     <string name="welcome_title">Bem-vindo(a) ao</string>
     <string name="welcome_message">Compartilhe\ne consulte ofertas reais</string>
@@ -65,11 +67,13 @@
     <string name="welcome_continue_with_email_text">Continuar com email</string>
 
     <string name="item_sale_sponsored_label">Patrocinado</string>
+    <string name="item_sale_mine_label">Sua promo</string>
     <string name="item_sale_dislike_sale_image_content_description">imageSaleDislike</string>
     <string name="item_sale_like_sale_image_content_description">imageSaleLike</string>
     <string name="item_sale_user_avatar_image_content_description">imageUserAvatar</string>
     <string name="item_sale_image_sale_image_content_description">imageSale</string>
     <string name="item_sale_user_options_image_content_description">imageUserOptions</string>
+    <string name="item_sale_price_formatted">R$ %.2f</string>
 
     <string name="settings_toolbar_title">Configurações</string>
     <string name="settings_notification_label">Notificações</string>
@@ -79,7 +83,7 @@
     <string name="settings_complaints_label">Denúncias</string>
     <string name="settings_blocked_users_label">Usuários bloqueados</string>
     <string name="settings_blocked_users_right_arrow_image_content_description">settingsBlockedUsersArrowImageView</string>
-    
+
     <string name="profile_edit_label">Editar perfil</string>
     <string name="profile_my_posts_label">Minhas publicações</string>
     <string name="profile_message">Publique sua primeira oferta acessando a opção “Enviar” abaixo.</string>
@@ -92,6 +96,22 @@
     <string name="profile_data_updated_success">dados atualizados com sucesso =)</string>
     <string name="profile_facebook_connect">Conectar com Facebook</string>
     <string name="profile_facebook_disconnect">Facebook Conectado</string>
+
+    <string name="retrieve_password_text_input_label">Recupere sua senha</string>
+    <string name="retrieve_password_text_input_hint">Confirmar e-mail cadastrado</string>
+    <string name="retrieve_password_text_button">Enviar nova senha</string>
+    <string name="retrieve_password_text_confirm_action">Verifique seu e-mail e insira\nsua nova senha abaixo</string>
+
+    <string name="main_brand_logo_image_view_content_description">mainBrandImageView</string>
+
+    <string name="sales_fragment_range_filter_text_formatted">%2dkm</string>
+    <string name="sales_fragment_search_label">Você buscou por: </string>
+    <string name="sales_fragment_search_query_formatted">""\"%s"\""</string>
+    <string name="sales_fragment_search_clen_label">Limpar</string>
+    <string name="action_search">Search</string>
+
+    <string name="item_sale_user_options_report_sale">Denunciar oferta</string>
+    <string name="item_sale_user_options_block_user">Bloquear usuário</string>
 
     <string name="menu_settings">Configurações</string>
     <string name="menu_search">Buscar</string>

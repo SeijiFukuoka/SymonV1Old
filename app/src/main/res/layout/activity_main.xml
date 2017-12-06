@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:fitsSystemWindows="true"
-    tools:context="br.com.symon.ui.MainActivity">
+    tools:context="br.com.symon.ui.main.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/mainAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -24,7 +26,21 @@
             <ImageView
                 android:id="@+id/mainBrandImageView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/main_brand_logo_image_view_content_description"
+                android:paddingEnd="@dimen/margin_10_dp"
+                android:paddingLeft="@dimen/margin_10_dp"
+                android:paddingRight="@dimen/margin_10_dp"
+                android:paddingStart="@dimen/margin_10_dp"
+                app:srcCompat="@drawable/ic_symon_logo_toolbar_image" />
+
+            <android.support.v7.widget.SearchView
+                android:id="@+id/mainActivitySearchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:theme="@style/SearchViewTheme"
+                app:queryHint="O que está procurando ? " />
 
         </android.support.v7.widget.Toolbar>
 

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:id="@+id/salesFragmentHeaderLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_20_dp">
+
+        <TextView
+            android:id="@+id/salesFragmentHeaderRangeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:lineSpacingExtra="5sp"
+            android:textAppearance="@style/TextAppearance.Bold"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_10_sp"
+            android:textStyle="bold"
+            tools:text="5km" />
+
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/salesFragmentHeaderRangeSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/margin_10_dp"
+            android:layout_marginLeft="@dimen/margin_10_dp"
+            android:layout_marginRight="@dimen/margin_10_dp"
+            android:layout_marginStart="@dimen/margin_10_dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/salesFragmentHeaderRangeImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_range_filter_low" />
+
+    </LinearLayout>
+
+    <br.com.symon.common.widget.ConfirmActionView
+        android:id="@+id/salesFragmentConfirmActionView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/salesFragmentHeaderLinearLayout"
+        android:visibility="gone"
+        tools:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/salesFragmentSalesSearchHeaderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/salesFragmentHeaderLinearLayout"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_20_dp"
+        android:paddingEnd="@dimen/margin_25_dp"
+        android:paddingLeft="@dimen/margin_25_dp"
+        android:paddingRight="@dimen/margin_25_dp"
+        android:paddingStart="@dimen/margin_25_dp"
+        android:paddingTop="@dimen/margin_20_dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/salesFragmentSalesSearchLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/sales_fragment_search_label"
+            android:textAppearance="@style/TextAppearance.Bold"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_14_sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/salesFragmentSalesSearchQueryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_5_dp"
+            android:layout_marginStart="@dimen/margin_5_dp"
+            android:layout_toEndOf="@id/salesFragmentSalesSearchLabelTextView"
+            android:layout_toRightOf="@id/salesFragmentSalesSearchLabelTextView"
+            android:textAppearance="@style/TextAppearance.Regular"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_14_sp"
+            tools:text="\u0022Breja\u0022" />
+
+        <TextView
+            android:id="@+id/salesFragmentSalesSearchCloseTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_5_dp"
+            android:layout_marginRight="@dimen/margin_5_dp"
+            android:layout_toLeftOf="@id/salesFragmentSalesSearchCloseImageView"
+            android:layout_toStartOf="@id/salesFragmentSalesSearchCloseImageView"
+            android:text="@string/sales_fragment_search_clen_label"
+            android:textAppearance="@style/TextAppearance.Regular"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_14_sp"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@+id/salesFragmentSalesSearchCloseImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/margin_5_dp"
+            app:srcCompat="@drawable/ic_close_white" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/salesFragmentSalesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/salesFragmentSalesSearchHeaderLayout" />
+
+</RelativeLayout>

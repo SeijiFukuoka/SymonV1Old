@@ -5,6 +5,7 @@ import android.widget.Toast
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
+import br.com.symon.common.isEmailValid
 import br.com.symon.common.startIntent
 import br.com.symon.data.model.responses.CheckUserResponse
 import br.com.symon.injection.components.DaggerLoginActivityComponent
@@ -13,7 +14,6 @@ import br.com.symon.injection.modules.LoginActivityModule
 import br.com.symon.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
-import java.util.regex.Pattern
 
 class LoginActivity : BaseActivity(), LoginContract.View {
 
@@ -33,13 +33,15 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         supportActionBar?.setDisplayShowHomeEnabled(false)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        loginViewHeaderProgress.bind(1)
+
         customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }
 
         loginEmailEditText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                if (!isEmailValid(loginEmailEditText.text.toString())) {
+                if (!loginEmailEditText.text.toString().isEmailValid()) {
                     loginEmailTextInputLayout.isErrorEnabled = true
                     loginEmailTextInputLayout.error = getString(R.string.login_email_invalid_msg)
                 }
@@ -49,7 +51,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         }
 
         loginDoLoginButton.setOnClickListener({
-            if (isEmailValid(loginEmailEditText.text.toString())) {
+            if (loginEmailEditText.text.toString().isEmailValid()) {
                 loginEmailTextInputLayout.isErrorEnabled = false
 
                 loginComponent.loginPresenter().checkUser(loginEmailEditText.text.toString())
@@ -66,18 +68,11 @@ class LoginActivity : BaseActivity(), LoginContract.View {
 
     override fun handleCheckResponse(checkResponse: CheckUserResponse) {
         if (checkResponse.exists!!) {
-            val recipeDetailActivity = LoginConfirmationActivity.newIntent(this,
+            val loginConfirmationActivity = LoginConfirmationActivity.newIntent(this,
                     loginEmailEditText.text.toString())
-            startActivity(recipeDetailActivity)
+            startActivity(loginConfirmationActivity)
         } else {
             Toast.makeText(this, "usuário não encontrado", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun isEmailValid(email: String): Boolean {
-        val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
-        val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
-        val matcher = pattern.matcher(email)
-        return matcher.matches()
     }
 }

@@ -11,7 +11,7 @@ import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSplashActivityComponent
 import br.com.symon.injection.components.SplashActivityComponent
 import br.com.symon.injection.modules.SplashActivityModule
-import br.com.symon.ui.MainActivity
+import br.com.symon.ui.main.MainActivity
 import br.com.symon.ui.welcome.WelcomeActivity
 
 class SplashActivity : AppCompatActivity(), SplashContract.View {

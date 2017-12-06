@@ -15,7 +15,7 @@ import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.dateFormat
 import br.com.symon.common.hideKeyboard
-import br.com.symon.common.loadUrlWithCircularImage
+import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.toast
 import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
@@ -173,13 +173,13 @@ class ProfileActivity : BaseActivity(),
     }
 
     override fun showPhoto(photo: String?) {
-        profileImageView.loadUrlWithCircularImage(photo, R.drawable.ic_profile_placeholder)
+        profileImageView.loadUrlToBeRounded(photo)
     }
 
     override fun showUserData(user: User?) {
         this.user = user
         user?.apply {
-            profileImageView.loadUrlWithCircularImage(photoUri, R.drawable.ic_profile_placeholder)
+            profileImageView.loadUrlToBeRounded(photoUri)
             profileNameEditText.setText(name)
             profileEmailEditText.setText(email)
             profilePhoneEditText.setText(phone)

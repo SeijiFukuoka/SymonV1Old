@@ -2,6 +2,7 @@ package br.com.symon.data.repository
 
 import br.com.symon.base.BaseRepository
 import br.com.symon.data.cache.UserCacheManagerImpl
+import br.com.symon.data.model.requests.BlockUserRequest
 import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.data.model.requests.UserFullUpdateRequest
@@ -46,4 +47,8 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
 
     fun uploadUserPhoto(userId: Int, photo: MultipartBody.Part)
             = call(userApiService.uploadUserPhoto(userId, photo))
+
+    fun retrievePassword(userEmail: String) = call(userApiService.retrievePassword(userEmail))
+
+    fun blockUSer(userToken: String?, userBlockedId: BlockUserRequest?) = call(userApiService.blockUser(userToken, userBlockedId))
 }

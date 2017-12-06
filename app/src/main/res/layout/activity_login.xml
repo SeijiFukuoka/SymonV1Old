@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <include
+    <br.com.symon.common.widget.HeaderProgressView
         android:id="@+id/loginViewHeaderProgress"
-        layout="@layout/view_header_progress" />
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_progress_view_height" />
 
     <include
         android:id="@+id/loginAppBarLayout"

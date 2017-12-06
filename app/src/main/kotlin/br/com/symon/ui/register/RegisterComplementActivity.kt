@@ -12,14 +12,14 @@ import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.dateFormat
 import br.com.symon.common.hideKeyboard
-import br.com.symon.common.loadUrlWithCircularImage
+import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.toast
 import br.com.symon.data.model.requests.UserUpdateRequest
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerRegisterComplementActivityComponent
 import br.com.symon.injection.components.RegisterComplementActivityComponent
 import br.com.symon.injection.modules.RegisterComplementActivityModule
-import br.com.symon.ui.MainActivity
+import br.com.symon.ui.main.MainActivity
 import com.github.vacxe.phonemask.PhoneMaskManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_register_complement.*
@@ -146,7 +146,7 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
     }
 
     override fun showPhoto(photo: String?) {
-        registerProfileImageView.loadUrlWithCircularImage(photo, R.drawable.ic_profile_placeholder)
+        photo?.let { registerProfileImageView.loadUrlToBeRounded(it) }
     }
 
     override fun goToMain(userTokenResponse: UserTokenResponse?) {

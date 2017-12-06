@@ -13,7 +13,7 @@ import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.injection.components.DaggerWelcomeActivityComponent
 import br.com.symon.injection.components.WelcomeActivityComponent
 import br.com.symon.injection.modules.WelcomeActivityModule
-import br.com.symon.ui.MainActivity
+import br.com.symon.ui.main.MainActivity
 import br.com.symon.ui.login.LoginActivity
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
