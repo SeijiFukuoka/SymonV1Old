@@ -3,6 +3,7 @@ package br.com.symon.data.webservice
 import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.UserAuthenticateRequest
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
+import br.com.symon.data.model.requests.UserFullUpdateRequest
 import br.com.symon.data.model.requests.UserUpdateRequest
 import br.com.symon.data.model.responses.CheckUserResponse
 import br.com.symon.data.model.responses.RegisterUserResponse
@@ -35,6 +36,10 @@ interface UserApiService {
     @PUT("/user/{user_id}")
     fun updateUser(@Path("user_id") userId: Int,
                    @Body userUpdateRequest: UserUpdateRequest): Observable<Response<UserTokenResponse>>
+
+    @PUT("/user/{user_id}")
+    fun updateFullUser(@Path("user_id") userId: Int,
+                   @Body userFullUpdateRequest: UserFullUpdateRequest): Observable<Response<UserTokenResponse>>
 
     @Multipart
     @POST("/user/photo/{user_id}")

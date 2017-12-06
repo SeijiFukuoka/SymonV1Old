@@ -15,7 +15,10 @@ import br.com.symon.injection.components.WelcomeActivityComponent
 import br.com.symon.injection.modules.WelcomeActivityModule
 import br.com.symon.ui.MainActivity
 import br.com.symon.ui.login.LoginActivity
-import com.facebook.*
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.GraphRequest
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.activity_welcome.*
@@ -49,8 +52,6 @@ class WelcomeActivity :
 
         callbackManager = CallbackManager.Factory.create()
         LoginManager.getInstance().registerCallback(callbackManager, this)
-
-        facebookLogout()
     }
 
     override fun redirectMainActivity(user: User) {
@@ -97,15 +98,5 @@ class WelcomeActivity :
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(
                 getString(R.string.facebook_permission_profile),
                 getString(R.string.facebook_permission_email)))
-    }
-
-    private fun facebookLogout() {
-        GraphRequest(AccessToken.getCurrentAccessToken(),
-                getString(R.string.facebook_permissions),
-                null,
-                HttpMethod.DELETE,
-                GraphRequest.Callback {
-
-                }).executeAsync()
     }
 }

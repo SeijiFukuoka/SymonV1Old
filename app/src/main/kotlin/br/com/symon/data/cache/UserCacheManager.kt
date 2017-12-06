@@ -4,7 +4,7 @@ import br.com.symon.data.model.responses.UserTokenResponse
 
 
 interface UserCacheManager {
-    fun save(user: UserTokenResponse?): io.reactivex.Observable<Unit>
+    fun save(userTokenResponse: UserTokenResponse?): io.reactivex.Observable<Unit>
 
     fun getUser(): io.reactivex.Observable<UserTokenResponse>
 

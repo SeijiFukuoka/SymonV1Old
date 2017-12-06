@@ -7,8 +7,8 @@ import br.com.symon.ui.register.RegisterComplementPresenter
 import dagger.Component
 
 @ActivityScope
-@Component(dependencies = arrayOf(ApplicationComponent::class),
-        modules = arrayOf(RegisterComplementActivityModule::class))
+@Component(dependencies = [(ApplicationComponent::class)],
+        modules = [(RegisterComplementActivityModule::class)])
 interface RegisterComplementActivityComponent {
     fun inject(registerComplementActivity: RegisterComplementActivity)
     fun registerComplementPresenter(): RegisterComplementPresenter

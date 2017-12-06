@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/viewHeaderProgress"
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -43,15 +43,16 @@
             <ImageView
                 android:id="@+id/registerProfileImageView"
                 style="@style/TextAppearance.Medium"
-                android:layout_width="133dp"
-                android:layout_height="133dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="@dimen/margin_30_dp"
-                android:background="@drawable/bg_profile_picture"
-                android:gravity="center"
+                android:adjustViewBounds="true"
+                android:background="@drawable/ic_profile_placeholder"
                 android:clickable="true"
                 android:focusable="true"
+                android:gravity="center"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

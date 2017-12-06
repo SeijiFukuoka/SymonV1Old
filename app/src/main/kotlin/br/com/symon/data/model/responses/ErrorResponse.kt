@@ -1,4 +1,6 @@
 package br.com.symon.data.model.responses
 
+import com.google.gson.annotations.SerializedName
 
-data class ErrorResponse(val error: String)
+
+data class ErrorResponse(@SerializedName("error") var error: String)

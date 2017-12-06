@@ -10,7 +10,7 @@ data class Sale(
         @SerializedName("value") var value: String?,
         @SerializedName("created_at") private var createdAt: String?,
         @SerializedName("updated_at") var updatedAt: String?,
-        @SerializedName("photo") var photo: Photo?,
+        @SerializedName("photoUri") var photo: Photo?,
         @SerializedName("isSponsored") var isSponsored: Boolean?,
         @SerializedName("isLiked") var isLiked: Boolean?,
         @SerializedName("isDisliked") var isDisliked: Boolean?
