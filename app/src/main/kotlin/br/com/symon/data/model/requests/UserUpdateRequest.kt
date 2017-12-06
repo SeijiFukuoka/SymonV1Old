@@ -5,6 +5,4 @@ import java.util.*
 
 data class UserUpdateRequest(@SerializedName("name") var name: String?,
                              @SerializedName("phone") var phone: String?,
-                             @SerializedName("birthday") var birthday: Date?,
-                             @SerializedName("currentPassword") var currentPassword: String? = null,
-                             @SerializedName("newPassword") val newPassword: String? = null)
+                             @SerializedName("birthday") var birthday: Date?)

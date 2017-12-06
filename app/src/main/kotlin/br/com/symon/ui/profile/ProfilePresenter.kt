@@ -2,7 +2,7 @@ package br.com.symon.ui.profile
 
 import android.net.Uri
 import br.com.gold360.financas.common.GeneralErrorHandler
-import br.com.symon.data.model.requests.UserUpdateRequest
+import br.com.symon.data.model.requests.UserFullUpdateRequest
 import br.com.symon.data.repository.FileRepository
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.ActivityScope
@@ -24,9 +24,9 @@ class ProfilePresenter @Inject constructor(private val view: ProfileContract.Vie
         }
     }
 
-    override fun updateUserInfo(userId: Int, userUpdateRequest: UserUpdateRequest) {
+    override fun updateUserInfo(userId: Int, userFullUpdateRequest: UserFullUpdateRequest) {
         view.showLoading()
-        userRepository.updateUser(userId, userUpdateRequest).subscribe({
+        userRepository.updateFullUser(userId, userFullUpdateRequest).subscribe({
             view.hideLoading()
             val userTokenResponse = it.body()
             userRepository.saveUserCache(userTokenResponse).subscribe({

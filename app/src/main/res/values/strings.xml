@@ -13,6 +13,7 @@
     <string name="general_password_hint">Digite sua senha</string>
     <string name="general_required_field">Campo obrigatório</string>
     <string name="general_permissions_message">Por favor libere as permissões de acesso ;)</string>
+    <string name="general_cancel">Cancelar</string>
 
     <string name="fb_login_protocol_scheme">fb1548485508507561</string>
     <string name="facebook_app_id">1548485508507561</string>
@@ -87,11 +88,12 @@
     <string name="profile_new_password_hint">Digite Nova senha</string>
     <string name="profile_confirm_new_password_hint">Confirme a nova senha</string>
     <string name="profile_change_password_label"><u>Alterar senha</u></string>
+    <string name="profile_password_not_match">As senhas não correspondem</string>
+    <string name="profile_data_updated_success">dados atualizados com sucesso =)</string>
+    <string name="profile_facebook_connect">Conectar com Facebook</string>
+    <string name="profile_facebook_disconnect">Facebook Conectado</string>
 
     <string name="menu_settings">Configurações</string>
     <string name="menu_search">Buscar</string>
-    <string name="profile_password_not_match">As senhas não correspondem</string>
-    <string name="general_cancel">Cancelar</string>
-    <string name="profile_data_updated_success">dados atualizados com sucesso =)</string>
 
 </resources>

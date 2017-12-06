@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import br.com.symon.CustomApplication
 import br.com.symon.R
@@ -16,10 +17,14 @@ import br.com.symon.common.hideKeyboard
 import br.com.symon.common.loadUrlWithCircularImage
 import br.com.symon.common.toast
 import br.com.symon.data.model.User
-import br.com.symon.data.model.requests.UserUpdateRequest
+import br.com.symon.data.model.requests.UserFacebookRegistryRequest
+import br.com.symon.data.model.requests.UserFullUpdateRequest
 import br.com.symon.injection.components.DaggerProfileActivityComponent
 import br.com.symon.injection.components.ProfileActivityComponent
 import br.com.symon.injection.modules.ProfileActivityModule
+import com.facebook.*
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.github.vacxe.phonemask.PhoneMaskManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -27,7 +32,9 @@ import kotlinx.android.synthetic.main.view_custom_toolbar.*
 import java.util.*
 
 
-class ProfileActivity : BaseActivity(), ProfileContract.View {
+class ProfileActivity : BaseActivity(),
+        ProfileContract.View,
+        FacebookCallback<LoginResult> {
 
     companion object {
         private val REQUEST_PICK_IMAGE = 10011
@@ -60,6 +67,8 @@ class ProfileActivity : BaseActivity(), ProfileContract.View {
         customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }
+
+        setupFacebookButton()
 
         PhoneMaskManager()
                 .withMask(getString(R.string.register_complement_phone_mask))
@@ -108,25 +117,48 @@ class ProfileActivity : BaseActivity(), ProfileContract.View {
             if (isValidUserData() && isValidUserPassword()) {
 
                 val userUpdateRequest = if (!isPasswordChange) {
-                    UserUpdateRequest(
-                            name = profileNameEditText.text.toString(),
-                            phone = profilePhoneEditText.text.toString(),
-                            birthday = calendar.time)
-                } else {
-                    UserUpdateRequest(
+                    UserFullUpdateRequest(
                             name = profileNameEditText.text.toString(),
                             phone = profilePhoneEditText.text.toString(),
                             birthday = calendar.time,
-                            currentPassword =  profilePasswordEditText.text.toString(),
+                            email = profileEmailEditText.text.toString())
+                } else {
+                    UserFullUpdateRequest(
+                            name = profileNameEditText.text.toString(),
+                            phone = profilePhoneEditText.text.toString(),
+                            birthday = calendar.time,
+                            email = profileEmailEditText.text.toString(),
+                            currentPassword = profilePasswordEditText.text.toString(),
                             newPassword = profileNewPasswordEditText.text.toString())
                 }
 
-                profileActivityComponent.profilePresenter().updateUserInfo(user?.id!!,
-                        userUpdateRequest)
+                user?.apply {
+                    id?.let {
+                        profileActivityComponent.profilePresenter().updateUserInfo(it, userUpdateRequest)
+                    }
+                }
             }
         }
 
         profileActivityComponent.profilePresenter().getUserCache()
+    }
+
+    private fun setupFacebookButton() {
+        val hasToken = AccessToken.getCurrentAccessToken() != null
+
+        profileFacebookTextView.text = if (hasToken) {
+            getString(R.string.profile_facebook_disconnect)
+        } else {
+            getString(R.string.profile_facebook_connect)
+        }
+
+        profileFacebookButtonContainerConstraint.setOnClickListener {
+            if (hasToken) {
+                facebookLogout()
+            } else {
+                facebookLogin()
+            }
+        }
     }
 
     override fun notifyDataUpdate() {
@@ -146,6 +178,51 @@ class ProfileActivity : BaseActivity(), ProfileContract.View {
             profilePhoneEditText.setText(phone)
             profileBirthdayEditText.setText(birthday?.dateFormat())
         }
+    }
+
+    override fun onCancel() {
+        Log.d("facebookEvent:", "Cancel")
+    }
+
+    override fun onError(error: FacebookException?) {
+        Log.d("facebookEvent:", error?.message)
+        toast(getString(R.string.facebook_error_message))
+    }
+
+    override fun onSuccess(result: LoginResult?) {
+        Log.d("facebookEvent:", "Success")
+        val request: GraphRequest = GraphRequest.newMeRequest(result?.accessToken) { jsonObject, _ ->
+            val email = jsonObject.getString(getString(R.string.facebook_email))
+            val name = jsonObject.getString(getString(R.string.facebook_name))
+
+            val user = UserFacebookRegistryRequest(
+                    name = name,
+                    email = email,
+                    facebookId = result?.accessToken?.userId)
+
+            //welcomeActivityComponent.welcomePresenter().registerUserFacebook(user)
+        }
+
+        val parameters = Bundle()
+        parameters.putString("fields", "${getString(R.string.facebook_email)},${getString(R.string.facebook_name)}")
+        request.parameters = parameters
+        request.executeAsync()
+    }
+
+    private fun facebookLogin() {
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(
+                getString(R.string.facebook_permission_profile),
+                getString(R.string.facebook_permission_email)))
+    }
+
+    private fun facebookLogout() {
+        GraphRequest(AccessToken.getCurrentAccessToken(),
+                getString(R.string.facebook_permissions),
+                null,
+                HttpMethod.DELETE,
+                GraphRequest.Callback {
+
+                }).executeAsync()
     }
 
     private fun isValidUserPassword(): Boolean {
@@ -220,6 +297,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.View {
         profileBirthdayEditText.hideKeyboard()
 
         calendar = Calendar.getInstance()
+
         datePickerDialog = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, monthOfYear)
@@ -236,8 +314,7 @@ class ProfileActivity : BaseActivity(), ProfileContract.View {
 
     private fun pickImage() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"),
-                    REQUEST_PICK_IMAGE)
+            startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"), REQUEST_PICK_IMAGE)
         } else {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
