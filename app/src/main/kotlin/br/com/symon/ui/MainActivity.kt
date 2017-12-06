@@ -19,6 +19,7 @@ import br.com.symon.injection.components.DaggerMainActivityComponent
 import br.com.symon.injection.components.MainActivityComponent
 import br.com.symon.injection.modules.MainActivityModule
 import br.com.symon.ui.main.MainContract
+import br.com.symon.ui.ratings.RatingsFragment
 import br.com.symon.ui.sales.SalesFragment
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
@@ -163,7 +164,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     }
 
     private fun openRatings() {
-        toast("Avaliações - Em progresso")
+        replace(this, R.id.mainFrameContent, RatingsFragment())
     }
 
     private fun openSendSale() {
