@@ -138,7 +138,7 @@ class SalesAdapter(private val list: MutableList<Sale>,
             with(sale.user)
             {
                 with(itemSaleUserPhotoImageView) {
-                    photo?.let { loadUrlToBeRounded(it) }
+                    photoUri?.let { loadUrlToBeRounded(it) }
                 }
 
                 itemSaleUserNameTextView.text = sale.user.name

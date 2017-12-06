@@ -12,7 +12,7 @@ data class User(
         @SerializedName("phone") var phone: String?,
         @SerializedName("birthday") var birthday: Date?,
         @SerializedName("facebookId") var facebookId: String?,
-        @SerializedName("photo") var photo: String?) : Parcelable {
+        @SerializedName("uri") var photoUri: String?) : Parcelable {
 
     constructor(source: Parcel) : this(
             source.readValue(Int::class.java.classLoader) as Int?,
@@ -33,7 +33,7 @@ data class User(
         writeString(phone)
         writeSerializable(birthday)
         writeString(facebookId)
-        writeString(photo)
+        writeString(photoUri)
     }
 
     companion object {

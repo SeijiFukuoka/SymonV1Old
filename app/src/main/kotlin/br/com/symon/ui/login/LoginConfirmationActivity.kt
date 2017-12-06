@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.R.layout
@@ -15,7 +14,7 @@ import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerLoginActivityConfirmationComponent
 import br.com.symon.injection.components.LoginActivityConfirmationComponent
 import br.com.symon.injection.modules.LoginActivityConfirmationModule
-import br.com.symon.ui.MainActivity
+import br.com.symon.ui.main.MainActivity
 import br.com.symon.ui.retrievePassword.RetrieverPasswordActivity
 import kotlinx.android.synthetic.main.activity_login_confirmation.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*

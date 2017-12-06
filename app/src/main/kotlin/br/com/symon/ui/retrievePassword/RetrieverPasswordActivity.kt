@@ -56,7 +56,7 @@ class RetrieverPasswordActivity : BaseActivity(), RetrievePasswordContract.View 
 
         retrievePasswordEmailEditText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                if (!isEmailValid(retrievePasswordEmailEditText.text.toString())) {
+                if (!retrievePasswordEmailEditText.text.toString().isEmailValid()) {
                     retrievePasswordTextInputLayout.isErrorEnabled = true
                     retrievePasswordTextInputLayout.error = getString(R.string.register_email_invalid_msg)
                 }
@@ -66,7 +66,7 @@ class RetrieverPasswordActivity : BaseActivity(), RetrievePasswordContract.View 
         }
 
         retrievePasswordSendNewPasswordButton.setOnClickListener {
-            if (isEmailValid(retrievePasswordEmailEditText.text.toString())) {
+            if (retrievePasswordEmailEditText.text.toString().isEmailValid()) {
                 retrievePasswordTextInputLayout.isErrorEnabled = false
                 retrieverPasswordActivityComponent.retrievePasswordPresenter().requestNewPassword(retrievePasswordEmailEditText.text.toString())
             } else {

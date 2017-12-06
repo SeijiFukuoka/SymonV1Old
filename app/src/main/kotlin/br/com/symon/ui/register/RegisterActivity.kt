@@ -39,7 +39,7 @@ class RegisterActivity : BaseActivity(), RegisterContract.View {
 
         registerEmailEditText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                if (!isEmailValid(registerEmailEditText.text.toString())) {
+                if (!registerEmailEditText.text.toString().isEmailValid()) {
                     registerEmailTextInput.isErrorEnabled = true
                     registerEmailTextInput.error = getString(R.string.register_email_invalid_msg)
                 }
@@ -50,7 +50,7 @@ class RegisterActivity : BaseActivity(), RegisterContract.View {
 
         registerContinueButton.setOnClickListener {
 
-            if (isEmailValid(registerEmailEditText.text.toString())) {
+            if (registerEmailEditText.text.toString().isEmailValid()) {
 
                 registerEmailTextInput.isErrorEnabled = false
 

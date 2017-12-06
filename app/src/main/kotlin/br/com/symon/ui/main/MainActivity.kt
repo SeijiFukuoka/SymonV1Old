@@ -1,10 +1,11 @@
-package br.com.symon.ui
+package br.com.symon.ui.main
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SearchView
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import br.com.symon.CustomApplication
@@ -12,25 +13,26 @@ import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.isDisplayedByTag
 import br.com.symon.common.replace
+import br.com.symon.common.startIntent
 import br.com.symon.common.toast
 import br.com.symon.data.model.responses.SalesListResponse
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerMainActivityComponent
 import br.com.symon.injection.components.MainActivityComponent
 import br.com.symon.injection.modules.MainActivityModule
-import br.com.symon.ui.main.MainContract
+import br.com.symon.ui.profile.ProfileFragment
 import br.com.symon.ui.ratings.RatingsFragment
 import br.com.symon.ui.sales.SalesFragment
+import br.com.symon.ui.settings.SettingsActivity
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import kotlinx.android.synthetic.main.activity_main.*
-
 
 class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextListener {
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
 
-        lateinit var user: UserTokenResponse
+        lateinit var userTokenResponse: UserTokenResponse
 
         fun newIntent(context: Context, user: UserTokenResponse?): Intent {
             val intent = Intent(context, MainActivity::class.java)
@@ -42,41 +44,32 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     private val mainActivityComponent: MainActivityComponent
         get() = DaggerMainActivityComponent
                 .builder()
-                .applicationComponent((this.application as CustomApplication).applicationComponent)
+                .applicationComponent((application as CustomApplication).applicationComponent)
                 .mainActivityModule(MainActivityModule(this))
                 .build()
 
-    private var user: UserTokenResponse? = null
+    private lateinit var menuSettings: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         mainActivityComponent.inject(this)
-        mainActivityComponent.mainPresenter().getUserCache()
+
+        userTokenResponse = intent.getParcelableExtra(EXTRA_USER)
 
         setSupportActionBar(mainToolbar)
+        supportActionBar?.setDisplayShowHomeEnabled(false)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        setupSearchView()
         setupBottomMenu()
-        openSales()
+        setupSearchView()
     }
 
     override fun onBackPressed() = if (!mainActivitySearchView.isIconified) {
         mainActivitySearchView.setIconified(true)
     } else {
         super.onBackPressed()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onQueryTextSubmit(query: String): Boolean {
@@ -87,10 +80,6 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     }
 
     override fun onQueryTextChange(newText: String): Boolean = false
-
-    override fun setUser(user: UserTokenResponse?) {
-        this.user = user
-    }
 
     override fun showSearchResults(salesListResponse: SalesListResponse) {
         if (salesListResponse.salesList.size > 0)
@@ -112,6 +101,31 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
             mainBrandImageView.visibility = View.VISIBLE
             supportActionBar?.setDisplayHomeAsUpEnabled(false)
             false
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+
+        menuSettings = menu.findItem(R.id.menu_action_settings)
+
+        openSales()
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            R.id.menu_action_settings -> {
+                startIntent(SettingsActivity::class.java)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -153,29 +167,40 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         }
     }
 
-    private fun openSales() {
-        if (!isDisplayedByTag(this, SalesFragment::class.java.canonicalName)) {
-            replace(this, R.id.mainFrameContent, SalesFragment())
+    private fun openProfile() {
+        val profileFragment = ProfileFragment.newInstance(user = userTokenResponse.user)
+        if (!isDisplayedByTag(ProfileFragment::class.java.canonicalName)) {
+            replace(R.id.mainFrameContent, profileFragment)
         }
+
+        mainActivitySearchView.visibility = View.GONE
+        menuSettings.isVisible = true
+    }
+
+    private fun openSales() {
+        if (!isDisplayedByTag(SalesFragment::class.java.canonicalName)) {
+            replace(R.id.mainFrameContent, SalesFragment())
+        }
+
+        menuSettings.isVisible = false
     }
 
     private fun openSearchSales(searchQuery: String) {
-        replace(this, R.id.mainFrameContent, SalesFragment.newInstance(searchQuery))
+        replace(R.id.mainFrameContent, SalesFragment.newInstance(searchQuery))
     }
 
     private fun openRatings() {
-        replace(this, R.id.mainFrameContent, RatingsFragment())
+        menuSettings.isVisible = false
+        replace(R.id.mainFrameContent, RatingsFragment())
     }
 
     private fun openSendSale() {
         toast("Enviar - Em progresso")
+        menuSettings.isVisible = false
     }
 
     private fun openNotifications() {
         toast("Notificações - Em progresso")
-    }
-
-    private fun openProfile() {
-        toast("Perfil - Em progresso")
+        menuSettings.isVisible = false
     }
 }

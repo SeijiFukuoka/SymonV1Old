@@ -7,12 +7,6 @@ import javax.inject.Inject
 
 @ActivityScope
 class MainPresenter @Inject constructor(val view: MainContract.View, private val userRepository: UserRepository, private val saleRepository: SaleRepository) : MainContract.Presenter {
-    override fun getUserCache() {
-        userRepository.getUserCache().subscribe {
-            view.setUser(it)
-        }
-    }
-
     override fun searchSales(userToken: String, query: String, page: Int, pageSize: Int) {
         saleRepository.searchSale(userToken, query, page, pageSize)
                 .subscribe {

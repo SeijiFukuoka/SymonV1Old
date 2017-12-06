@@ -12,15 +12,15 @@ class WelcomePresenter @Inject constructor(
     : WelcomeContract.Presenter {
 
     override fun registerUserFacebook(user: UserFacebookRegistryRequest) {
-       /* userRepository.registryUserFacebook(user).subscribe({
+       /* userRepository.registryUserFacebook(userTokenResponse).subscribe({
             val userId = it.id
             val userCache = User(
                     userId,
-                    user.name,
-                    user.email,
+                    userTokenResponse.name,
+                    userTokenResponse.email,
                     null,
                     null,
-                    user.facebookId,
+                    userTokenResponse.facebookId,
                     null)
 
             userRepository.saveUserCache(userCache).subscribe({

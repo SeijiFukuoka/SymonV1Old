@@ -23,20 +23,20 @@ import java.util.*
 import java.util.regex.Pattern
 
 
-fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View =
-        LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
-
-fun isDisplayedByTag(activity: AppCompatActivity, fragmentTag: String): Boolean {
-    val fragment = activity.supportFragmentManager.findFragmentByTag(fragmentTag)
+fun AppCompatActivity.isDisplayedByTag(fragmentTag: String): Boolean {
+    val fragment = this.supportFragmentManager.findFragmentByTag(fragmentTag)
     return fragment != null && fragment.isVisible
 }
 
-fun replace(activity: FragmentActivity, @IdRes id: Int, fragment: Fragment) {
-    activity.supportFragmentManager
+fun FragmentActivity.replace(@IdRes id: Int, fragment: Fragment) {
+    this.supportFragmentManager
             .beginTransaction()
             .replace(id, fragment, fragment.javaClass.canonicalName)
             .commit()
 }
+
+fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View =
+        LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 
 fun Activity.toast(text: String?) {
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
@@ -63,24 +63,17 @@ private fun Date.asString(format: DateFormat): String = format.format(this)
 fun dpToPixels(dp: Float): Int =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().displayMetrics).toInt()
 
-fun ImageView.loadUrl(url: String) {
+fun ImageView.loadUrl(url: String?) {
     Glide.with(context).load(url).into(this)
 }
 
-fun ImageView.loadUrlToBeRounded(url: String) {
+fun ImageView.loadUrlToBeRounded(url: String?) {
     Glide.with(context).load(url).apply(RequestOptions.circleCropTransform()).into(this)
 }
 
-fun isEmailValid(email: String): Boolean {
+fun String.isEmailValid(): Boolean {
     val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
     val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
-    val matcher = pattern.matcher(email)
+    val matcher = pattern.matcher(this)
     return matcher.matches()
-}
-
-inline fun <E : Any, T : Collection<E>, R : Any> T?.whenNotNullNorEmpty(func: (T) -> R?): R? {
-    if (this != null && this.isNotEmpty()) {
-        return func(this)
-    }
-    return null
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:fitsSystemWindows="true"
-    tools:context="br.com.symon.ui.MainActivity">
+    tools:context="br.com.symon.ui.main.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/mainAppBar"
@@ -19,7 +19,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/mainToolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 

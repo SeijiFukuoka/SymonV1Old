@@ -12,7 +12,7 @@ import javax.inject.Inject
 class RegisterPresenter @Inject constructor(
         private val view: RegisterContract.View,
         private val userRepository: UserRepository) :
-RegisterContract.Presenter {
+        RegisterContract.Presenter {
 
     override fun register(userAuthenticateRequest: UserAuthenticateRequest) {
         view.showLoading()
@@ -21,9 +21,9 @@ RegisterContract.Presenter {
                 view.hideLoading()
                 view.goToNextStep(it.body()?.id)
             } else {
-                val errorResponse = Gson().fromJson(it.errorBody().toString(), ErrorResponse::class.java)
+                val errorResponse : ErrorResponse = Gson().fromJson(it.errorBody()?.string(), ErrorResponse::class.java)
                 view.hideLoading()
-                view .showErrorMessage(errorResponse?.error)
+                view.showErrorMessage(errorResponse.error)
             }
         }, {
             view.hideLoading()

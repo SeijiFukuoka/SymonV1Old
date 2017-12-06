@@ -19,12 +19,14 @@ import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerRegisterComplementActivityComponent
 import br.com.symon.injection.components.RegisterComplementActivityComponent
 import br.com.symon.injection.modules.RegisterComplementActivityModule
-import br.com.symon.ui.MainActivity
+import br.com.symon.ui.main.MainActivity
 import com.github.vacxe.phonemask.PhoneMaskManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_register_complement.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
 import java.util.*
+
+
 
 
 class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.View {

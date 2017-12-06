@@ -41,7 +41,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
 
         loginEmailEditText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                if (!isEmailValid(loginEmailEditText.text.toString())) {
+                if (!loginEmailEditText.text.toString().isEmailValid()) {
                     loginEmailTextInputLayout.isErrorEnabled = true
                     loginEmailTextInputLayout.error = getString(R.string.login_email_invalid_msg)
                 }
@@ -51,7 +51,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         }
 
         loginDoLoginButton.setOnClickListener({
-            if (isEmailValid(loginEmailEditText.text.toString())) {
+            if (loginEmailEditText.text.toString().isEmailValid()) {
                 loginEmailTextInputLayout.isErrorEnabled = false
 
                 loginComponent.loginPresenter().checkUser(loginEmailEditText.text.toString())

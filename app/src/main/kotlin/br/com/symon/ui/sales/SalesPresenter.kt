@@ -12,9 +12,11 @@ import javax.inject.Inject
 class SalesPresenter @Inject constructor(val view: SalesContract.View, private val saleRepository: SaleRepository, private val userRepository: UserRepository) : SalesContract.Presenter {
 
     override fun getUser() {
-        userRepository.getUserCache().subscribe {
+        userRepository.getUserCache().subscribe({
             view.setUser(it)
-        }
+        }, {
+            GeneralErrorHandler(it, view, {})
+        })
     }
 
     override fun loadSales(userToken: String, page: Int, pageSize: Int) {
