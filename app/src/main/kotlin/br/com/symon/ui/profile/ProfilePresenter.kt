@@ -3,9 +3,11 @@ package br.com.symon.ui.profile
 import android.net.Uri
 import br.com.gold360.financas.common.GeneralErrorHandler
 import br.com.symon.data.model.requests.UserFullUpdateRequest
+import br.com.symon.data.model.responses.ErrorResponse
 import br.com.symon.data.repository.FileRepository
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.ActivityScope
+import com.google.gson.Gson
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -28,12 +30,20 @@ class ProfilePresenter @Inject constructor(private val view: ProfileContract.Vie
         view.showLoading()
         userRepository.updateFullUser(userId, userFullUpdateRequest).subscribe({
             view.hideLoading()
-            val userTokenResponse = it.body()
-            userRepository.saveUserCache(userTokenResponse).subscribe({
-                view.notifyDataUpdate()
-            }, {
-                GeneralErrorHandler(it, view, {})
-            })
+
+            if (it.code() == 200) {
+                val userTokenResponse = it.body()
+                userRepository.saveUserCache(userTokenResponse).subscribe({
+                    view.notifyDataUpdate()
+                }, {
+                    GeneralErrorHandler(it, view, {})
+                })
+            } else {
+                val errorResponse = Gson().fromJson(it.errorBody()?.string(), ErrorResponse::class.java)
+                view.hideLoading()
+                view.showErrorMessage(errorResponse?.error)
+            }
+
         }, {
             GeneralErrorHandler(it, view, {})
         })

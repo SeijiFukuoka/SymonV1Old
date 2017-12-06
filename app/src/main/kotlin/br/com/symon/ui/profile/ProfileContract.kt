@@ -11,6 +11,7 @@ interface ProfileContract {
         fun showUserData(user: User?)
         fun showPhoto(photo: String?)
         fun notifyDataUpdate()
+        fun showErrorMessage(error: String?)
     }
 
     interface Presenter{

@@ -1,6 +1,7 @@
 package br.com.symon.ui.profile
 
 import android.Manifest
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
@@ -49,6 +50,7 @@ class ProfileActivity : BaseActivity(),
 
     private var isPasswordChange = false
     private var user: User? = null
+
     private lateinit var calendar: Calendar
     private lateinit var datePickerDialog: DatePickerDialog.OnDateSetListener
 
@@ -163,6 +165,11 @@ class ProfileActivity : BaseActivity(),
 
     override fun notifyDataUpdate() {
         toast(getString(R.string.profile_data_updated_success))
+        finish()
+    }
+
+    override fun showErrorMessage(error: String?) {
+        toast(error)
     }
 
     override fun showPhoto(photo: String?) {
@@ -177,6 +184,9 @@ class ProfileActivity : BaseActivity(),
             profileEmailEditText.setText(email)
             profilePhoneEditText.setText(phone)
             profileBirthdayEditText.setText(birthday?.dateFormat())
+
+            calendar = Calendar.getInstance()
+            calendar.time = birthday
         }
     }
 
@@ -207,6 +217,22 @@ class ProfileActivity : BaseActivity(),
         parameters.putString("fields", "${getString(R.string.facebook_email)},${getString(R.string.facebook_name)}")
         request.parameters = parameters
         request.executeAsync()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, result: Intent?) {
+        super.onActivityResult(requestCode, resultCode, result)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_PICK_IMAGE -> {
+                    user?.apply {
+                        id?.let {
+                            profileActivityComponent.profilePresenter().uploadUserPhoto(it, result?.data)
+                        }
+                    }
+
+                }
+            }
+        }
     }
 
     private fun facebookLogin() {
@@ -254,12 +280,12 @@ class ProfileActivity : BaseActivity(),
             profileConfirmNewPasswordTextInput.isErrorEnabled = false
         }
 
-        if (profileNewPasswordEditText.text !== profileConfirmNewPasswordEditText.text) {
+        if (profileNewPasswordEditText.text.toString() == profileConfirmNewPasswordEditText.text.toString()) {
+            profileConfirmNewPasswordTextInput.isErrorEnabled = false
+        } else {
             profileConfirmNewPasswordTextInput.isErrorEnabled = true
             profileConfirmNewPasswordTextInput.error = getString(R.string.profile_password_not_match)
             return false
-        } else {
-            profileConfirmNewPasswordTextInput.isErrorEnabled = false
         }
 
         return true

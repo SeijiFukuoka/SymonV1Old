@@ -8,5 +8,5 @@ class UserFullUpdateRequest(@SerializedName("name") var name: String,
                             @SerializedName("phone") var phone: String,
                             @SerializedName("birthday") var birthday: Date,
                             @SerializedName("email") var email: String?,
-                            @SerializedName("currentPassword") var currentPassword: String? = null,
-                            @SerializedName("newPassword") val newPassword: String? = null)
+                            @SerializedName("password") var currentPassword: String? = null,
+                            @SerializedName("new_password") val newPassword: String? = null)

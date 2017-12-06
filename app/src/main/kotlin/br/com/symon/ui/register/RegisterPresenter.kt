@@ -21,9 +21,9 @@ class RegisterPresenter @Inject constructor(
                 view.hideLoading()
                 view.goToNextStep(it.body()?.id)
             } else {
-                val errorResponse = Gson().fromJson(it.errorBody().toString(), ErrorResponse::class.java)
+                val errorResponse : ErrorResponse = Gson().fromJson(it.errorBody()?.string(), ErrorResponse::class.java)
                 view.hideLoading()
-                view.showErrorMessage(errorResponse?.error)
+                view.showErrorMessage(errorResponse.error)
             }
         }, {
             view.hideLoading()
