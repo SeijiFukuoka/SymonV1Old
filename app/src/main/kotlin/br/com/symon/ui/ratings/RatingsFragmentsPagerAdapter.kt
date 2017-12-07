@@ -29,10 +29,17 @@ class RatingsFragmentsPagerAdapter(
 
     fun getTabView(position: Int): View {
         val view: View = LayoutInflater.from(mContext).inflate(R.layout.custom_rating_tab, null)
-        val textView: TextView = view.findViewById<TextView>(R.id.customRatingTabTextView) as TextView
-        val imageView: ImageView = view.findViewById<ImageView>(R.id.customRatingsTabImageView) as ImageView
+        val textView: TextView = view.findViewById(R.id.customRatingTabTextView) as TextView
+        val imageView: ImageView = view.findViewById(R.id.customRatingsTabImageView) as ImageView
         textView.text = titlesList[position]
-        imageView.setImageDrawable(ResourcesCompat.getDrawable(mContext.resources, R.drawable.ic_ratings_sale_active, null))
+
+        when (position) {
+            0 -> imageView.setImageDrawable(ResourcesCompat.getDrawable(mContext.resources, R.drawable.ic_ratings_favorites_selector, null))
+            1 -> imageView.setImageDrawable(ResourcesCompat.getDrawable(mContext.resources, R.drawable.ic_ratings_likes_selector, null))
+            2 -> imageView.setImageDrawable(ResourcesCompat.getDrawable(mContext.resources, R.drawable.ic_ratings_dislikes_selector, null))
+            3 -> imageView.setImageDrawable(ResourcesCompat.getDrawable(mContext.resources, R.drawable.ic_ratings_comments_selector, null))
+        }
+
         return view
     }
 }

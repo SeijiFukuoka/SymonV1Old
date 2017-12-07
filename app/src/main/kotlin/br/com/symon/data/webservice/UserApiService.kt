@@ -1,11 +1,9 @@
 package br.com.symon.data.webservice
 
+import br.com.symon.data.model.Comment
 import br.com.symon.data.model.User
-import br.com.symon.data.model.requests.BlockUserRequest
-import br.com.symon.data.model.requests.UserAuthenticateRequest
-import br.com.symon.data.model.requests.UserFacebookRegistryRequest
-import br.com.symon.data.model.requests.UserFullUpdateRequest
-import br.com.symon.data.model.requests.UserUpdateRequest
+import br.com.symon.data.model.UserLikeResponse
+import br.com.symon.data.model.requests.*
 import br.com.symon.data.model.responses.CheckUserResponse
 import br.com.symon.data.model.responses.RegisterUserResponse
 import br.com.symon.data.model.responses.UploadUserPhotoResponse
@@ -40,7 +38,7 @@ interface UserApiService {
 
     @PUT("/user/{user_id}")
     fun updateFullUser(@Path("user_id") userId: Int,
-                   @Body userFullUpdateRequest: UserFullUpdateRequest): Observable<Response<UserTokenResponse>>
+                       @Body userFullUpdateRequest: UserFullUpdateRequest): Observable<Response<UserTokenResponse>>
 
     @Multipart
     @POST("/user/photo/{user_id}")
@@ -55,4 +53,10 @@ interface UserApiService {
 
     @POST("/user/block")
     fun blockUser(@Header("Authorization") userToken: String?, @Body userBlockedId: BlockUserRequest?): Observable<Response<Void>>
+
+    @GET("/user/like")
+    fun getLikes(@Header("Authorization") userToken: String): Observable<MutableList<UserLikeResponse>>
+
+    @GET("/user/comment")
+    fun getComments(@Header("Authorization") userToken: String): Observable<MutableList<Comment>>
 }

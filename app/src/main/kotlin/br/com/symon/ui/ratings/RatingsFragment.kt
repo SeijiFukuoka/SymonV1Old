@@ -26,10 +26,10 @@ class RatingsFragment : BaseFragment(), RatingsContract {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val salesRatingFragment = RatingsChildFragment.newInstance(0)
-        val likesRatingFragment = RatingsChildFragment.newInstance(1)
-        val dislikesRatingFragment = RatingsChildFragment.newInstance(2)
-        val commentsRatingFragment = RatingsChildFragment.newInstance(3)
+        val salesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.FAVORITES)
+        val likesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.LIKES)
+        val dislikesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.DISLIKES)
+        val commentsRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.COMMENTS)
 
         val fragmentsList: MutableList<RatingsChildFragment> = ArrayList()
         fragmentsList.add(salesRatingFragment)
@@ -51,26 +51,6 @@ class RatingsFragment : BaseFragment(), RatingsContract {
             val tab = fragmentRatingsTabLayout.getTabAt(i)
             tab?.customView = ratingsFragmentAdapter.getTabView(i)
         }
-
-//        val tabOne = LayoutInflater.from(activity).inflate(R.layout.custom_rating_tab, null) as TextView
-//        tabOne.text = titlesList[0]
-//        tabOne.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ratings_sale_active, 0, 0, 0)
-//        fragmentRatingsTabLayout.getTabAt(0)?.customView = tabOne
-//
-//        val tabTwo = LayoutInflater.from(activity).inflate(R.layout.custom_rating_tab, null) as TextView
-//        tabTwo.text = titlesList[1]
-//        tabTwo.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ratings_sale_active, 0, 0, 0)
-//        fragmentRatingsTabLayout.getTabAt(1)?.customView = tabTwo
-//
-//        val tabThree = LayoutInflater.from(activity).inflate(R.layout.custom_rating_tab, null) as TextView
-//        tabThree.text = titlesList[2]
-//        tabThree.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ratings_sale_active, 0, 0, 0)
-//        fragmentRatingsTabLayout.getTabAt(2)?.customView = tabThree
-//
-//        val tabFour = LayoutInflater.from(activity).inflate(R.layout.custom_rating_tab, null) as TextView
-//        tabFour.text = titlesList[3]
-//        tabFour.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ratings_sale_active, 0, 0, 0)
-//        fragmentRatingsTabLayout.getTabAt(3)?.customView = tabFour
 
         fragmentRatingsTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabUnselected(tab: TabLayout.Tab?) {

@@ -15,9 +15,7 @@
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorPrimaryDark"
         app:tabIndicatorHeight="4dp"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/colorPrimaryDark"
-        app:tabTextColor="@color/gray_CCCCCC" />
+        app:tabMode="fixed" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

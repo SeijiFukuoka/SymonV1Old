@@ -2,11 +2,7 @@ package br.com.symon.data.repository
 
 import br.com.symon.base.BaseRepository
 import br.com.symon.data.cache.UserCacheManagerImpl
-import br.com.symon.data.model.requests.BlockUserRequest
-import br.com.symon.data.model.requests.UserAuthenticateRequest
-import br.com.symon.data.model.requests.UserFacebookRegistryRequest
-import br.com.symon.data.model.requests.UserFullUpdateRequest
-import br.com.symon.data.model.requests.UserUpdateRequest
+import br.com.symon.data.model.requests.*
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.data.webservice.UserApiService
 import okhttp3.MultipartBody
@@ -51,4 +47,8 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
     fun retrievePassword(userEmail: String) = call(userApiService.retrievePassword(userEmail))
 
     fun blockUSer(userToken: String?, userBlockedId: BlockUserRequest?) = call(userApiService.blockUser(userToken, userBlockedId))
+
+    fun getLikes(userToken: String) = call(userApiService.getLikes(userToken))
+
+    fun getComments(userToken: String) = call(userApiService.getComments(userToken))
 }

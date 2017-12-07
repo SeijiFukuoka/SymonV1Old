@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        tools:src="@drawable/ic_ratings_sale_active" />
+        tools:src="@drawable/ic_ratings_favorites_selected" />
 
     <TextView
         android:id="@+id/customRatingTabTextView"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_10_dp"
         android:textAppearance="@style/TextAppearance.Bold"
-        android:textColor="@color/com_facebook_blue"
+        android:textColor="@color/ic_ratings_text_selector"
         android:textSize="@dimen/tab_label"
         tools:text="123" />
 </LinearLayout>
