@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/postInfoAppBarLayout"
+        layout="@layout/view_custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_40_dp"
+            android:paddingBottom="@dimen/margin_60_dp">
+
+            <ImageView
+                android:id="@+id/postInfoImageView"
+                style="@style/TextAppearance.Medium"
+                android:layout_width="0dp"
+                android:layout_height="175dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:adjustViewBounds="true"
+                android:background="@color/colorPrimary"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/postInfoNameTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:paddingBottom="5dp"
+                android:theme="@style/CustomEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/postInfoImageView">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/postInfoNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/post_info_product_name_hint"
+                    android:inputType="textPersonName"
+                    android:paddingBottom="@dimen/margin_15_dp"
+                    android:textColor="@color/black_202020"
+                    android:textSize="@dimen/text_size_16_sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/postInfoLocationTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:paddingBottom="5dp"
+                android:theme="@style/CustomEditText"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/postInfoNameTextInput">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/postInfoLocationEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/product_info_location_hint"
+                    android:inputType="textPersonName"
+                    android:paddingBottom="@dimen/margin_15_dp"
+                    android:textColor="@color/black_202020"
+                    android:textSize="@dimen/text_size_16_sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toBottomOf="@+id/postInfoLocationTextInput"
+                app:layout_constraintEnd_toEndOf="@+id/postInfoLocationTextInput"
+                app:layout_constraintTop_toTopOf="@+id/postInfoLocationTextInput"
+                app:srcCompat="@drawable/ic_my_location_24dp" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="91dp"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/postInfoLocationTextInput" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/postInfoPriceTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="@dimen/margin_30_dp"
+                android:paddingBottom="5dp"
+                android:theme="@style/WhiteEditText"
+                app:layout_constraintBottom_toBottomOf="@+id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/postInfoLocationTextInput">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/postInfoPriceEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/product_info_location_hint"
+                    android:inputType="textPersonName"
+                    android:paddingBottom="@dimen/margin_15_dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textColorLink="@color/white"
+                    android:textSize="@dimen/text_size_16_sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/postInfoContinueButton"
+                style="@style/CustomButtonTextMedium"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_50_dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
+                android:layout_marginTop="@dimen/margin_40_dp"
+                android:background="@drawable/button_color_accent_selector"
+                android:shadowColor="@color/buttonShadow"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
+                android:text="@string/general_continue"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_20_sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postInfoPriceTextInput" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

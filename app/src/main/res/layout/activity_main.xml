@@ -39,8 +39,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:visibility="gone"
                 android:theme="@style/SearchViewTheme"
                 app:queryHint="O que está procurando ? " />
+
+            <ImageView
+                android:id="@+id/mainSettingsImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:contentDescription="@string/main_brand_logo_image_view_content_description"
+                android:padding="@dimen/margin_10_dp"
+                app:srcCompat="@drawable/ic_settings_white_24dp" />
 
         </android.support.v7.widget.Toolbar>
 

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SearchView
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import br.com.symon.CustomApplication
@@ -41,13 +40,13 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     }
 
     private val mainActivityComponent: MainActivityComponent
-    get() = DaggerMainActivityComponent
-            .builder()
-            .applicationComponent((application as CustomApplication).applicationComponent)
-            .mainActivityModule(MainActivityModule(this))
-            .build()
+        get() = DaggerMainActivityComponent
+                .builder()
+                .applicationComponent((application as CustomApplication).applicationComponent)
+                .mainActivityModule(MainActivityModule(this))
+                .build()
 
-    private lateinit var menuSettings : MenuItem
+    private lateinit var menuSettings: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +62,10 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
 
         setupBottomMenu()
         setupSearchView()
+
+        mainSettingsImageView.setOnClickListener {
+            startIntent(SettingsActivity::class.java)
+        }
     }
 
     override fun onBackPressed() = if (!mainActivitySearchView.isIconified) {
@@ -103,25 +106,10 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
-
-        menuSettings = menu.findItem(R.id.menu_action_settings)
-
-        openSales()
-
-        return true
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
-                true
-            }
-            R.id.menu_action_settings -> {
-                startIntent(SettingsActivity::class.java)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -164,6 +152,8 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
             }
             true
         }
+
+        mainBottomNavigation.currentItem = 0
     }
 
     private fun openProfile() {
@@ -171,35 +161,49 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         if (!isDisplayedByTag(ProfileFragment::class.java.canonicalName)) {
             replace(R.id.mainFrameContent, profileFragment)
         }
-
-        mainActivitySearchView.visibility = View.GONE
-        menuSettings.isVisible = true
+        setupToolbarMenu(isSearchVisible = false, isSettingsVisible = true)
     }
 
     private fun openSales() {
         if (!isDisplayedByTag(SalesFragment::class.java.canonicalName)) {
             replace(R.id.mainFrameContent, SalesFragment())
         }
-
-        menuSettings.isVisible = false
+        setupToolbarMenu(isSearchVisible = true, isSettingsVisible = false)
     }
 
     private fun openSearchSales(searchQuery: String) {
         replace(R.id.mainFrameContent, SalesFragment.newInstance(searchQuery))
+        setupToolbarMenu(isSearchVisible = true, isSettingsVisible = false)
     }
 
     private fun openRatings() {
         toast("Avaliações - Em progresso")
-        menuSettings.isVisible = false
+        setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false)
     }
 
     private fun openSendSale() {
         toast("Enviar - Em progresso")
-        menuSettings.isVisible = false
+        setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false)
     }
 
     private fun openNotifications() {
         toast("Notificações - Em progresso")
-        menuSettings.isVisible = false
+        setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false)
     }
+
+    private fun setupToolbarMenu(isSearchVisible: Boolean, isSettingsVisible: Boolean) {
+
+        mainActivitySearchView.visibility =
+                if (isSearchVisible)
+            View.VISIBLE
+        else
+            View.GONE
+
+        mainSettingsImageView.visibility =
+                if (isSettingsVisible)
+            View.VISIBLE
+        else
+            View.GONE
+    }
+
 }

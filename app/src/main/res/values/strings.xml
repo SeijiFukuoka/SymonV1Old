@@ -24,7 +24,7 @@
     <string name="facebook_name">name</string>
     <string name="facebook_error_message">Ocorreu um erro ao tentar entrar com o Facebook =/</string>
 
-    <string name="tab_promo">Oportunidades</string>
+    <string name="tab_promo">Ofertas</string>
     <string name="tab_rating">Avaliações</string>
     <string name="tab_send">Enviar</string>
     <string name="tab_notifications">Notificações</string>
@@ -115,5 +115,8 @@
 
     <string name="menu_settings">Configurações</string>
     <string name="menu_search">Buscar</string>
+
+    <string name="post_info_product_name_hint">Nome do produto</string>
+    <string name="product_info_location_hint">Estabelecimento</string>
 
 </resources>
