@@ -1,8 +1,12 @@
 package br.com.symon.ui.main
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SearchView
 import android.view.MenuItem
@@ -21,14 +25,23 @@ import br.com.symon.injection.components.MainActivityComponent
 import br.com.symon.injection.modules.MainActivityModule
 import br.com.symon.ui.profile.ProfileFragment
 import br.com.symon.ui.sales.SalesFragment
+import br.com.symon.ui.sendPost.PostInfoActivity
 import br.com.symon.ui.settings.SettingsActivity
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
+import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextListener {
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
+        const val CAMERA_REQUEST: Int = 1213
 
         lateinit var userTokenResponse: UserTokenResponse
 
@@ -46,7 +59,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
                 .mainActivityModule(MainActivityModule(this))
                 .build()
 
-    private lateinit var menuSettings: MenuItem
+    private var photoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,6 +129,19 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+            mediaScanIntent.data = photoUri
+            sendBroadcast(mediaScanIntent)
+
+            val postInfoIntent = PostInfoActivity.newIntent(this, photoUri)
+            startActivity(postInfoIntent)
+        }
+    }
+
     private fun setupBottomMenu() {
         val itemPromos = AHBottomNavigationItem(R.string.tab_promo, R.drawable.ic_promos, R.color.black)
         val itemRating = AHBottomNavigationItem(R.string.tab_rating, R.drawable.ic_rating,
@@ -182,8 +208,52 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     }
 
     private fun openSendSale() {
-        toast("Enviar - Em progresso")
-        setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false)
+        RxPermissions(this)
+                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe { granted ->
+                    if (granted) {
+                        val observable = Observable.create<Uri> { emitter ->
+                            emitter.onNext(createFileUri())
+                            emitter.onComplete()
+                        }
+
+                        observable.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    callCameraFromUri(it)
+                                }, {
+
+                                })
+                    } else {
+                        toast(getString(R.string.general_permissions_message))
+                    }
+                }
+
+    }
+
+    private fun createFileUri(): Uri {
+        val dir = File(Environment.getExternalStorageDirectory(), packageName)
+        dir.mkdirs()
+
+        val picName = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("pt", "BR")).format(Date())
+        val newFile = File(dir, "SYMON_$picName.png")
+
+        return Uri.fromFile(newFile)
+    }
+
+    private fun callCameraFromUri(uri: Uri) {
+        photoUri = uri
+        RxPermissions(this)
+                .request(Manifest.permission.CAMERA)
+                .subscribe { granted ->
+                    if (granted) {
+                        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                        startActivityForResult(cameraIntent, CAMERA_REQUEST)
+                    } else {
+                        toast(getString(R.string.general_permissions_message))
+                    }
+                }
     }
 
     private fun openNotifications() {
@@ -195,15 +265,15 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
 
         mainActivitySearchView.visibility =
                 if (isSearchVisible)
-            View.VISIBLE
-        else
-            View.GONE
+                    View.VISIBLE
+                else
+                    View.GONE
 
         mainSettingsImageView.visibility =
                 if (isSettingsVisible)
-            View.VISIBLE
-        else
-            View.GONE
+                    View.VISIBLE
+                else
+                    View.GONE
     }
 
 }

@@ -26,9 +26,6 @@ import kotlinx.android.synthetic.main.activity_register_complement.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
 import java.util.*
 
-
-
-
 class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.View {
     companion object {
         private const val EXTRA_USER_ID = "EXTRA_USER_ID"
