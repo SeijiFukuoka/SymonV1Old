@@ -119,5 +119,9 @@
     <string name="post_info_product_name_hint">Nome do produto</string>
     <string name="product_info_location_hint">Estabelecimento</string>
     <string name="post_into_title">Sobre a oferta</string>
+    <string name="view_choose_photo_title">Escolha</string>
+    <string name="view_choose_photo_camera">Câmera</string>
+    <string name="view_choose_photo_gallery">Galeria</string>
+    <string name="view_choose_photo_cancel">CANCELAR</string>
 
 </resources>

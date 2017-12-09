@@ -1,14 +1,17 @@
 package br.com.symon.ui.main
 
 import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SearchView
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import br.com.symon.CustomApplication
@@ -30,18 +33,14 @@ import br.com.symon.ui.settings.SettingsActivity
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.tbruyelle.rxpermissions2.RxPermissions
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
+import kotlinx.android.synthetic.main.view_choose_photo_dialog.view.*
 
 class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextListener {
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
-        const val CAMERA_REQUEST: Int = 1213
+        const val REQUEST_PICK_IMAGE_FROM_CAMERA: Int = 12130
+        const val REQUEST_PICK_IMAGE_FROM_GALLERY = 10017
 
         lateinit var userTokenResponse: UserTokenResponse
 
@@ -132,13 +131,24 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-            mediaScanIntent.data = photoUri
-            sendBroadcast(mediaScanIntent)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_PICK_IMAGE_FROM_GALLERY -> {
+                    val postInfoIntent = PostInfoActivity.newIntent(this, data?.data)
+                    startActivity(postInfoIntent)
+                    mainBottomNavigation.currentItem = 0
+                }
+                REQUEST_PICK_IMAGE_FROM_CAMERA -> {
+                    val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+                    mediaScanIntent.data = photoUri
+                    sendBroadcast(mediaScanIntent)
 
-            val postInfoIntent = PostInfoActivity.newIntent(this, photoUri)
-            startActivity(postInfoIntent)
+                    val postInfoIntent = PostInfoActivity.newIntent(this, photoUri)
+                    startActivity(postInfoIntent)
+
+                    mainBottomNavigation.currentItem = 0
+                }
+            }
         }
     }
 
@@ -172,7 +182,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
             when (position) {
                 0 -> openSales()
                 1 -> openRatings()
-                2 -> openSendSale()
+                2 -> openSendSaleDialog()
                 3 -> openNotifications()
                 4 -> openProfile()
             }
@@ -207,41 +217,32 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false)
     }
 
-    private fun openSendSale() {
-        RxPermissions(this)
-                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
-                    if (granted) {
-                        val observable = Observable.create<Uri> { emitter ->
-                            emitter.onNext(createFileUri())
-                            emitter.onComplete()
-                        }
+    private fun openSendSaleDialog() {
+        val dialogBuilder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val dialogView = inflater.inflate(R.layout.view_choose_photo_dialog, null)
 
-                        observable.subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe({
-                                    callCameraFromUri(it)
-                                }, {
+        dialogBuilder.setView(dialogView)
+        dialogBuilder.setCancelable(false)
+        val alertDialog = dialogBuilder.show()
 
-                                })
-                    } else {
-                        toast(getString(R.string.general_permissions_message))
-                    }
-                }
+        dialogView.choosePhotoCamContainerLinearLayout.setOnClickListener {
+            pickImageFromCam()
+            alertDialog.hide()
+        }
 
+        dialogView.choosePhotoGalleryContainerLinearLayout.setOnClickListener {
+            pickImageFromGalley()
+            alertDialog.hide()
+        }
+
+        dialogView.choosePhotoCancelTextView.setOnClickListener {
+            alertDialog.hide()
+            mainBottomNavigation.currentItem = 0
+        }
     }
 
-    private fun createFileUri(): Uri {
-        val dir = File(Environment.getExternalStorageDirectory(), packageName)
-        dir.mkdirs()
-
-        val picName = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("pt", "BR")).format(Date())
-        val newFile = File(dir, "SYMON_$picName.png")
-
-        return Uri.fromFile(newFile)
-    }
-
-    private fun callCameraFromUri(uri: Uri) {
+    override fun callCameraFromUri(uri: Uri?) {
         photoUri = uri
         RxPermissions(this)
                 .request(Manifest.permission.CAMERA)
@@ -249,7 +250,38 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
                     if (granted) {
                         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                        startActivityForResult(cameraIntent, CAMERA_REQUEST)
+                        startActivityForResult(cameraIntent, REQUEST_PICK_IMAGE_FROM_CAMERA)
+                    } else {
+                        toast(getString(R.string.general_permissions_message))
+                    }
+                }
+    }
+
+    private fun pickImageFromCam() {
+        RxPermissions(this)
+                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe { granted ->
+                    if (granted) {
+                        mainActivityComponent.mainPresenter().setPathUri()
+                    } else {
+                        toast(getString(R.string.general_permissions_message))
+                    }
+                }
+    }
+
+    private fun pickImageFromGalley() {
+        RxPermissions(this)
+                .request(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe { granted ->
+                    if (granted) {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                            startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"), REQUEST_PICK_IMAGE_FROM_GALLERY)
+                        } else {
+                            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                            intent.addCategory(Intent.CATEGORY_OPENABLE)
+                            intent.type = "image/*"
+                            startActivityForResult(intent, REQUEST_PICK_IMAGE_FROM_GALLERY)
+                        }
                     } else {
                         toast(getString(R.string.general_permissions_message))
                     }

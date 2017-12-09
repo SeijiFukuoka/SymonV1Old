@@ -6,4 +6,5 @@ import io.reactivex.Observable
 
 interface FileManager {
     fun getPathFromUri(uri: Uri?) : Observable<String>
+    fun saveData() : Observable<Uri>
 }
