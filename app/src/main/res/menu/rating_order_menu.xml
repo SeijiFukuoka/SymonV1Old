@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ratingOrderMenuNewest"
+        android:title="@string/ratings_order_menu_option_newest" />
+    <item
+        android:id="@+id/ratingOrderMenuCheaper"
+        android:title="@string/ratings_order_menu_option_cheaper" />
+    <item
+        android:id="@+id/ratingOrderMenuExpensive"
+        android:title="@string/ratings_order_menu_option_expensive" />
+</menu>

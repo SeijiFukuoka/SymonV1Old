@@ -116,4 +116,8 @@
     <string name="menu_settings">Configurações</string>
     <string name="menu_search">Buscar</string>
 
+    <string name="ratings_order_menu_option_newest">Mais recentes</string>
+    <string name="ratings_order_menu_option_cheaper">Mais baratas</string>
+    <string name="ratings_order_menu_option_expensive">Mais caras</string>
+
 </resources>

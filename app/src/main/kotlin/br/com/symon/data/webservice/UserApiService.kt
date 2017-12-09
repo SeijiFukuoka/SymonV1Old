@@ -1,13 +1,8 @@
 package br.com.symon.data.webservice
 
-import br.com.symon.data.model.Comment
 import br.com.symon.data.model.User
-import br.com.symon.data.model.UserLikeResponse
 import br.com.symon.data.model.requests.*
-import br.com.symon.data.model.responses.CheckUserResponse
-import br.com.symon.data.model.responses.RegisterUserResponse
-import br.com.symon.data.model.responses.UploadUserPhotoResponse
-import br.com.symon.data.model.responses.UserTokenResponse
+import br.com.symon.data.model.responses.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -54,9 +49,15 @@ interface UserApiService {
     @POST("/user/block")
     fun blockUser(@Header("Authorization") userToken: String?, @Body userBlockedId: BlockUserRequest?): Observable<Response<Void>>
 
+    @GET("/user/favorites")
+    fun getFavorites(@Header("Authorization") userToken: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
+
     @GET("/user/like")
-    fun getLikes(@Header("Authorization") userToken: String): Observable<MutableList<UserLikeResponse>>
+    fun getLikes(@Header("Authorization") userToken: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
+
+    @GET("/user/dislike")
+    fun getDislikes(@Header("Authorization") userToken: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
 
     @GET("/user/comment")
-    fun getComments(@Header("Authorization") userToken: String): Observable<MutableList<Comment>>
+    fun getComments(@Header("Authorization") userToken: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
 }

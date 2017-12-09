@@ -4,7 +4,8 @@
     android:id="@+id/fragmentRatingsLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/fragmentRatingsTabLayout"
@@ -17,15 +18,9 @@
         app:tabIndicatorHeight="4dp"
         app:tabMode="fixed" />
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/fragmentRatingsCustomViewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" />
 
-        <br.com.symon.common.widget.WrapContentViewPager
-            android:id="@+id/fragmentRatingsCustomViewPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

@@ -1,20 +1,15 @@
 package br.com.symon.ui.ratings
 
 import br.com.gold360.financas.common.GeneralErrorHandler
+import br.com.symon.data.model.requests.BlockUserRequest
+import br.com.symon.data.model.requests.SaleReportRequest
+import br.com.symon.data.repository.SaleRepository
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.FragmentScope
 import javax.inject.Inject
 
 @FragmentScope
-class RatingsChildFragmentPresenter @Inject constructor(val view: RatingsChildFragmentContract.View, private val userRepository: UserRepository) : RatingsChildFragmentContract.Presenter {
-    override fun loadLikes(userToken: String) {
-        userRepository.getLikes(userToken)
-                .subscribe({
-                    view.showLikes(it)
-                }, {
-                    GeneralErrorHandler(it, view, {})
-                })
-    }
+class RatingsChildFragmentPresenter @Inject constructor(val view: RatingsChildFragmentContract.View, private val userRepository: UserRepository, private val saleRepository: SaleRepository) : RatingsChildFragmentContract.Presenter {
 
     override fun getUserCache() {
         userRepository.getUserCache().subscribe({
@@ -22,5 +17,73 @@ class RatingsChildFragmentPresenter @Inject constructor(val view: RatingsChildFr
         }, {
             GeneralErrorHandler(it, view, {})
         })
+    }
+
+    override fun loadTab(ratingsChildType: RatingsChildFragment.RatingsChildType, userToken: String, page: Int, pageSize: Int) {
+//        TODO("Aguardando API")
+//        when (ratingsChildType) {
+//            RatingsChildFragment.RatingsChildType.FAVORITES -> {
+//                userRepository.getFavorites(userToken, page, pageSize)
+//            }
+//            RatingsChildFragment.RatingsChildType.LIKES -> {
+//                userRepository.getLikes(userToken, page, pageSize)
+//            }
+//            RatingsChildFragment.RatingsChildType.DISLIKES -> {
+//                userRepository.getDislikes(userToken, page, pageSize)
+//            }
+//            RatingsChildFragment.RatingsChildType.COMMENTS -> {
+//                userRepository.getComments(userToken, page, pageSize)
+//            }
+//        }
+        saleRepository.getSalesList(userToken, page, pageSize)
+                .subscribe({
+                    view.showSales(it)
+                }, {
+                    GeneralErrorHandler(it, view, {})
+                })
+    }
+
+    override fun likeSale(position: Int, saleId: Int, userToken: String) {
+        saleRepository.likeSale(saleId, userToken)
+                .subscribe({
+                    when (it.code()) {
+                        in 200..204 -> {
+                            view.updateActionSAle(position, true)
+                        }
+                    }
+                }, {
+                    GeneralErrorHandler(it, view, {})
+                })
+    }
+
+    override fun disLikeSale(position: Int, saleId: Int, userToken: String) {
+        saleRepository.disLikeSale(saleId, userToken)
+                .subscribe({
+                    when (it.code()) {
+                        in 200..204 -> {
+                            view.updateActionSAle(position, false)
+                        }
+                    }
+                }, {
+                    GeneralErrorHandler(it, view, {})
+                })
+    }
+
+    override fun reportSale(userToken: String?, saleReportRequest: SaleReportRequest?) {
+        saleRepository.reportSale(saleReportRequest, userToken)
+                .subscribe({
+                    view.showReportSaleResponse()
+                }, {
+                    GeneralErrorHandler(it, view, {})
+                })
+    }
+
+    override fun blockUser(userToken: String?, userBlockedId: BlockUserRequest?) {
+        userRepository.blockUSer(userToken, userBlockedId)
+                .subscribe({
+                    view.showBlockUserResponse()
+                }, {
+                    GeneralErrorHandler(it, view, {})
+                })
     }
 }

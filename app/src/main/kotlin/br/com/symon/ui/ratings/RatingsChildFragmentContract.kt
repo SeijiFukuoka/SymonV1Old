@@ -1,17 +1,29 @@
 package br.com.symon.ui.ratings
 
 import br.com.symon.base.BaseView
-import br.com.symon.data.model.UserLikeResponse
+import br.com.symon.data.model.requests.BlockUserRequest
+import br.com.symon.data.model.requests.SaleReportRequest
+import br.com.symon.data.model.responses.SalesListResponse
 import br.com.symon.data.model.responses.UserTokenResponse
 
 interface RatingsChildFragmentContract {
     interface View : BaseView {
-        fun showLikes(userLikeResponse: MutableList<UserLikeResponse>)
         fun setUser(userTokenResponse: UserTokenResponse)
+        fun showTabResponse(salesListResponse: SalesListResponse)
+        fun updateActionSAle(position: Int, isLike: Boolean)
+        fun showReportSaleResponse()
+        fun showBlockUserResponse()
+
+//        TODO("Aguardando API")
+        fun showSales(salesListResponse: SalesListResponse)
     }
 
     interface Presenter {
-        fun loadLikes(userToken: String)
         fun getUserCache()
+        fun loadTab(ratingsChildType: RatingsChildFragment.RatingsChildType, userToken: String, page: Int, pageSize: Int)
+        fun likeSale(position: Int, saleId: Int, userToken: String)
+        fun disLikeSale(position: Int, saleId: Int, userToken: String)
+        fun reportSale(userToken: String?, saleReportRequest: SaleReportRequest?)
+        fun blockUser(userToken: String?, userBlockedId: BlockUserRequest?)
     }
 }

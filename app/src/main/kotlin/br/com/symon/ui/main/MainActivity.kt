@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.SearchView
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -62,8 +64,9 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         supportActionBar?.setDisplayShowHomeEnabled(false)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        setupBottomMenu()
         setupSearchView()
+        setupRatingOrderMenu()
+        setupBottomMenu()
     }
 
     override fun onBackPressed() = if (!mainActivitySearchView.isIconified) {
@@ -83,25 +86,9 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
 
     override fun showSearchResults(salesListResponse: SalesListResponse) {
         if (salesListResponse.salesList.size > 0)
-            toast("Resultados da procura = ${salesListResponse.salesList.get(0)} ")
+            toast("Resultados da procura = ${salesListResponse.salesList[0]} ")
         else
             toast("Nenhum resultado encontrado")
-    }
-
-    private fun setupSearchView() {
-        mainActivitySearchView.setOnQueryTextListener(this)
-        mainActivitySearchView.setOnSearchClickListener({
-            mainBrandImageView.visibility = View.GONE
-            mainFrameContent.visibility = View.GONE
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        })
-
-        mainActivitySearchView.setOnCloseListener {
-            mainFrameContent.visibility = View.VISIBLE
-            mainBrandImageView.visibility = View.VISIBLE
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
-            false
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -126,6 +113,45 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setupSearchView() {
+        mainActivitySearchView.setOnQueryTextListener(this)
+        mainActivitySearchView.setOnSearchClickListener({
+            mainBrandImageView.visibility = View.GONE
+            mainFrameContent.visibility = View.GONE
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        })
+
+        mainActivitySearchView.setOnCloseListener {
+            mainFrameContent.visibility = View.VISIBLE
+            mainBrandImageView.visibility = View.VISIBLE
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            false
+        }
+    }
+
+    private fun setupRatingOrderMenu() {
+        mainActivityRatingOrderLinearLayout.setOnClickListener {
+            val popup = PopupMenu(this, mainActivityRatingOrderLinearLayout, Gravity.TOP)
+            popup.inflate(R.menu.rating_order_menu)
+
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.ratingOrderMenuNewest -> {
+                        mainActivityRatingOrderTextView.text = getString(R.string.ratings_order_menu_option_newest)
+                    }
+                    R.id.ratingOrderMenuCheaper -> {
+                        mainActivityRatingOrderTextView.text = getString(R.string.ratings_order_menu_option_cheaper)
+                    }
+                    R.id.ratingOrderMenuExpensive -> {
+                        mainActivityRatingOrderTextView.text = getString(R.string.ratings_order_menu_option_expensive)
+                    }
+                }
+                false
+            }
+            popup.show()
         }
     }
 
@@ -174,6 +200,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         }
 
         mainActivitySearchView.visibility = View.GONE
+        mainActivityRatingOrderLinearLayout.visibility = View.GONE
         menuSettings.isVisible = true
     }
 
@@ -183,24 +210,33 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         }
 
         menuSettings.isVisible = false
+        mainActivityRatingOrderLinearLayout.visibility = View.GONE
+        mainActivitySearchView.visibility = View.VISIBLE
     }
 
     private fun openSearchSales(searchQuery: String) {
         replace(R.id.mainFrameContent, SalesFragment.newInstance(searchQuery))
+        mainActivityRatingOrderLinearLayout.visibility = View.GONE
+        menuSettings.isVisible = false
+        mainActivitySearchView.visibility = View.VISIBLE
     }
 
     private fun openRatings() {
         menuSettings.isVisible = false
+        mainActivitySearchView.visibility = View.GONE
+        mainActivityRatingOrderLinearLayout.visibility = View.VISIBLE
         replace(R.id.mainFrameContent, RatingsFragment())
     }
 
     private fun openSendSale() {
         toast("Enviar - Em progresso")
         menuSettings.isVisible = false
+        mainActivityRatingOrderLinearLayout.visibility = View.GONE
     }
 
     private fun openNotifications() {
         toast("Notificações - Em progresso")
         menuSettings.isVisible = false
+        mainActivityRatingOrderLinearLayout.visibility = View.GONE
     }
 }

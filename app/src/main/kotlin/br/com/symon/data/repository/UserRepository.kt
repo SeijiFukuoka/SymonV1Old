@@ -48,7 +48,11 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
 
     fun blockUSer(userToken: String?, userBlockedId: BlockUserRequest?) = call(userApiService.blockUser(userToken, userBlockedId))
 
-    fun getLikes(userToken: String) = call(userApiService.getLikes(userToken))
+    fun getFavorites(userToken: String, page: Int, pageSize: Int) = call(userApiService.getFavorites(userToken, page, pageSize))
 
-    fun getComments(userToken: String) = call(userApiService.getComments(userToken))
+    fun getLikes(userToken: String, page: Int, pageSize: Int) = call(userApiService.getLikes(userToken, page, pageSize))
+
+    fun getDislikes(userToken: String, page: Int, pageSize: Int) = call(userApiService.getDislikes(userToken, page, pageSize))
+
+    fun getComments(userToken: String, page: Int, pageSize: Int) = call(userApiService.getComments(userToken, page, pageSize))
 }
