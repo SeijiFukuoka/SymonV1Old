@@ -15,15 +15,21 @@ import java.util.*
 
 class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.OnRatingsChildListener {
 
-    private var extraOrderBy: String? = ""
+    enum class OrderBy(val value: Int) {
+        NEWEST(0),
+        CHEAPER(1),
+        EXPENSIVE(2)
+    }
+
+    private var extraOrderBy: Int = 0
 
     companion object {
         private const val EXTRA_ORDER_BY = "EXTRA_ORDER_BY"
 
-        fun newInstance(orderBy: String?): RatingsFragment {
+        fun newInstance(orderBy: Int): RatingsFragment {
             val f = RatingsFragment()
             val args = Bundle()
-            args.putString(EXTRA_ORDER_BY, orderBy)
+            args.putInt(EXTRA_ORDER_BY, orderBy)
             f.arguments = args
             return f
         }
@@ -43,10 +49,8 @@ class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.On
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (arguments != null && arguments.getString(RatingsFragment.EXTRA_ORDER_BY) != null)
-            extraOrderBy = arguments.getString(RatingsFragment.EXTRA_ORDER_BY)
-
-        Log.i("TAG - 1", extraOrderBy)
+        if (arguments != null)
+            extraOrderBy = arguments.getInt(RatingsFragment.EXTRA_ORDER_BY, OrderBy.NEWEST.value)
 
         val salesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.FAVORITES, extraOrderBy)
         val likesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.LIKES, extraOrderBy)

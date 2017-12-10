@@ -3,7 +3,6 @@ package br.com.symon.ui.ratings
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,11 +43,11 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         private const val API_OPTION_KEY: String = "API_OPTION_KEY"
         const val EXTRA_ORDER_BY: String = "EXTRA_ORDER_BY"
 
-        fun newInstance(apiOptionKey: RatingsChildType, orderBy: String?): RatingsChildFragment {
+        fun newInstance(apiOptionKey: RatingsChildType, orderBy: Int): RatingsChildFragment {
             val f = RatingsChildFragment()
             val args = Bundle()
             args.putSerializable(API_OPTION_KEY, apiOptionKey)
-            args.putString(EXTRA_ORDER_BY, orderBy)
+            args.putInt(EXTRA_ORDER_BY, orderBy)
             f.arguments = args
             return f
         }
@@ -59,7 +58,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         fun onTabsUpdateNeeded()
     }
 
-    private var extraOrderBy: String? = ""
+    private var extraOrderBy: Int = 0
     private lateinit var apiOptionKey: RatingsChildType
     private lateinit var userTokenResponse: UserTokenResponse
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -92,10 +91,8 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
 
         if (arguments != null) {
             apiOptionKey = arguments.getSerializable(API_OPTION_KEY) as RatingsChildType
-            extraOrderBy = arguments.getString(RatingsChildFragment.EXTRA_ORDER_BY)
+            extraOrderBy = arguments.getInt(RatingsChildFragment.EXTRA_ORDER_BY, RatingsFragment.OrderBy.NEWEST.value)
         }
-
-        Log.i("TAG - 2", extraOrderBy)
 
         showLoading()
         setUpRecyclersViews()
@@ -120,11 +117,11 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
     }
 
     override fun onLikeSaleClick(position: Int, sale: Sale) {
-        ratingsChildComponent.ratingsChildFragmentPresenter().likeSale(position, sale.id!!, userTokenResponse.token)
+        ratingsChildComponent.ratingsChildFragmentPresenter().likeSale(position, sale.id, userTokenResponse.token)
     }
 
     override fun onDislikeSaleClick(position: Int, sale: Sale) {
-        ratingsChildComponent.ratingsChildFragmentPresenter().disLikeSale(position, sale.id!!, userTokenResponse.token)
+        ratingsChildComponent.ratingsChildFragmentPresenter().disLikeSale(position, sale.id, userTokenResponse.token)
     }
 
     override fun onReportSaleClick(sale: Sale) {
