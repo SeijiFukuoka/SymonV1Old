@@ -7,11 +7,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.dateFormat
-import br.com.symon.common.hideKeyboard
 import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.toast
 import br.com.symon.data.model.requests.UserUpdateRequest
@@ -83,6 +83,8 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
 
         }
 
+        registerComplementBirthdayEditText.inputType = InputType.TYPE_NULL
+
         registerComplementBirthdayEditText.setOnClickListener {
             setupCalendar()
         }
@@ -153,8 +155,6 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
     }
 
     private fun setupCalendar() {
-        registerComplementBirthdayEditText.hideKeyboard()
-
         calendar = Calendar.getInstance()
         datePickerDialog = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)

@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.util.Log
@@ -14,7 +15,6 @@ import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.dateFormat
-import br.com.symon.common.hideKeyboard
 import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.toast
 import br.com.symon.data.model.User
@@ -88,6 +88,8 @@ class ProfileActivity : BaseActivity(),
                     }
 
         }
+
+        profileBirthdayEditText.inputType = InputType.TYPE_NULL
 
         profileBirthdayEditText.setOnClickListener {
             setupCalendar()
@@ -188,6 +190,13 @@ class ProfileActivity : BaseActivity(),
             calendar = Calendar.getInstance()
             calendar.time = birthday
         }
+    }
+
+    override fun showInvalidPassword() {
+        profilePasswordEditText.setText("")
+        profileNewPasswordTextInput.requestFocus()
+        profilePasswordTextInput.isErrorEnabled = true
+        profilePasswordTextInput.error = getString(R.string.profile_wrong_password)
     }
 
     override fun onCancel() {
@@ -320,8 +329,6 @@ class ProfileActivity : BaseActivity(),
     }
 
     private fun setupCalendar() {
-        profileBirthdayEditText.hideKeyboard()
-
         calendar = Calendar.getInstance()
 
         datePickerDialog = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->

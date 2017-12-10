@@ -28,7 +28,7 @@ import br.com.symon.injection.components.MainActivityComponent
 import br.com.symon.injection.modules.MainActivityModule
 import br.com.symon.ui.profile.ProfileFragment
 import br.com.symon.ui.sales.SalesFragment
-import br.com.symon.ui.sendPost.PostInfoActivity
+import br.com.symon.ui.send.PostInfoActivity
 import br.com.symon.ui.settings.SettingsActivity
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem

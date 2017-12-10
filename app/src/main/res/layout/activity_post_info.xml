@@ -6,6 +6,12 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <br.com.symon.common.widget.HeaderProgressView
+        android:id="@+id/postInfoViewHeaderProgress"
+        layout="@layout/view_header_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <include
         android:id="@+id/postInfoAppBarLayout"
         layout="@layout/view_custom_toolbar"
@@ -32,9 +38,8 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:adjustViewBounds="true"
-                android:background="@color/colorPrimary"
-                android:clickable="true"
-                android:focusable="true"
+                android:background="@color/gray_E0E0E0"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -81,22 +86,19 @@
                     android:id="@+id/postInfoLocationEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/product_info_location_hint"
-                    android:inputType="textPersonName"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/ic_my_location_24dp"
+                    android:drawableRight="@drawable/ic_my_location_24dp"
+                    android:editable="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/post_info_location_hint"
                     android:paddingBottom="@dimen/margin_15_dp"
+                    android:singleLine="true"
                     android:textColor="@color/black_202020"
                     android:textSize="@dimen/text_size_16_sp" />
 
             </android.support.design.widget.TextInputLayout>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:adjustViewBounds="true"
-                app:layout_constraintBottom_toBottomOf="@+id/postInfoLocationTextInput"
-                app:layout_constraintEnd_toEndOf="@+id/postInfoLocationTextInput"
-                app:layout_constraintTop_toTopOf="@+id/postInfoLocationTextInput"
-                app:srcCompat="@drawable/ic_my_location_24dp" />
 
             <View
                 android:id="@+id/view"
@@ -127,8 +129,8 @@
                     android:id="@+id/postInfoPriceEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/product_info_location_hint"
-                    android:inputType="textPersonName"
+                    android:hint="R$"
+                    android:inputType="numberDecimal"
                     android:paddingBottom="@dimen/margin_15_dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"

@@ -31,19 +31,24 @@ class ProfilePresenter @Inject constructor(private val view: ProfileContract.Vie
         userRepository.updateFullUser(userId, userFullUpdateRequest).subscribe({
             view.hideLoading()
 
-            if (it.code() == 200) {
-                val userTokenResponse = it.body()
-                userRepository.saveUserCache(userTokenResponse).subscribe({
-                    view.notifyDataUpdate()
-                }, {
-                    GeneralErrorHandler(it, view, {})
-                })
-            } else {
-                val errorResponse = Gson().fromJson(it.errorBody()?.string(), ErrorResponse::class.java)
-                view.hideLoading()
-                view.showErrorMessage(errorResponse?.error)
+            when(it.code()) {
+                200 -> {
+                    val userTokenResponse = it.body()
+                    userRepository.saveUserCache(userTokenResponse).subscribe({
+                        view.notifyDataUpdate()
+                    }, {
+                        GeneralErrorHandler(it, view, {})
+                    })
+                }
+                401 -> {
+                    view.showInvalidPassword()
+                }
+                else -> {
+                    val errorResponse = Gson().fromJson(it.errorBody()?.string(), ErrorResponse::class.java)
+                    view.hideLoading()
+                    view.showErrorMessage(errorResponse?.error)
+                }
             }
-
         }, {
             GeneralErrorHandler(it, view, {})
         })

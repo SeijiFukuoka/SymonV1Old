@@ -96,6 +96,7 @@
     <string name="profile_data_updated_success">dados atualizados com sucesso =)</string>
     <string name="profile_facebook_connect">Conectar com Facebook</string>
     <string name="profile_facebook_disconnect">Facebook Conectado</string>
+    <string name="profile_wrong_password">Senha inválida</string>
 
     <string name="retrieve_password_text_input_label">Recupere sua senha</string>
     <string name="retrieve_password_text_input_hint">Confirmar e-mail cadastrado</string>
@@ -117,11 +118,13 @@
     <string name="menu_search">Buscar</string>
 
     <string name="post_info_product_name_hint">Nome do produto</string>
-    <string name="product_info_location_hint">Estabelecimento</string>
     <string name="post_into_title">Sobre a oferta</string>
+
     <string name="view_choose_photo_title">Escolha</string>
     <string name="view_choose_photo_camera">Câmera</string>
     <string name="view_choose_photo_gallery">Galeria</string>
     <string name="view_choose_photo_cancel">CANCELAR</string>
 
+    <string name="post_info_location_hint">Estabelecimento</string>
+    <string name="search_place_hint">Procurar local</string>
 </resources>
