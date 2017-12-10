@@ -141,12 +141,15 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
                 when (item.itemId) {
                     R.id.ratingOrderMenuNewest -> {
                         mainActivityRatingOrderTextView.text = getString(R.string.ratings_order_menu_option_newest)
+                        openRatings("1")
                     }
                     R.id.ratingOrderMenuCheaper -> {
                         mainActivityRatingOrderTextView.text = getString(R.string.ratings_order_menu_option_cheaper)
+                        openRatings("2")
                     }
                     R.id.ratingOrderMenuExpensive -> {
                         mainActivityRatingOrderTextView.text = getString(R.string.ratings_order_menu_option_expensive)
+                        openRatings("3")
                     }
                 }
                 false
@@ -184,7 +187,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         mainBottomNavigation.setOnTabSelectedListener { position, _ ->
             when (position) {
                 0 -> openSales()
-                1 -> openRatings()
+                1 -> openRatings(orderBy = "1")
                 2 -> openSendSale()
                 3 -> openNotifications()
                 4 -> openProfile()
@@ -221,11 +224,12 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         mainActivitySearchView.visibility = View.VISIBLE
     }
 
-    private fun openRatings() {
+    private fun openRatings(orderBy: String) {
         menuSettings.isVisible = false
         mainActivitySearchView.visibility = View.GONE
         mainActivityRatingOrderLinearLayout.visibility = View.VISIBLE
-        replace(R.id.mainFrameContent, RatingsFragment())
+//        TODO("Pendente API")
+        replace(R.id.mainFrameContent, RatingsFragment.newInstance(orderBy))
     }
 
     private fun openSendSale() {

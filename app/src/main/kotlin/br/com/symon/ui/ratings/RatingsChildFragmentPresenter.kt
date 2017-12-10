@@ -20,27 +20,40 @@ class RatingsChildFragmentPresenter @Inject constructor(val view: RatingsChildFr
     }
 
     override fun loadTab(ratingsChildType: RatingsChildFragment.RatingsChildType, userToken: String, page: Int, pageSize: Int) {
-//        TODO("Aguardando API")
-//        when (ratingsChildType) {
-//            RatingsChildFragment.RatingsChildType.FAVORITES -> {
-//                userRepository.getFavorites(userToken, page, pageSize)
-//            }
-//            RatingsChildFragment.RatingsChildType.LIKES -> {
-//                userRepository.getLikes(userToken, page, pageSize)
-//            }
-//            RatingsChildFragment.RatingsChildType.DISLIKES -> {
-//                userRepository.getDislikes(userToken, page, pageSize)
-//            }
-//            RatingsChildFragment.RatingsChildType.COMMENTS -> {
-//                userRepository.getComments(userToken, page, pageSize)
-//            }
-//        }
-        saleRepository.getSalesList(userToken, page, pageSize)
-                .subscribe({
-                    view.showSales(it)
-                }, {
-                    GeneralErrorHandler(it, view, {})
-                })
+        when (ratingsChildType) {
+            RatingsChildFragment.RatingsChildType.FAVORITES -> {
+                userRepository.getFavorites(userToken, page, pageSize)
+                        .subscribe({
+                            view.showTabResponse(it)
+                        }, {
+                            GeneralErrorHandler(it, view, {})
+                        })
+            }
+            RatingsChildFragment.RatingsChildType.LIKES -> {
+                userRepository.getLikes(userToken, page, pageSize)
+                        .subscribe({
+                            view.showTabResponse(it)
+                        }, {
+                            GeneralErrorHandler(it, view, {})
+                        })
+            }
+            RatingsChildFragment.RatingsChildType.DISLIKES -> {
+                userRepository.getDislikes(userToken, page, pageSize)
+                        .subscribe({
+                            view.showTabResponse(it)
+                        }, {
+                            GeneralErrorHandler(it, view, {})
+                        })
+            }
+            RatingsChildFragment.RatingsChildType.COMMENTS -> {
+                userRepository.getComments(userToken, page, pageSize)
+                        .subscribe({
+                            view.showTabResponse(it)
+                        }, {
+                            GeneralErrorHandler(it, view, {})
+                        })
+            }
+        }
     }
 
     override fun likeSale(position: Int, saleId: Int, userToken: String) {

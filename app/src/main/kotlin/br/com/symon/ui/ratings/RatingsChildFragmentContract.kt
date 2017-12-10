@@ -13,9 +13,6 @@ interface RatingsChildFragmentContract {
         fun updateActionSAle(position: Int, isLike: Boolean)
         fun showReportSaleResponse()
         fun showBlockUserResponse()
-
-//        TODO("Aguardando API")
-        fun showSales(salesListResponse: SalesListResponse)
     }
 
     interface Presenter {

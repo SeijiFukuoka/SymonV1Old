@@ -1,7 +1,7 @@
 package br.com.symon.ui.ratings
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +14,20 @@ import java.util.*
 
 
 class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.OnRatingsChildListener {
+
+    private var extraOrderBy: String? = ""
+
+    companion object {
+        private const val EXTRA_ORDER_BY = "EXTRA_ORDER_BY"
+
+        fun newInstance(orderBy: String?): RatingsFragment {
+            val f = RatingsFragment()
+            val args = Bundle()
+            args.putString(EXTRA_ORDER_BY, orderBy)
+            f.arguments = args
+            return f
+        }
+    }
 
     private lateinit var ratingsFragmentAdapter: RatingsFragmentsPagerAdapter
 
@@ -29,10 +43,15 @@ class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.On
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val salesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.FAVORITES)
-        val likesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.LIKES)
-        val dislikesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.DISLIKES)
-        val commentsRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.COMMENTS)
+        if (arguments != null && arguments.getString(RatingsFragment.EXTRA_ORDER_BY) != null)
+            extraOrderBy = arguments.getString(RatingsFragment.EXTRA_ORDER_BY)
+
+        Log.i("TAG - 1", extraOrderBy)
+
+        val salesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.FAVORITES, extraOrderBy)
+        val likesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.LIKES, extraOrderBy)
+        val dislikesRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.DISLIKES, extraOrderBy)
+        val commentsRatingFragment = RatingsChildFragment.newInstance(RatingsChildFragment.RatingsChildType.COMMENTS, extraOrderBy)
 
         val fragmentsList: MutableList<RatingsChildFragment> = ArrayList()
         fragmentsList.add(salesRatingFragment)
@@ -41,10 +60,10 @@ class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.On
         fragmentsList.add(commentsRatingFragment)
 
         val titlesList: MutableList<String> = ArrayList()
-        titlesList.add("1")
-        titlesList.add("1")
-        titlesList.add("7")
-        titlesList.add("3")
+        titlesList.add("0")
+        titlesList.add("0")
+        titlesList.add("0")
+        titlesList.add("0")
 
         ratingsFragmentAdapter = RatingsFragmentsPagerAdapter(activity, childFragmentManager, fragmentsList, titlesList)
         fragmentRatingsCustomViewPager.adapter = ratingsFragmentAdapter
@@ -55,18 +74,6 @@ class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.On
             val tab = fragmentRatingsTabLayout.getTabAt(i)
             tab?.customView = ratingsFragmentAdapter.getTabView(i)
         }
-
-        fragmentRatingsTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-//                fragmentRatingsCustomViewPager.reMeasureCurrentPage(tab.position)
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-            }
-        })
     }
 
     override fun onResponseQuantityLoaded(apiOptionKey: RatingsChildFragment.RatingsChildType, quantity: Int) {

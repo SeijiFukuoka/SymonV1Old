@@ -49,7 +49,7 @@ interface UserApiService {
     @POST("/user/block")
     fun blockUser(@Header("Authorization") userToken: String?, @Body userBlockedId: BlockUserRequest?): Observable<Response<Void>>
 
-    @GET("/user/favorites")
+    @GET("/user/sale")
     fun getFavorites(@Header("Authorization") userToken: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
 
     @GET("/user/like")

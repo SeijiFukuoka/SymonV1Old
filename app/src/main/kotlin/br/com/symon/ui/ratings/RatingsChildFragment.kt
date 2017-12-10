@@ -3,6 +3,7 @@ package br.com.symon.ui.ratings
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,19 +34,21 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         COMMENTS(3)
     }
 
-    val ratingsChildComponent: RatingsChildFragmentComponent
+    private val ratingsChildComponent: RatingsChildFragmentComponent
         get() = DaggerRatingsChildFragmentComponent.builder()
                 .applicationComponent((activity.application as CustomApplication).applicationComponent)
                 .ratingsChildFragmentModule(RatingsChildFragmentModule(this))
                 .build()
 
     companion object {
-        public const val API_OPTION_KEY: String = "API_OPTION_KEY"
+        private const val API_OPTION_KEY: String = "API_OPTION_KEY"
+        const val EXTRA_ORDER_BY: String = "EXTRA_ORDER_BY"
 
-        fun newInstance(apiOptionKey: RatingsChildType): RatingsChildFragment {
+        fun newInstance(apiOptionKey: RatingsChildType, orderBy: String?): RatingsChildFragment {
             val f = RatingsChildFragment()
             val args = Bundle()
             args.putSerializable(API_OPTION_KEY, apiOptionKey)
+            args.putString(EXTRA_ORDER_BY, orderBy)
             f.arguments = args
             return f
         }
@@ -56,6 +59,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         fun onTabsUpdateNeeded()
     }
 
+    private var extraOrderBy: String? = ""
     private lateinit var apiOptionKey: RatingsChildType
     private lateinit var userTokenResponse: UserTokenResponse
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -86,8 +90,12 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (arguments != null)
+        if (arguments != null) {
             apiOptionKey = arguments.getSerializable(API_OPTION_KEY) as RatingsChildType
+            extraOrderBy = arguments.getString(RatingsChildFragment.EXTRA_ORDER_BY)
+        }
+
+        Log.i("TAG - 2", extraOrderBy)
 
         showLoading()
         setUpRecyclersViews()
@@ -107,27 +115,16 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         hideLoading()
     }
 
-    //    TODO("Deletar APOS API")
-    override fun showSales(salesListResponse: SalesListResponse) {
-        if (!salesListResponse.salesList.isEmpty()) {
-            onResponseLoaded.onResponseQuantityLoaded(apiOptionKey, salesListResponse.totalItems)
-            setSalesAdapter(salesListResponse)
-        }
-        hideLoading()
-    }
-
     override fun onSaleImageClick(sale: Sale) {
         activity.toast("onSaleImageClick ID = ${sale.id}")
     }
 
     override fun onLikeSaleClick(position: Int, sale: Sale) {
         ratingsChildComponent.ratingsChildFragmentPresenter().likeSale(position, sale.id!!, userTokenResponse.token)
-        onResponseLoaded.onTabsUpdateNeeded()
     }
 
     override fun onDislikeSaleClick(position: Int, sale: Sale) {
         ratingsChildComponent.ratingsChildFragmentPresenter().disLikeSale(position, sale.id!!, userTokenResponse.token)
-        onResponseLoaded.onTabsUpdateNeeded()
     }
 
     override fun onReportSaleClick(sale: Sale) {
@@ -139,7 +136,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
     }
 
     override fun updateActionSAle(position: Int, isLike: Boolean) {
-        salesAdapter.updateItem(position, isLike)
+        onResponseLoaded.onTabsUpdateNeeded()
     }
 
     override fun showReportSaleResponse() {
@@ -150,7 +147,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         activity.toast("showBlockUserResponse")
     }
 
-    public fun updateFragment() {
+    fun updateFragment() {
         fetchData(FIRST_PAGE)
     }
 
@@ -188,5 +185,4 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
             }
         }, linearLayoutManager))
     }
-
 }
