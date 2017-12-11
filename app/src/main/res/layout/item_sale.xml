@@ -111,8 +111,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_5_dp"
                         android:layout_marginRight="@dimen/margin_5_dp"
-                        android:background="@drawable/selector_ic_sale_like_action"
-                        android:contentDescription="@string/item_sale_like_sale_image_content_description" />
+                        android:contentDescription="@string/item_sale_like_sale_image_content_description"
+                        app:srcCompat="@drawable/selector_ic_sale_like_action" />
 
                     <TextView
                         android:id="@+id/itemSaleLikeQuantityTextView"
@@ -151,8 +151,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_5_dp"
                         android:layout_marginRight="@dimen/margin_5_dp"
-                        android:background="@drawable/selector_ic_sale_dislike_action"
-                        android:contentDescription="@string/item_sale_dislike_sale_image_content_description" />
+                        android:contentDescription="@string/item_sale_dislike_sale_image_content_description"
+                        app:srcCompat="@drawable/selector_ic_sale_dislike_action" />
 
                     <TextView
                         android:id="@+id/itemSaleDislikeQuantityTextView"
