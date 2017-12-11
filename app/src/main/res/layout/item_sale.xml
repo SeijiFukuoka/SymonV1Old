@@ -4,11 +4,9 @@
     style="@style/CardView.Light"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/margin_15_dp"
-    android:layout_marginEnd="@dimen/margin_10_dp"
-    android:layout_marginStart="@dimen/margin_10_dp"
-    android:layout_marginTop="@dimen/margin_15_dp"
+    android:layout_margin="@dimen/margin_10_dp"
     android:animateLayoutChanges="true"
+    android:clipToPadding="false"
     app:cardCornerRadius="5dp"
     app:cardElevation="@dimen/margin_10_dp">
 
@@ -52,46 +50,51 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/itemSaleImageView">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/itemSaleSaleDetailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
+                android:baselineAligned="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="@dimen/margin_15_dp">
 
-                <TextView
-                    android:id="@+id/itemSaleSaleTitleTextView"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:paddingBottom="@dimen/margin_5_dp"
-                    android:textAppearance="@style/TextAppearance.Bold"
-                    android:textColor="@color/black_202020"
-                    android:textSize="@dimen/text_size_12_sp"
-                    android:textStyle="bold"
-                    tools:text="Maionese Vigor" />
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/itemSaleSaleValueTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingTop="@dimen/margin_10_dp"
-                    android:textAppearance="@style/TextAppearance.Bold"
-                    android:textColor="@color/green_54983A"
-                    android:textSize="@dimen/text_size_14_sp"
-                    android:textStyle="bold"
-                    tools:text="R$ 0,89" />
+                    <TextView
+                        android:id="@+id/itemSaleSaleTitleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Bold"
+                        android:textColor="@color/black_202020"
+                        android:textSize="@dimen/text_size_12_sp"
+                        android:textStyle="bold"
+                        tools:text="Maionese Vigor" />
+
+                    <TextView
+                        android:id="@+id/itemSaleSaleValueTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Bold"
+                        android:textColor="@color/green_54983A"
+                        android:textSize="@dimen/text_size_14_sp"
+                        android:textStyle="bold"
+                        tools:text="R$ 0,89" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/itemSaleLikeLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/margin_15_dp"
                     android:layout_marginRight="@dimen/margin_15_dp"
-                    android:layout_toLeftOf="@id/itemSaleDislikeLayout"
-                    android:layout_toStartOf="@id/itemSaleDislikeLayout"
                     android:background="@drawable/selector_ic_sale_like_layout_background"
                     android:clickable="true"
                     android:focusable="true"
@@ -130,9 +133,7 @@
                     android:id="@+id/itemSaleDislikeLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
                     android:background="@drawable/selector_ic_sale_dislike_layout_background"
                     android:clickable="true"
                     android:focusable="true"
@@ -166,7 +167,7 @@
 
                 </LinearLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/itemSaleBottomLayout"
@@ -239,5 +240,4 @@
             </RelativeLayout>
         </RelativeLayout>
     </android.support.constraint.ConstraintLayout>
-
 </android.support.v7.widget.CardView>
