@@ -105,10 +105,15 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
     }
 
     override fun showTabResponse(salesListResponse: SalesListResponse) {
-        if (!salesListResponse.salesList.isEmpty()) {
-            onResponseLoaded.onResponseQuantityLoaded(apiOptionKey, salesListResponse.totalItems)
+        if (salesListResponse.salesList.isNotEmpty()) {
             setSalesAdapter(salesListResponse)
+            ratingsChildFragmentRecyclerView.visibility = View.VISIBLE
+            ratingsChildFragmentNoContent.visibility = View.GONE
+        } else {
+            ratingsChildFragmentRecyclerView.visibility = View.GONE
+            ratingsChildFragmentNoContent.visibility = View.VISIBLE
         }
+        onResponseLoaded.onResponseQuantityLoaded(apiOptionKey, salesListResponse.totalItems)
         hideLoading()
     }
 
@@ -134,6 +139,9 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
 
     override fun updateActionSAle(position: Int, isLike: Boolean) {
         onResponseLoaded.onTabsUpdateNeeded()
+        ratingsChildFragmentNoContent.visibility = View.GONE
+        ratingsChildFragmentRecyclerView.visibility = View.GONE
+        showLoading()
     }
 
     override fun showReportSaleResponse() {
@@ -167,7 +175,6 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         if (currentPage == Constants.FIRST_PAGE) {
             salesAdapter = SalesAdapter(salesListResponse.salesList, userTokenResponse.user!!, this)
             ratingsChildFragmentRecyclerView.adapter = salesAdapter
-            ratingsChildFragmentRecyclerView.visibility = View.VISIBLE
         } else {
             salesAdapter.addList(salesListResponse.salesList)
         }

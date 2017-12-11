@@ -12,4 +12,16 @@
         android:scrollbars="vertical"
         android:visibility="gone"
         tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/ratingsChildFragmentNoContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Sem resultados até o momento"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_14_sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
 </LinearLayout>
