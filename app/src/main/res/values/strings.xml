@@ -116,4 +116,11 @@
     <string name="menu_settings">Configurações</string>
     <string name="menu_search">Buscar</string>
 
+    <string name="sale_detail_price_label">Valor promocional</string>
+    <string name="sale_detail_product_name_label">Nome do produto</string>
+    <string name="sale_detail_place_name_label">Estabelecimento</string>
+    <string name="sale_detail_opinion_label">Deixe sua opinião</string>
+    <string name="sale_detail_comment_label">Faça seu comentário</string>
+    <string name="sale_detail_comment_layout_label">Comentários</string>
+    <string name="sale_detail_comment_comment_input_hint">Faça seu comentário</string>
 </resources>

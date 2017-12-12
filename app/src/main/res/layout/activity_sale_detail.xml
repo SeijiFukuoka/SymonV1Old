@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/saleDetailActivityMainContentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/saleDetailActivityScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/saleDetailActivityCommentLayout">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/saleDetailActivityContraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:focusableInTouchMode="true">
+
+            <include
+                android:id="@+id/saleDetailActivityHeaderProgressView"
+                layout="@layout/view_header_progress" />
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/saleDetailActivityAppBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@android:color/white"
+                android:fitsSystemWindows="true"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:elevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivityHeaderProgressView">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/saleDetailActivityToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                    <ImageView
+                        android:id="@+id/saleDetailActivityBackArrowImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_20_dp"
+                        android:layout_marginStart="@dimen/margin_20_dp"
+                        app:srcCompat="@drawable/ic_back_arrow" />
+
+                    <TextView
+                        android:id="@+id/saleDetailActivityToolbarTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_15_dp"
+                        android:layout_marginStart="@dimen/margin_15_dp"
+                        android:gravity="center_vertical"
+                        android:textAppearance="@style/TextAppearance.Title.Toolbar"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_18_sp"
+                        tools:text="Maionese Vigor" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/margin_25_dp"
+                        android:layout_marginRight="@dimen/margin_25_dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_sale_toolbar_favorite_off" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/margin_15_dp"
+                        android:layout_marginRight="@dimen/margin_15_dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_sale_toolbar_comment" />
+
+                </android.support.v7.widget.Toolbar>
+            </android.support.design.widget.AppBarLayout>
+
+            <ImageView
+                android:id="@+id/saleDetailActivitySaleImageView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/margin_25_dp"
+                android:layout_marginLeft="@dimen/margin_25_dp"
+                android:layout_marginRight="@dimen/margin_25_dp"
+                android:layout_marginStart="@dimen/margin_25_dp"
+                android:layout_marginTop="@dimen/margin_15_dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/item_sale_image_sale_image_content_description"
+                android:minHeight="175dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="H,16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivityAppBarLayout"
+                tools:src="@color/white_F5F5F5" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/saleDetailActivitySaleProductDetailCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_25_dp"
+                android:layout_marginLeft="@dimen/margin_25_dp"
+                android:layout_marginRight="@dimen/margin_25_dp"
+                android:layout_marginStart="@dimen/margin_25_dp"
+                app:cardElevation="@dimen/margin_10_dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySaleImageView">
+
+                <LinearLayout
+                    android:id="@+id/saleDetailActivitySaleDetailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/green_54983A"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_15_dp"
+                    android:paddingEnd="@dimen/margin_25_dp"
+                    android:paddingLeft="@dimen/margin_25_dp"
+                    android:paddingRight="@dimen/margin_25_dp"
+                    android:paddingStart="@dimen/margin_25_dp"
+                    android:paddingTop="@dimen/margin_10_dp">
+
+                    <TextView
+                        android:id="@+id/saleDetailActivitySaleDetailPriceLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sale_detail_price_label"
+                        android:textAppearance="@style/TextAppearance.Regular"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_12_sp" />
+
+                    <TextView
+                        android:id="@+id/saleDetailActivitySaleDetailPriceValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_3_dp"
+                        android:text="@string/sale_detail_price_label"
+                        android:textAppearance="@style/TextAppearance.Bold"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_20_sp"
+                        android:textStyle="bold"
+                        tools:text="R$ 0,89" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/saleDetailActivitySaleProductLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_15_dp"
+                android:layout_marginStart="@dimen/margin_15_dp"
+                android:layout_marginTop="@dimen/margin_25_dp"
+                android:text="@string/sale_detail_product_name_label"
+                android:textAppearance="@style/TextAppearance.Regular"
+                android:textColor="@color/gray_737373"
+                android:textSize="@dimen/text_size_14_sp"
+                app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySaleProductDetailCardView"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySaleProductDetailCardView" />
+
+            <TextView
+                android:id="@+id/saleDetailActivitySaleProductValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5_dp"
+                android:text="@string/sale_detail_price_label"
+                android:textAppearance="@style/TextAppearance.Bold"
+                android:textColor="@color/gray_4A4A4A"
+                android:textSize="@dimen/text_size_15_sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySaleProductLabel"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySaleProductLabel"
+                tools:text="R$ 0,89" />
+
+            <TextView
+                android:id="@+id/saleDetailActivitySalePlaceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:text="@string/sale_detail_place_name_label"
+                android:textAppearance="@style/TextAppearance.Regular"
+                android:textColor="@color/gray_737373"
+                android:textSize="@dimen/text_size_14_sp"
+                app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySaleProductValue"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySaleProductValue" />
+
+            <TextView
+                android:id="@+id/saleDetailActivitySalePlaceValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5_dp"
+                android:textAppearance="@style/TextAppearance.Bold"
+                android:textColor="@color/green_54983A"
+                android:textSize="@dimen/text_size_15_sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySalePlaceLabel"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySalePlaceLabel"
+                tools:text="Pão de Açúcar - Clodomiro Ama..." />
+
+            <TextView
+                android:id="@+id/saleDetailActivityOpinionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20_dp"
+                android:text="@string/sale_detail_opinion_label"
+                android:textAppearance="@style/TextAppearance.Regular"
+                android:textColor="@color/gray_737373"
+                android:textSize="@dimen/text_size_14_sp"
+                app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySalePlaceValue"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySalePlaceValue" />
+
+            <LinearLayout
+                android:id="@+id/saleDetailActivityActionLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_15_dp"
+                android:layout_marginTop="@dimen/margin_15_dp"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="@id/saleDetailActivityOpinionLabel"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivityOpinionLabel">
+
+                <LinearLayout
+                    android:id="@+id/saleDetailActivityLikeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_ic_sale_like_layout_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/margin_10_dp"
+                    android:paddingEnd="@dimen/margin_5_dp"
+                    android:paddingLeft="@dimen/margin_5_dp"
+                    android:paddingRight="@dimen/margin_5_dp"
+                    android:paddingStart="@dimen/margin_5_dp"
+                    android:paddingTop="@dimen/margin_10_dp"
+                    tools:ignore="RelativeOverlap">
+
+                    <ImageView
+                        android:id="@+id/itemSaleLikeImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_5_dp"
+                        android:layout_marginRight="@dimen/margin_5_dp"
+                        android:background="@drawable/selector_ic_sale_like_action"
+                        android:contentDescription="@string/item_sale_like_sale_image_content_description" />
+
+                    <TextView
+                        android:id="@+id/itemSaleLikeQuantityTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Bold"
+                        android:textColor="@drawable/selector_ic_sale_action_text"
+                        android:textSize="@dimen/text_size_15_sp"
+                        android:textStyle="bold"
+                        tools:text="99" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/saleDetailActivityDislikeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_ic_sale_dislike_layout_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/margin_10_dp"
+                    android:paddingEnd="@dimen/margin_5_dp"
+                    android:paddingLeft="@dimen/margin_5_dp"
+                    android:paddingRight="@dimen/margin_5_dp"
+                    android:paddingStart="@dimen/margin_5_dp"
+                    android:paddingTop="@dimen/margin_10_dp">
+
+                    <ImageView
+                        android:id="@+id/itemSaleDislikeImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_5_dp"
+                        android:layout_marginRight="@dimen/margin_5_dp"
+                        android:background="@drawable/selector_ic_sale_dislike_action"
+                        android:contentDescription="@string/item_sale_dislike_sale_image_content_description" />
+
+                    <TextView
+                        android:id="@+id/itemSaleDislikeQuantityTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.Bold"
+                        android:textColor="@drawable/selector_ic_sale_action_text"
+                        android:textSize="@dimen/text_size_15_sp"
+                        android:textStyle="bold"
+                        tools:text="12" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/saleDetailActivityCommentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/saleDetailActivityCommentEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:padding="@dimen/margin_15_dp"
+            android:text="@string/sale_detail_comment_comment_input_hint"
+            android:textAppearance="@style/TextAppearance.Regular"
+            android:textColor="@color/black_202020"
+            android:textColorHint="@color/black_202020"
+            android:textSize="@dimen/text_size_15_sp" />
+
+        <ImageView
+            android:id="@+id/saleDetailActivitySendCommentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/orange_F5A623"
+            android:padding="@dimen/margin_15_dp"
+            app:srcCompat="@drawable/ic_sale_send_comment" />
+
+    </LinearLayout>
+</RelativeLayout>
