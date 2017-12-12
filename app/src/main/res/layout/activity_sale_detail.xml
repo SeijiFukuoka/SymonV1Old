@@ -219,89 +219,84 @@
                 app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySalePlaceValue"
                 app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySalePlaceValue" />
 
+
             <LinearLayout
-                android:id="@+id/saleDetailActivityActionLayout"
+                android:id="@+id/saleDetailActivityLikeLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_15_dp"
-                android:layout_marginTop="@dimen/margin_15_dp"
+                android:background="@drawable/selector_ic_sale_like_layout_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_10_dp"
+                android:paddingEnd="@dimen/margin_5_dp"
+                android:paddingLeft="@dimen/margin_5_dp"
+                android:paddingRight="@dimen/margin_5_dp"
+                android:paddingStart="@dimen/margin_5_dp"
+                android:paddingTop="@dimen/margin_10_dp"
                 app:layout_constraintLeft_toLeftOf="@id/saleDetailActivityOpinionLabel"
-                app:layout_constraintTop_toBottomOf="@id/saleDetailActivityOpinionLabel">
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivityOpinionLabel"
+                tools:ignore="RelativeOverlap">
 
-                <LinearLayout
-                    android:id="@+id/saleDetailActivityLikeLayout"
+                <ImageView
+                    android:id="@+id/itemSaleLikeImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/selector_ic_sale_like_layout_background"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/margin_10_dp"
-                    android:paddingEnd="@dimen/margin_5_dp"
-                    android:paddingLeft="@dimen/margin_5_dp"
-                    android:paddingRight="@dimen/margin_5_dp"
-                    android:paddingStart="@dimen/margin_5_dp"
-                    android:paddingTop="@dimen/margin_10_dp"
-                    tools:ignore="RelativeOverlap">
+                    android:layout_marginEnd="@dimen/margin_5_dp"
+                    android:layout_marginRight="@dimen/margin_5_dp"
+                    android:background="@drawable/selector_ic_sale_like_action"
+                    android:contentDescription="@string/item_sale_like_sale_image_content_description" />
 
-                    <ImageView
-                        android:id="@+id/itemSaleLikeImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_5_dp"
-                        android:layout_marginRight="@dimen/margin_5_dp"
-                        android:background="@drawable/selector_ic_sale_like_action"
-                        android:contentDescription="@string/item_sale_like_sale_image_content_description" />
-
-                    <TextView
-                        android:id="@+id/itemSaleLikeQuantityTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.Bold"
-                        android:textColor="@drawable/selector_ic_sale_action_text"
-                        android:textSize="@dimen/text_size_15_sp"
-                        android:textStyle="bold"
-                        tools:text="99" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/saleDetailActivityDislikeLayout"
+                <TextView
+                    android:id="@+id/itemSaleLikeQuantityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/selector_ic_sale_dislike_layout_background"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/margin_10_dp"
-                    android:paddingEnd="@dimen/margin_5_dp"
-                    android:paddingLeft="@dimen/margin_5_dp"
-                    android:paddingRight="@dimen/margin_5_dp"
-                    android:paddingStart="@dimen/margin_5_dp"
-                    android:paddingTop="@dimen/margin_10_dp">
+                    android:textAppearance="@style/TextAppearance.Bold"
+                    android:textColor="@drawable/selector_ic_sale_action_text"
+                    android:textSize="@dimen/text_size_15_sp"
+                    android:textStyle="bold"
+                    tools:text="99" />
 
-                    <ImageView
-                        android:id="@+id/itemSaleDislikeImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_5_dp"
-                        android:layout_marginRight="@dimen/margin_5_dp"
-                        android:background="@drawable/selector_ic_sale_dislike_action"
-                        android:contentDescription="@string/item_sale_dislike_sale_image_content_description" />
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/itemSaleDislikeQuantityTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.Bold"
-                        android:textColor="@drawable/selector_ic_sale_action_text"
-                        android:textSize="@dimen/text_size_15_sp"
-                        android:textStyle="bold"
-                        tools:text="12" />
-                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/saleDetailActivityDislikeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_ic_sale_dislike_layout_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_10_dp"
+                android:paddingEnd="@dimen/margin_5_dp"
+                android:paddingLeft="@dimen/margin_5_dp"
+                android:paddingRight="@dimen/margin_5_dp"
+                android:paddingStart="@dimen/margin_5_dp"
+                android:paddingTop="@dimen/margin_10_dp"
+                app:layout_constraintBottom_toBottomOf="@id/saleDetailActivityLikeLayout"
+                app:layout_constraintStart_toEndOf="@id/saleDetailActivityLikeLayout"
+                app:layout_constraintTop_toTopOf="@id/saleDetailActivityLikeLayout">
+
+                <ImageView
+                    android:id="@+id/itemSaleDislikeImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_5_dp"
+                    android:layout_marginRight="@dimen/margin_5_dp"
+                    android:background="@drawable/selector_ic_sale_dislike_action"
+                    android:contentDescription="@string/item_sale_dislike_sale_image_content_description" />
+
+                <TextView
+                    android:id="@+id/itemSaleDislikeQuantityTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Bold"
+                    android:textColor="@drawable/selector_ic_sale_action_text"
+                    android:textSize="@dimen/text_size_15_sp"
+                    android:textStyle="bold"
+                    tools:text="12" />
             </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
