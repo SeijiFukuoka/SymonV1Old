@@ -10,7 +10,7 @@
         android:id="@+id/saleDetailActivityScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/saleDetailActivityCommentLayout">
+        android:layout_above="@+id/saleDetailActivitySendCommentLayout">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/saleDetailActivityContraintLayout"
@@ -224,6 +224,7 @@
                 android:id="@+id/saleDetailActivityLikeLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20_dp"
                 android:background="@drawable/selector_ic_sale_like_layout_background"
                 android:clickable="true"
                 android:focusable="true"
@@ -299,11 +300,41 @@
                     tools:text="12" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/saleDetailActivityCommentListLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_35_dp"
+                android:background="@color/gray_F3F3F3"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_50_dp"
+                android:paddingTop="@dimen/margin_15_dp"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivityDislikeLayout">
+
+                <TextView
+                    android:id="@+id/saleDetailActivityCommentListLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_25_dp"
+                    android:layout_marginStart="@dimen/margin_25_dp"
+                    android:text="@string/sale_detail_comment_layout_label"
+                    android:textAppearance="@style/TextAppearance.Bold"
+                    android:textSize="@dimen/text_size_18_sp"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/saleDetailActivityCommentRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin_15_dp"
+                    tools:listitem="@layout/item_sale_comment" />
+
+            </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/saleDetailActivityCommentLayout"
+        android:id="@+id/saleDetailActivitySendCommentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

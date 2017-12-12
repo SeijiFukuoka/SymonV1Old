@@ -15,6 +15,7 @@ import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
 import kotlinx.android.synthetic.main.item_sale.view.*
+import kotlinx.android.synthetic.main.view_item_author_bottom_layout.view.*
 import java.util.*
 
 
@@ -114,7 +115,7 @@ class SalesAdapter(private val list: MutableList<Sale>,
                 itemSaleSaleTitleTextView.text = sale.message
                 itemSaleSaleValueTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.item_sale_price_formatted), sale.price)
 
-                itemSaleSaleTimeTextView.text = sale.updatedAt
+                viewItemAuthorBottomSaleTimeTextView.text = sale.updatedAt
                 itemSaleLikeQuantityTextView.text = sale.likes.toString()
                 itemSaleDislikeQuantityTextView.text = sale.dislikes.toString()
 
@@ -137,13 +138,13 @@ class SalesAdapter(private val list: MutableList<Sale>,
 
             with(sale.user)
             {
-                with(itemSaleUserPhotoImageView) {
+                with(viewItemAuthorBottomUserPhotoImageView) {
                     photoUri?.let { loadUrlToBeRounded(it) }
                 }
 
-                itemSaleUserNameTextView.text = sale.user.name
-                itemSaleUserOptionsImageView.setOnClickListener {
-                    val popup = PopupMenu(context, itemSaleUserOptionsImageView, Gravity.TOP)
+                viewItemAuthorBottomUserNameTextView.text = sale.user.name
+                viewItemAuthorBottomUserOptionsImageView.setOnClickListener {
+                    val popup = PopupMenu(context, viewItemAuthorBottomUserOptionsImageView, Gravity.TOP)
                     popup.inflate(R.menu.user_options_menu)
 
                     if (currentUser.id == sale.user.id) {
