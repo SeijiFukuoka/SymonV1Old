@@ -123,4 +123,8 @@
     <string name="sale_detail_comment_label">Faça seu comentário</string>
     <string name="sale_detail_comment_layout_label">Comentários</string>
     <string name="sale_detail_comment_comment_input_hint">Faça seu comentário</string>
+    <string name="sale_detail_back_arrow_image_view_content_description">saleDetailActivityBackArrowImageView</string>
+    <string name="sale_detail_favorite_image_view_content_description">saleDetailActivityFavoriteImageView</string>
+    <string name="sale_detail_comment_image_view_content_description">saleDetailActivityCommentImageView</string>
+    <string name="sale_detail_send_comment_image_view_content_description">saleDetailActivitySendCommentButton</string>
 </resources>

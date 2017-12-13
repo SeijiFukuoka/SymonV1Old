@@ -16,5 +16,8 @@ class SalesFragmentModule(val view: SalesContract.View) {
 
     @Provides
     @FragmentScope
-    fun providerPresenter(view: SalesContract.View, saleRepository: SaleRepository, userRepository: UserRepository) = SalesPresenter(view, saleRepository, userRepository)
+    fun providerPresenter(view: SalesContract.View,
+                          saleRepository: SaleRepository,
+                          userRepository: UserRepository) =
+            SalesPresenter(view, saleRepository, userRepository)
 }
