@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
+    android:paddingBottom="@dimen/margin_10_dp"
     android:orientation="vertical">
 
     <br.com.symon.common.widget.HeaderProgressView

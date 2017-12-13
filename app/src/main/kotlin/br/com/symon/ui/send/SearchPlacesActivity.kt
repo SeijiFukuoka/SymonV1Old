@@ -2,6 +2,8 @@ package br.com.symon.ui.send
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -24,10 +26,16 @@ import pl.charmas.android.reactivelocation2.ReactiveLocationProvider
 import java.util.concurrent.TimeUnit
 
 
+
+
 class SearchPlacesActivity : AppCompatActivity() {
 
-    private lateinit var locationProvider: ReactiveLocationProvider
-    private lateinit var searchPlacesAdapter: SearchPlacesAdapter
+    companion object {
+        const val EXTRA_PLACE_INFO = "place_info"
+
+        private lateinit var locationProvider: ReactiveLocationProvider
+        private lateinit var searchPlacesAdapter: SearchPlacesAdapter
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,17 +48,16 @@ class SearchPlacesActivity : AppCompatActivity() {
         locationProvider = ReactiveLocationProvider(this)
 
         customToolbarTitleTextView.text = getString(R.string.post_info_location_hint)
-
         customToolbarBackImageView.setImageResource(R.drawable.ic_close_primary_color)
         customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }
 
+        searchPlacesViewHeaderProgress.bind(2)
+
         requestLocationPermission()
-        setupRecyclerView()
 
         val observable = RxTextView.textChanges(searchPlaceEditText)
-                .filter { charSequence -> charSequence.length > 3 }
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .map<String> { charSequence -> charSequence.toString() }
 
@@ -59,12 +66,20 @@ class SearchPlacesActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        val returnIntent = Intent()
+        setResult(Activity.RESULT_CANCELED, returnIntent)
+        super.onBackPressed()
+    }
+
     private fun requestLocationPermission() {
         RxPermissions(this)
                 .request(Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe({ granted ->
-                    if (!granted) {
+                    if (granted) {
+                        setupRecyclerView()
+                    } else {
                         val alertDialog = AlertDialog.Builder(this).create()
                         alertDialog.setMessage(getString(R.string.general_permissions_message))
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "ok", { _, _ ->
@@ -84,13 +99,14 @@ class SearchPlacesActivity : AppCompatActivity() {
                             LatLng(latitude - 0.05, longitude - 0.05),
                             LatLng(latitude + 0.05, longitude + 0.05))
 
+
                     val obs: Observable<AutocompletePredictionBuffer> =
                             locationProvider.getPlaceAutocompletePredictions(queryString, bounds, null)
 
                     obs.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
-                                val placesList = it.map { PlaceInfo(it.getPrimaryText(null).toString(), it.getSecondaryText(null).toString())  }
+                                val placesList = it.map { PlaceInfo(it.placeId, it.getPrimaryText(null).toString(), it.getSecondaryText(null).toString())  }
                                 it.release()
 
                                 searchPlacesAdapter.updateAddressList(placesList)
@@ -101,7 +117,10 @@ class SearchPlacesActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         searchPlacesAdapter = SearchPlacesAdapter({
-            // setActivityResult
+            val returnIntent = Intent()
+            returnIntent.putExtra(EXTRA_PLACE_INFO, it)
+            setResult(Activity.RESULT_OK, returnIntent)
+            finish()
         })
 
         searchPlaceRecyclerView.layoutManager = LinearLayoutManager(this)

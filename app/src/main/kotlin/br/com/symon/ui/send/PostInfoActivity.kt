@@ -2,6 +2,7 @@ package br.com.symon.ui.send
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.location.Address
@@ -12,8 +13,9 @@ import android.text.InputType
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.loadUrl
-import br.com.symon.common.startIntent
 import br.com.symon.common.toast
+import br.com.symon.data.model.PlaceInfo
+import com.google.android.gms.location.places.Place
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,9 +30,10 @@ class PostInfoActivity : BaseActivity() {
     companion object {
         const val EXTRA_URI = "EXTRA_URI"
         const val MAX_ADDRESSES = 1
+        const val REQUEST_PLACE_INFO = 13123
 
-        lateinit var uri: Uri
-        lateinit var locationProvider: ReactiveLocationProvider
+        private lateinit var uri: Uri
+        private lateinit var locationProvider: ReactiveLocationProvider
 
         fun newIntent(context: Context, uri: Uri?): Intent {
             val intent = Intent(context, PostInfoActivity::class.java)
@@ -39,10 +42,11 @@ class PostInfoActivity : BaseActivity() {
         }
     }
 
+    private var place: Place? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_info)
-
 
         uri = intent.getParcelableExtra(EXTRA_URI)
 
@@ -60,12 +64,14 @@ class PostInfoActivity : BaseActivity() {
         postInfoLocationEditText.inputType = InputType.TYPE_NULL
 
         postInfoLocationEditText.setOnClickListener {
-            startIntent(SearchPlacesActivity::class.java)
+            val requestIntent = Intent(this, SearchPlacesActivity::class.java)
+            startActivityForResult(requestIntent, REQUEST_PLACE_INFO)
         }
 
         postInfoLocationEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                startIntent(SearchPlacesActivity::class.java)
+                val requestIntent = Intent(this, SearchPlacesActivity::class.java)
+                startActivityForResult(requestIntent, REQUEST_PLACE_INFO)
             }
         }
 
@@ -83,6 +89,28 @@ class PostInfoActivity : BaseActivity() {
                         toast(getString(R.string.general_permissions_message))
                     }
                 })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                if (requestCode == REQUEST_PLACE_INFO) {
+                    val placeInfo: PlaceInfo? = data.getParcelableExtra(SearchPlacesActivity.EXTRA_PLACE_INFO)
+
+                    placeInfo?.let {
+                        postInfoLocationEditText.setText("${it.name} - ${it.address}")
+
+                        locationProvider.getPlaceById(it.id).subscribe {
+                            place = it.get(0)
+                        }
+                    }
+                }
+            }
+            else -> {
+                super.onActivityResult(requestCode, resultCode, data)
+            }
+        }
     }
 
     @SuppressLint("MissingPermission")
