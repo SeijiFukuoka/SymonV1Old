@@ -19,10 +19,10 @@ class RatingsChildFragmentPresenter @Inject constructor(val view: RatingsChildFr
         })
     }
 
-    override fun loadTab(ratingsChildType: RatingsChildFragment.RatingsChildType, userToken: String, page: Int, pageSize: Int) {
+    override fun loadTab(ratingsChildType: RatingsChildFragment.RatingsChildType, userToken: String, page: Int, pageSize: Int, order: Int) {
         when (ratingsChildType) {
             RatingsChildFragment.RatingsChildType.FAVORITES -> {
-                userRepository.getFavorites(userToken, page, pageSize)
+                userRepository.getFavorites(userToken, page, pageSize, order)
                         .subscribe({
                             view.showTabResponse(it)
                         }, {
@@ -30,7 +30,7 @@ class RatingsChildFragmentPresenter @Inject constructor(val view: RatingsChildFr
                         })
             }
             RatingsChildFragment.RatingsChildType.LIKES -> {
-                userRepository.getLikes(userToken, page, pageSize)
+                userRepository.getLikes(userToken, page, pageSize, order)
                         .subscribe({
                             view.showTabResponse(it)
                         }, {
@@ -38,7 +38,7 @@ class RatingsChildFragmentPresenter @Inject constructor(val view: RatingsChildFr
                         })
             }
             RatingsChildFragment.RatingsChildType.DISLIKES -> {
-                userRepository.getDislikes(userToken, page, pageSize)
+                userRepository.getDislikes(userToken, page, pageSize, order)
                         .subscribe({
                             view.showTabResponse(it)
                         }, {
@@ -46,7 +46,7 @@ class RatingsChildFragmentPresenter @Inject constructor(val view: RatingsChildFr
                         })
             }
             RatingsChildFragment.RatingsChildType.COMMENTS -> {
-                userRepository.getComments(userToken, page, pageSize)
+                userRepository.getComments(userToken, page, pageSize, order)
                         .subscribe({
                             view.showTabResponse(it)
                         }, {

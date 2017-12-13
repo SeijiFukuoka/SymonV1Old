@@ -47,17 +47,30 @@ interface UserApiService {
     fun retrievePassword(@Path("user_email") userEmail: String?): Observable<Response<Void>>
 
     @POST("/user/block")
-    fun blockUser(@Header("Authorization") userToken: String?, @Body userBlockedId: BlockUserRequest?): Observable<Response<Void>>
+    fun blockUser(@Header("Authorization") userToken: String?,
+                  @Body userBlockedId: BlockUserRequest?): Observable<Response<Void>>
 
     @GET("/user/sale")
-    fun getFavorites(@Header("Authorization") userToken: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
+    fun getFavorites(@Header("Authorization") userToken: String,
+                     @Query("page") page: Int,
+                     @Query("pageSize") pageSize: Int,
+                     @Query("order") order: Int): Observable<SalesListResponse>
 
     @GET("/user/like")
-    fun getLikes(@Header("Authorization") userToken: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
+    fun getLikes(@Header("Authorization") userToken: String,
+                 @Query("page") page: Int,
+                 @Query("pageSize") pageSize: Int,
+                 @Query("order") order: Int): Observable<SalesListResponse>
 
     @GET("/user/dislike")
-    fun getDislikes(@Header("Authorization") userToken: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
+    fun getDislikes(@Header("Authorization") userToken: String,
+                    @Query("page") page: Int,
+                    @Query("pageSize") pageSize: Int,
+                    @Query("order") order: Int): Observable<SalesListResponse>
 
     @GET("/user/comment")
-    fun getComments(@Header("Authorization") userToken: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
+    fun getComments(@Header("Authorization") userToken: String,
+                    @Query("page") page: Int,
+                    @Query("pageSize") pageSize: Int,
+                    @Query("order") order: Int): Observable<SalesListResponse>
 }

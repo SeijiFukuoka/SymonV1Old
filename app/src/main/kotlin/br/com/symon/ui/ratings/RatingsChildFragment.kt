@@ -139,9 +139,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
 
     override fun updateActionSAle(position: Int, isLike: Boolean) {
         onResponseLoaded.onTabsUpdateNeeded()
-        ratingsChildFragmentNoContent.visibility = View.GONE
-        ratingsChildFragmentRecyclerView.visibility = View.GONE
-        showLoading()
+        salesAdapter.updateItem(position, isLike)
     }
 
     override fun showReportSaleResponse() {
@@ -167,8 +165,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
     private fun fetchData(page: Int) {
         ratingsChildComponent.ratingsChildFragmentPresenter().loadTab(apiOptionKey, userTokenResponse.token,
                 if (page > 1) page else Constants.FIRST_PAGE,
-                Constants.RESULTS_PER_PAGE
-        )
+                Constants.RESULTS_PER_PAGE, extraOrderBy)
     }
 
     private fun setSalesAdapter(salesListResponse: SalesListResponse) {

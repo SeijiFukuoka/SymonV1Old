@@ -17,7 +17,7 @@ interface RatingsChildFragmentContract {
 
     interface Presenter {
         fun getUserCache()
-        fun loadTab(ratingsChildType: RatingsChildFragment.RatingsChildType, userToken: String, page: Int, pageSize: Int)
+        fun loadTab(ratingsChildType: RatingsChildFragment.RatingsChildType, userToken: String, page: Int, pageSize: Int, order: Int)
         fun likeSale(position: Int, saleId: Int, userToken: String)
         fun disLikeSale(position: Int, saleId: Int, userToken: String)
         fun reportSale(userToken: String?, saleReportRequest: SaleReportRequest?)

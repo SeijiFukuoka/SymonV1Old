@@ -1,7 +1,7 @@
 package br.com.symon.ui.ratings
 
 import android.os.Bundle
-import android.util.Log
+import android.support.design.widget.TabLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +36,8 @@ class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.On
     }
 
     private lateinit var ratingsFragmentAdapter: RatingsFragmentsPagerAdapter
+    private var mLastSelectedIndex: Int = 0
+    private var mNeedRefresh: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +74,26 @@ class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.On
         ratingsFragmentAdapter = RatingsFragmentsPagerAdapter(activity, childFragmentManager, fragmentsList, titlesList)
         fragmentRatingsCustomViewPager.adapter = ratingsFragmentAdapter
         fragmentRatingsCustomViewPager.offscreenPageLimit = 4
+        fragmentRatingsCustomViewPager.currentItem = mLastSelectedIndex
         fragmentRatingsTabLayout.setupWithViewPager(fragmentRatingsCustomViewPager)
+        fragmentRatingsTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                mLastSelectedIndex = tab.position
+                if (mNeedRefresh) {
+                    updateChildFragment()
+                    if (tab.position !in 1..2)
+                        mNeedRefresh = false
+                }
+            }
+        })
 
         for (i in 0 until fragmentRatingsTabLayout.tabCount) {
             val tab = fragmentRatingsTabLayout.getTabAt(i)
@@ -86,9 +107,15 @@ class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.On
     }
 
     override fun onTabsUpdateNeeded() {
-        (0 until fragmentRatingsTabLayout.tabCount)
-                .asSequence()
-                .map { ratingsFragmentAdapter.getItem(it) as RatingsChildFragment }
-                .forEach { it.updateFragment() }
+        mNeedRefresh = true
+        when (fragmentRatingsTabLayout.selectedTabPosition) {
+            1 -> updateChildFragment()
+            2 -> updateChildFragment()
+        }
+    }
+
+    private fun updateChildFragment() {
+        var currentFragment = ratingsFragmentAdapter.getItem(fragmentRatingsTabLayout.selectedTabPosition) as RatingsChildFragment
+        currentFragment.updateFragment()
     }
 }
