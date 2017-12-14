@@ -8,5 +8,5 @@ import javax.inject.Singleton
 
 @Singleton
 class FileRepository @Inject constructor(private val fileManagerImpl: FileManagerImpl) : BaseRepository() {
-    fun getPathFromUri(uri: Uri?) = call(fileManagerImpl.getPathFromUri(uri))
+    fun createMultipartFromUri(uri: Uri?) = call(fileManagerImpl.createMultipartFromUri(uri))
 }

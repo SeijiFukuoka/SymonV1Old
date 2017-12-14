@@ -2,10 +2,12 @@ package br.com.symon.data.webservice
 
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.requests.SaleReportRequest
+import br.com.symon.data.model.requests.SendSaleRequest
 import br.com.symon.data.model.responses.SalesListResponse
+import br.com.symon.data.model.responses.SendSaleResponse
+import br.com.symon.data.model.responses.UploadPhotoResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -17,16 +19,16 @@ interface SaleApiService {
     @GET("/sale/{sale_id}")
     fun getSaleDetail(@Path("sale_id") saleId: Int): Observable<Response<Sale>>
 
-    @FormUrlEncoded
     @POST("/sale")
-    fun uploadSale(@Body sale: Sale): Observable<Response<Sale>>
+    fun uploadSale(@Body sendSaleRequest: SendSaleRequest,
+                   @Header("Authorization") userToken: String): Observable<Response<SendSaleResponse>>
 
     @Multipart
-    @POST("/sale/photo")
-    fun uploaSalePhoto(@Path("sale_id") saleId: Int,
-                       @Part photo: MultipartBody.Part): Observable<Response<ResponseBody>>
+    @POST("/sale/photo/{sale_id}")
+    fun uploadSalePhoto(@Path("sale_id") saleId: Int,
+                        @Part photo: MultipartBody.Part,
+                        @Header("Authorization") userToken: String): Observable<Response<UploadPhotoResponse>>
 
-    @FormUrlEncoded
     @PUT("/sale/{sale_id}")
     fun updateSale(@Body sale: Sale): Observable<Response<Void>>
 

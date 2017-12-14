@@ -7,7 +7,7 @@ import br.com.symon.ui.main.MainPresenter
 import dagger.Component
 
 @ActivityScope
-@Component(dependencies = arrayOf(ApplicationComponent::class), modules = arrayOf(MainActivityModule::class))
+@Component(dependencies = [(ApplicationComponent::class)], modules = [(MainActivityModule::class)])
 interface MainActivityComponent {
     fun inject(mainActivity: MainActivity)
     fun mainPresenter(): MainPresenter

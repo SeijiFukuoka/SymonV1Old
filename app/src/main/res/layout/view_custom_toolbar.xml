@@ -24,8 +24,9 @@
             android:id="@+id/customToolbarBackImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_20_dp"
-            android:layout_marginStart="@dimen/margin_20_dp"
+            android:layout_marginLeft="@dimen/margin_10_dp"
+            android:layout_marginStart="@dimen/margin_10_dp"
+            android:padding="@dimen/margin_10_dp"
             app:srcCompat="@drawable/ic_back_arrow" />
 
         <TextView

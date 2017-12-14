@@ -12,6 +12,7 @@ interface ProfileContract {
         fun showPhoto(photo: String?)
         fun notifyDataUpdate()
         fun showErrorMessage(error: String?)
+        fun showInvalidPassword()
     }
 
     interface Presenter{

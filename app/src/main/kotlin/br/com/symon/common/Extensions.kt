@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.net.Uri
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
@@ -28,10 +29,10 @@ fun AppCompatActivity.isDisplayedByTag(fragmentTag: String): Boolean {
     return fragment != null && fragment.isVisible
 }
 
-fun FragmentActivity.replace(@IdRes id: Int, fragment: Fragment) {
+fun FragmentActivity.replace(@IdRes id: Int, fragment: Fragment?) {
     this.supportFragmentManager
             .beginTransaction()
-            .replace(id, fragment, fragment.javaClass.canonicalName)
+            .replace(id, fragment, fragment?.javaClass?.canonicalName)
             .commit()
 }
 
@@ -65,6 +66,10 @@ fun dpToPixels(dp: Float): Int =
 
 fun ImageView.loadUrl(url: String?) {
     Glide.with(context).load(url).into(this)
+}
+
+fun ImageView.loadUrl(uri: Uri?) {
+    Glide.with(context).load(uri).into(this)
 }
 
 fun ImageView.loadUrlToBeRounded(url: String?) {
