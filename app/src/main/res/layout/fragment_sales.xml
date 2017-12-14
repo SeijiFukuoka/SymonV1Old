@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
+    android:orientation="vertical"
     android:background="@color/colorPrimary">
 
     <LinearLayout
@@ -52,7 +53,6 @@
         android:id="@+id/salesFragmentConfirmActionView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/salesFragmentHeaderLinearLayout"
         android:visibility="gone"
         tools:visibility="gone" />
 
@@ -60,7 +60,6 @@
         android:id="@+id/salesFragmentSalesSearchHeaderLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/salesFragmentHeaderLinearLayout"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/margin_20_dp"
         android:paddingEnd="@dimen/margin_25_dp"
@@ -124,10 +123,39 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/salesFragmentSendSuccessContainerLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_20_dp"
+            android:layout_marginStart="@dimen/margin_20_dp"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/ic_check_circle_white" />
+
+        <TextView
+            style="@style/TextAppearance.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_20_dp"
+            android:layout_marginStart="@dimen/margin_20_dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14_sp"
+            android:text="@string/main_send_success_msg" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/salesFragmentSalesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/salesFragmentSalesSearchHeaderLayout" />
+        android:layout_height="wrap_content" />
 
-</RelativeLayout>
+</LinearLayout>

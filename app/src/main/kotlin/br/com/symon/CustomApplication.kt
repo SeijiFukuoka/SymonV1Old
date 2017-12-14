@@ -1,6 +1,8 @@
 package br.com.symon
 
 import android.app.Application
+import android.content.Context
+import android.support.multidex.MultiDex
 import br.com.symon.injection.components.ApplicationComponent
 import br.com.symon.injection.components.DaggerApplicationComponent
 import br.com.symon.injection.modules.ApplicationModule
@@ -29,5 +31,10 @@ class CustomApplication : Application() {
 
 
         AppEventsLogger.activateApp(this)
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 }

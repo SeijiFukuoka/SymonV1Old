@@ -37,6 +37,6 @@ open class BaseFragment : Fragment(), BaseView {
     }
 
     override fun showError(message: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }

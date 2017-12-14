@@ -2,6 +2,7 @@ package br.com.symon.ui.sales
 
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
+import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +61,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         salesFragmentComponent.inject(this)
         fragmentId = SalesFragment::class.java.canonicalName
     }
@@ -78,6 +80,10 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         setUpRecyclersViews()
         getUser()
         setUpSeekBar()
+
+        salesFragmentSendSuccessContainerLinearLayout.setOnClickListener {
+            salesFragmentSendSuccessContainerLinearLayout.visibility = View.GONE
+        }
 
         salesFragmentSalesSearchCloseTextView.setOnClickListener {
             resetSaleData()
@@ -246,5 +252,10 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         salesFragmentSalesRecyclerView.visibility = View.GONE
         extraSearchQuery = ""
         fetchData(FIRST_PAGE)
+    }
+
+    fun showSendSuccessMessage() {
+        salesFragmentSendSuccessContainerLinearLayout.visibility = View.VISIBLE
+        resetSaleData()
     }
 }

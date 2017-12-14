@@ -39,8 +39,57 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:visibility="gone"
                 android:theme="@style/SearchViewTheme"
                 app:queryHint="O que está procurando ? " />
+
+            <ImageView
+                android:id="@+id/mainSettingsImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:contentDescription="@string/main_brand_logo_image_view_content_description"
+                android:padding="@dimen/margin_10_dp"
+                app:srcCompat="@drawable/ic_settings_white_24dp" />
+
+            <LinearLayout
+                android:id="@+id/mainActivityRatingOrderLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/margin_15_dp"
+                android:layout_marginRight="@dimen/margin_15_dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/mainActivityRatingOrderTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/margin_15_dp"
+                    android:layout_marginRight="@dimen/margin_15_dp"
+                    android:gravity="center"
+                    android:letterSpacing="-0.02"
+                    android:text="@string/ratings_order_menu_option_newest"
+                    android:textAppearance="@style/TextAppearance.Regular"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_15_sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_ratings_menu_options" />
+
+            </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
 

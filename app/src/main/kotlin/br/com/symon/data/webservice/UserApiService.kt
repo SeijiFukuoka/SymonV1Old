@@ -1,15 +1,13 @@
 package br.com.symon.data.webservice
 
 import br.com.symon.data.model.User
-import br.com.symon.data.model.requests.BlockUserRequest
-import br.com.symon.data.model.requests.UserAuthenticateRequest
-import br.com.symon.data.model.requests.UserFacebookRegistryRequest
-import br.com.symon.data.model.requests.UserFullUpdateRequest
-import br.com.symon.data.model.requests.UserUpdateRequest
+import br.com.symon.data.model.requests.*
 import br.com.symon.data.model.responses.CheckUserResponse
 import br.com.symon.data.model.responses.RegisterUserResponse
-import br.com.symon.data.model.responses.UploadUserPhotoResponse
+import br.com.symon.data.model.responses.UploadPhotoResponse
 import br.com.symon.data.model.responses.UserTokenResponse
+import br.com.symon.data.model.requests.*
+import br.com.symon.data.model.responses.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -45,7 +43,7 @@ interface UserApiService {
     @Multipart
     @POST("/user/photo/{user_id}")
     fun uploadUserPhoto(@Path("user_id") userId: Int,
-                        @Part photo: MultipartBody.Part): Observable<UploadUserPhotoResponse>
+                        @Part photo: MultipartBody.Part): Observable<UploadPhotoResponse>
 
     @POST("/token")
     fun getToken(@Body userAuthenticateRequest: UserAuthenticateRequest): Observable<Response<UserTokenResponse>>
@@ -54,5 +52,30 @@ interface UserApiService {
     fun retrievePassword(@Path("user_email") userEmail: String?): Observable<Response<Void>>
 
     @POST("/user/block")
-    fun blockUser(@Header("Authorization") userToken: String?, @Body userBlockedId: BlockUserRequest?): Observable<Response<Void>>
+    fun blockUser(@Header("Authorization") userToken: String?,
+                  @Body userBlockedId: BlockUserRequest?): Observable<Response<Void>>
+
+    @GET("/user/sale")
+    fun getFavorites(@Header("Authorization") userToken: String,
+                     @Query("page") page: Int,
+                     @Query("pageSize") pageSize: Int,
+                     @Query("order") order: Int): Observable<SalesListResponse>
+
+    @GET("/user/like")
+    fun getLikes(@Header("Authorization") userToken: String,
+                 @Query("page") page: Int,
+                 @Query("pageSize") pageSize: Int,
+                 @Query("order") order: Int): Observable<SalesListResponse>
+
+    @GET("/user/dislike")
+    fun getDislikes(@Header("Authorization") userToken: String,
+                    @Query("page") page: Int,
+                    @Query("pageSize") pageSize: Int,
+                    @Query("order") order: Int): Observable<SalesListResponse>
+
+    @GET("/user/comment")
+    fun getComments(@Header("Authorization") userToken: String,
+                    @Query("page") page: Int,
+                    @Query("pageSize") pageSize: Int,
+                    @Query("order") order: Int): Observable<SalesListResponse>
 }

@@ -5,29 +5,29 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Sale(
-        @SerializedName("id") var id: Int?,
+        @SerializedName("id") var id: Int,
         @SerializedName("message") var message: String?,
         @SerializedName("price") var price: Float?,
         @SerializedName("place") var place: String?,
         @SerializedName("created_at") private var createdAt: String?,
         @SerializedName("updated_at") var updatedAt: String?,
         @SerializedName("photo") var photo: String?,
-        @SerializedName("likes") var likes: Int?,
-        @SerializedName("dislikes") var dislikes: Int?,
+        @SerializedName("likes") var likes: Int,
+        @SerializedName("dislikes") var dislikes: Int,
         @SerializedName("hasLiked") var hasLiked: Boolean,
         @SerializedName("hasDisliked") var hasDisliked: Boolean,
         @SerializedName("user") var user: User
 ) : Parcelable {
     constructor(source: Parcel) : this(
-            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readInt(),
             source.readString(),
             source.readValue(Float::class.java.classLoader) as Float?,
             source.readString(),
             source.readString(),
             source.readString(),
             source.readString(),
-            source.readValue(Int::class.java.classLoader) as Int?,
-            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readInt(),
+            source.readInt(),
             1 == source.readInt(),
             1 == source.readInt(),
             source.readParcelable<User>(User::class.java.classLoader)
@@ -36,15 +36,15 @@ data class Sale(
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeValue(id)
+        writeInt(id)
         writeString(message)
         writeValue(price)
         writeString(place)
         writeString(createdAt)
         writeString(updatedAt)
         writeString(photo)
-        writeValue(likes)
-        writeValue(dislikes)
+        writeInt(likes)
+        writeInt(dislikes)
         writeInt((if (hasLiked) 1 else 0))
         writeInt((if (hasDisliked) 1 else 0))
         writeParcelable(user, 0)

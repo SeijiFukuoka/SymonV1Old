@@ -49,28 +49,28 @@ class SalesAdapter(private val list: MutableList<Sale>,
         val saleToBeChanged = list[position]
 
         if (isLike) {
-            if (saleToBeChanged.hasLiked!!) {
-                saleToBeChanged.likes = saleToBeChanged.likes?.minus(1)
+            if (saleToBeChanged.hasLiked) {
+                saleToBeChanged.likes = saleToBeChanged.likes.minus(1)
                 saleToBeChanged.hasLiked = false
             } else {
-                saleToBeChanged.likes = saleToBeChanged.likes?.plus(1)
+                saleToBeChanged.likes = saleToBeChanged.likes.plus(1)
                 saleToBeChanged.hasLiked = true
 
-                if (saleToBeChanged.hasDisliked!!) {
-                    saleToBeChanged.dislikes = saleToBeChanged.dislikes?.minus(1)
+                if (saleToBeChanged.hasDisliked) {
+                    saleToBeChanged.dislikes = saleToBeChanged.dislikes.minus(1)
                     saleToBeChanged.hasDisliked = false
                 }
             }
         } else {
-            if (saleToBeChanged.hasDisliked!!) {
-                saleToBeChanged.dislikes = saleToBeChanged.dislikes?.minus(1)
+            if (saleToBeChanged.hasDisliked) {
+                saleToBeChanged.dislikes = saleToBeChanged.dislikes.minus(1)
                 saleToBeChanged.hasDisliked = false
             } else {
-                saleToBeChanged.dislikes = saleToBeChanged.dislikes?.plus(1)
+                saleToBeChanged.dislikes = saleToBeChanged.dislikes.plus(1)
                 saleToBeChanged.hasDisliked = true
 
-                if (saleToBeChanged.hasLiked!!) {
-                    saleToBeChanged.likes = saleToBeChanged.likes?.minus(1)
+                if (saleToBeChanged.hasLiked) {
+                    saleToBeChanged.likes = saleToBeChanged.likes.minus(1)
                     saleToBeChanged.hasLiked = false
                 }
             }
@@ -91,7 +91,7 @@ class SalesAdapter(private val list: MutableList<Sale>,
                     itemSaleCardLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_item_sale_label_mine, null)
                     itemSaleMineSponsoredLabelTextView.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_item_sale_label_mine, null)
                     itemSaleMineSponsoredLabelTextView.setTextColor(ResourcesCompat.getColor(resources, R.color.gray_737373, null))
-                    var padding = dpToPixels(resources.getDimension(R.dimen.margin_2_dp))
+                    val padding = dpToPixels(resources.getDimension(R.dimen.margin_2_dp))
                     itemSaleCardLayout.setPadding(padding, padding, padding, padding)
                     itemSaleMineSponsoredLabelTextView.text = resources.getString(R.string.item_sale_mine_label)
                     itemSaleMineSponsoredLabelTextView.visibility = View.VISIBLE
@@ -119,16 +119,16 @@ class SalesAdapter(private val list: MutableList<Sale>,
                 itemSaleLikeQuantityTextView.text = sale.likes.toString()
                 itemSaleDislikeQuantityTextView.text = sale.dislikes.toString()
 
-                hasLiked?.let {
-                    itemSaleLikeLayout.isSelected = hasLiked as Boolean
-                    itemSaleLikeImageView.isSelected = hasLiked as Boolean
-                    itemSaleLikeQuantityTextView.isSelected = hasLiked as Boolean
+                hasLiked.let {
+                    itemSaleLikeLayout.isSelected = hasLiked
+                    itemSaleLikeImageView.isSelected = hasLiked
+                    itemSaleLikeQuantityTextView.isSelected = hasLiked
                 }
 
-                hasDisliked?.let {
-                    itemSaleDislikeLayout.isSelected = hasDisliked as Boolean
-                    itemSaleDislikeImageView.isSelected = hasDisliked as Boolean
-                    itemSaleDislikeQuantityTextView.isSelected = hasDisliked as Boolean
+                hasDisliked.let {
+                    itemSaleDislikeLayout.isSelected = hasDisliked
+                    itemSaleDislikeImageView.isSelected = hasDisliked
+                    itemSaleDislikeQuantityTextView.isSelected = hasDisliked
                 }
 
                 itemSaleImageView.setOnClickListener { listener.onSaleImageClick(sale) }
