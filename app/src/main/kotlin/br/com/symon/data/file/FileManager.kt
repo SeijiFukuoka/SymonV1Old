@@ -2,9 +2,9 @@ package br.com.symon.data.file
 
 import android.net.Uri
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 
 
 interface FileManager {
-    fun getPathFromUri(uri: Uri?) : Observable<String>
-    fun saveData() : Observable<Uri>
+    fun createMultipartFromUri(uri: Uri?): Observable<MultipartBody.Part>
 }

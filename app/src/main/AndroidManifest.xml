@@ -83,11 +83,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ui.send.PostInfoActivity"
+            android:name=".ui.send.SendSaleActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".ui.send.SearchPlacesActivity"
+        <activity android:name=".ui.SearchPlacesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 

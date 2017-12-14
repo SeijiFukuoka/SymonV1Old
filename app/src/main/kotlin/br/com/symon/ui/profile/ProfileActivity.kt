@@ -1,10 +1,7 @@
 package br.com.symon.ui.profile
 
 import android.Manifest
-import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.text.SpannableString
@@ -27,6 +24,8 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.github.vacxe.phonemask.PhoneMaskManager
+import com.mlsdev.rximagepicker.RxImagePicker
+import com.mlsdev.rximagepicker.Sources
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
@@ -36,10 +35,6 @@ import java.util.*
 class ProfileActivity : BaseActivity(),
         ProfileContract.View,
         FacebookCallback<LoginResult> {
-
-    companion object {
-        private val REQUEST_PICK_IMAGE = 10011
-    }
 
     private val profileActivityComponent: ProfileActivityComponent
         get() = DaggerProfileActivityComponent
@@ -228,22 +223,6 @@ class ProfileActivity : BaseActivity(),
         request.executeAsync()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, result: Intent?) {
-        super.onActivityResult(requestCode, resultCode, result)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                REQUEST_PICK_IMAGE -> {
-                    user?.apply {
-                        id?.let {
-                            profileActivityComponent.profilePresenter().uploadUserPhoto(it, result?.data)
-                        }
-                    }
-
-                }
-            }
-        }
-    }
-
     private fun facebookLogin() {
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(
                 getString(R.string.facebook_permission_profile),
@@ -346,13 +325,12 @@ class ProfileActivity : BaseActivity(),
     }
 
     private fun pickImage() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"), REQUEST_PICK_IMAGE)
-        } else {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_PICK_IMAGE)
+        RxImagePicker.with(this).requestImage(Sources.GALLERY).subscribe { uri ->
+            user?.apply {
+                id?.let {
+                    profileActivityComponent.profilePresenter().uploadUserPhoto(it, uri)
+                }
+            }
         }
     }
 }

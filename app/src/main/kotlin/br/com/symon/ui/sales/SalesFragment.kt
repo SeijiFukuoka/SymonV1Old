@@ -78,6 +78,10 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         getUser()
         setUpSeekBar()
 
+        salesFragmentSendSuccessContainerLinearLayout.setOnClickListener {
+            salesFragmentSendSuccessContainerLinearLayout.visibility = View.GONE
+        }
+
         salesFragmentSalesSearchCloseTextView.setOnClickListener {
             resetSaleData()
         }
@@ -244,5 +248,9 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         salesFragmentSalesRecyclerView.visibility = View.GONE
         extraSearchQuery = ""
         fetchData(FIRST_PAGE)
+    }
+
+    fun showSendSuccessMessage() {
+        salesFragmentSendSuccessContainerLinearLayout.visibility = View.VISIBLE
     }
 }

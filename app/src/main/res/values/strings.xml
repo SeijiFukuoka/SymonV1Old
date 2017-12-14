@@ -127,4 +127,5 @@
 
     <string name="post_info_location_hint">Estabelecimento</string>
     <string name="search_place_hint">Procurar local</string>
+    <string name="main_send_success_msg">Publicação realizada!</string>
 </resources>

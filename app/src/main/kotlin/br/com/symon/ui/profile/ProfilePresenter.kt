@@ -8,10 +8,6 @@ import br.com.symon.data.repository.FileRepository
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.ActivityScope
 import com.google.gson.Gson
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.File
 import javax.inject.Inject
 
 @ActivityScope
@@ -56,22 +52,13 @@ class ProfilePresenter @Inject constructor(private val view: ProfileContract.Vie
 
     override fun uploadUserPhoto(userId: Int, uri: Uri?) {
         view.showLoading()
-        fileRepository.getPathFromUri(uri).subscribe({
-            val file = File(it)
-
-            val filePart = MultipartBody.Part.createFormData(
-                    "resource",
-                    file.name,
-                    RequestBody.create(MediaType.parse("image/jpeg"), file))
-
-            userRepository.uploadUserPhoto(userId, filePart).subscribe({
+        fileRepository.createMultipartFromUri(uri).subscribe {
+            userRepository.uploadUserPhoto(userId, it).subscribe({
                 view.hideLoading()
                 view.showPhoto(it.uri)
             }, {
                 GeneralErrorHandler(it, view, {})
             })
-        },{
-            GeneralErrorHandler(it, view, {})
-        })
+        }
     }
 }

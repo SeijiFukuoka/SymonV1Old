@@ -29,10 +29,10 @@ fun AppCompatActivity.isDisplayedByTag(fragmentTag: String): Boolean {
     return fragment != null && fragment.isVisible
 }
 
-fun FragmentActivity.replace(@IdRes id: Int, fragment: Fragment) {
+fun FragmentActivity.replace(@IdRes id: Int, fragment: Fragment?) {
     this.supportFragmentManager
             .beginTransaction()
-            .replace(id, fragment, fragment.javaClass.canonicalName)
+            .replace(id, fragment, fragment?.javaClass?.canonicalName)
             .commit()
 }
 

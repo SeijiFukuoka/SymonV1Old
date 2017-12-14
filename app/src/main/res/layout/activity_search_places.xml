@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
-    android:paddingBottom="@dimen/margin_10_dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_10_dp">
 
     <br.com.symon.common.widget.HeaderProgressView
         android:id="@+id/searchPlacesViewHeaderProgress"
@@ -33,8 +33,7 @@
             android:layout_marginTop="@dimen/margin_20_dp"
             android:background="@color/colorPrimary"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/postInfoLocationTextInput" />
+            app:layout_constraintRight_toRightOf="parent" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/searchPlaceTextInput"
@@ -58,8 +57,8 @@
                 android:drawableRight="@drawable/ic_search_white_24dp"
                 android:hint="@string/search_place_hint"
                 android:inputType="textAutoComplete"
-                android:paddingBottom="@dimen/margin_15_dp"
                 android:maxLines="1"
+                android:paddingBottom="@dimen/margin_15_dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textColorLink="@color/white"

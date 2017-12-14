@@ -5,10 +5,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
@@ -28,19 +25,21 @@ import br.com.symon.injection.components.MainActivityComponent
 import br.com.symon.injection.modules.MainActivityModule
 import br.com.symon.ui.profile.ProfileFragment
 import br.com.symon.ui.sales.SalesFragment
-import br.com.symon.ui.send.PostInfoActivity
+import br.com.symon.ui.send.SendSaleActivity
 import br.com.symon.ui.settings.SettingsActivity
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
+import com.mlsdev.rximagepicker.RxImagePicker
+import com.mlsdev.rximagepicker.Sources
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_choose_photo_dialog.view.*
 
+
 class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextListener {
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
-        const val REQUEST_PICK_IMAGE_FROM_CAMERA: Int = 12130
-        const val REQUEST_PICK_IMAGE_FROM_GALLERY = 10017
+        const val REQUEST_SEND_SALE = 10412
 
         lateinit var userTokenResponse: UserTokenResponse
 
@@ -58,7 +57,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
                 .mainActivityModule(MainActivityModule(this))
                 .build()
 
-    private var photoUri: Uri? = null
+    private var salesFragment: SalesFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,26 +128,14 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                REQUEST_PICK_IMAGE_FROM_GALLERY -> {
-                    val postInfoIntent = PostInfoActivity.newIntent(this, data?.data)
-                    startActivity(postInfoIntent)
-                    mainBottomNavigation.currentItem = 0
-                }
-                REQUEST_PICK_IMAGE_FROM_CAMERA -> {
-                    val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-                    mediaScanIntent.data = photoUri
-                    sendBroadcast(mediaScanIntent)
-
-                    val postInfoIntent = PostInfoActivity.newIntent(this, photoUri)
-                    startActivity(postInfoIntent)
-
-                    mainBottomNavigation.currentItem = 0
+                REQUEST_SEND_SALE -> {
+                    salesFragment?.showSendSuccessMessage()
                 }
             }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -182,7 +169,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
             when (position) {
                 0 -> openSales()
                 1 -> openRatings()
-                2 -> openSendSaleDialog()
+                2 -> requestFilePermissions()
                 3 -> openNotifications()
                 4 -> openProfile()
             }
@@ -202,19 +189,33 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
 
     private fun openSales() {
         if (!isDisplayedByTag(SalesFragment::class.java.canonicalName)) {
-            replace(R.id.mainFrameContent, SalesFragment())
+            salesFragment = SalesFragment()
+            replace(R.id.mainFrameContent, salesFragment)
         }
         setupToolbarMenu(isSearchVisible = true, isSettingsVisible = false)
     }
 
     private fun openSearchSales(searchQuery: String) {
-        replace(R.id.mainFrameContent, SalesFragment.newInstance(searchQuery))
+        salesFragment = SalesFragment.newInstance(searchQuery)
+        replace(R.id.mainFrameContent, salesFragment)
         setupToolbarMenu(isSearchVisible = true, isSettingsVisible = false)
     }
 
     private fun openRatings() {
         toast("Avaliações - Em progresso")
         setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false)
+    }
+
+    private fun requestFilePermissions() {
+        RxPermissions(this)
+                .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe { granted ->
+                    if (granted) {
+                        openSendSaleDialog()
+                    } else {
+                        toast(getString(R.string.general_permissions_message))
+                    }
+                }
     }
 
     private fun openSendSaleDialog() {
@@ -227,12 +228,18 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         val alertDialog = dialogBuilder.show()
 
         dialogView.choosePhotoCamContainerLinearLayout.setOnClickListener {
-            pickImageFromCam()
+            RxImagePicker.with(this).requestImage(Sources.CAMERA).subscribe {
+                val postInfoIntent = SendSaleActivity.newIntent(this, it, userTokenResponse.token)
+                startActivityForResult(postInfoIntent, REQUEST_SEND_SALE)
+            }
             alertDialog.hide()
         }
 
         dialogView.choosePhotoGalleryContainerLinearLayout.setOnClickListener {
-            pickImageFromGalley()
+            RxImagePicker.with(this).requestImage(Sources.GALLERY).subscribe {
+                val postInfoIntent = SendSaleActivity.newIntent(this, it, userTokenResponse.token)
+                startActivityForResult(postInfoIntent, REQUEST_SEND_SALE)
+            }
             alertDialog.hide()
         }
 
@@ -240,52 +247,6 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
             alertDialog.hide()
             mainBottomNavigation.currentItem = 0
         }
-    }
-
-    override fun callCameraFromUri(uri: Uri?) {
-        photoUri = uri
-        RxPermissions(this)
-                .request(Manifest.permission.CAMERA)
-                .subscribe { granted ->
-                    if (granted) {
-                        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                        startActivityForResult(cameraIntent, REQUEST_PICK_IMAGE_FROM_CAMERA)
-                    } else {
-                        toast(getString(R.string.general_permissions_message))
-                    }
-                }
-    }
-
-    private fun pickImageFromCam() {
-        RxPermissions(this)
-                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
-                    if (granted) {
-                        mainActivityComponent.mainPresenter().setPathUri()
-                    } else {
-                        toast(getString(R.string.general_permissions_message))
-                    }
-                }
-    }
-
-    private fun pickImageFromGalley() {
-        RxPermissions(this)
-                .request(Manifest.permission.READ_EXTERNAL_STORAGE)
-                .subscribe { granted ->
-                    if (granted) {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                            startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"), REQUEST_PICK_IMAGE_FROM_GALLERY)
-                        } else {
-                            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-                            intent.addCategory(Intent.CATEGORY_OPENABLE)
-                            intent.type = "image/*"
-                            startActivityForResult(intent, REQUEST_PICK_IMAGE_FROM_GALLERY)
-                        }
-                    } else {
-                        toast(getString(R.string.general_permissions_message))
-                    }
-                }
     }
 
     private fun openNotifications() {

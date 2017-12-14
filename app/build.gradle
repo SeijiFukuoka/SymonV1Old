@@ -3,13 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 
-def getGooglePlayServicesApiKey() {
-    if (REACTIVE_LOCATION_GMS_API_KEY != null && !REACTIVE_LOCATION_GMS_API_KEY.isEmpty()) {
-        return REACTIVE_LOCATION_GMS_API_KEY
-    }
-    return ""
-}
-
 android {
     signingConfigs {
         release {
@@ -23,7 +16,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "br.com.symon"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 3
         versionName "1.0.0"
@@ -31,7 +24,7 @@ android {
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
-        resValue "string", "API_KEY", getGooglePlayServicesApiKey()
+        resValue "string", "API_KEY", REACTIVE_LOCATION_GMS_API_KEY
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -135,6 +128,8 @@ dependencies {
 
     // PhoneMask
     compile "com.github.vacxe:phonemask:$maskEditTextVersion"
+
+    compile 'com.mlsdev.rximagepicker:library:2.0.2'
 
     // Fabric
     compile("com.crashlytics.sdk.android:crashlytics:$fabricVersion") {

@@ -1,4 +1,4 @@
-package br.com.symon.ui.send
+package br.com.symon.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
