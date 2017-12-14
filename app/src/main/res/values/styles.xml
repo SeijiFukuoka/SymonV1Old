@@ -66,7 +66,7 @@
         <item name="android:textSize">@dimen/text_size_14_sp</item>
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
         <item name="colorAccent">@color/colorPrimary</item>
-        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/gray_E0E0E0</item>
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
 
         <item name="textColorError">#FFD50000</item>
@@ -88,6 +88,20 @@
         <item name="android:textColorHighlight">#FFD50000</item>
         <item name="android:textColorLink">#FFD50000</item>
 
+    </style>
+
+    <style name="WhiteEditText" parent="TextAppearance.Bold">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_14_sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+
+        <item name="textColorError">#FFF</item>
+        <item name="android:textColorHighlight">#FFF</item>
+        <item name="android:textColorLink">#FFF</item>
     </style>
 
     <style name="CustomButtonTextMedium" parent="@style/Widget.AppCompat.Button.Borderless">

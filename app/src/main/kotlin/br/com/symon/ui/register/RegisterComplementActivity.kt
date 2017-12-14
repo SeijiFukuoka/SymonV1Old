@@ -1,17 +1,15 @@
 package br.com.symon.ui.register
 
 import android.Manifest
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.dateFormat
-import br.com.symon.common.hideKeyboard
 import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.toast
 import br.com.symon.data.model.requests.UserUpdateRequest
@@ -21,19 +19,16 @@ import br.com.symon.injection.components.RegisterComplementActivityComponent
 import br.com.symon.injection.modules.RegisterComplementActivityModule
 import br.com.symon.ui.main.MainActivity
 import com.github.vacxe.phonemask.PhoneMaskManager
+import com.mlsdev.rximagepicker.RxImagePicker
+import com.mlsdev.rximagepicker.Sources
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_register_complement.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
 import java.util.*
 
-
-
-
 class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.View {
     companion object {
         private const val EXTRA_USER_ID = "EXTRA_USER_ID"
-        private val REQUEST_PICK_IMAGE = 10011
-
         var userId: Int = 0
 
         fun newIntent(context: Context, userId: Int?): Intent {
@@ -86,6 +81,8 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
 
         }
 
+        registerComplementBirthdayEditText.inputType = InputType.TYPE_NULL
+
         registerComplementBirthdayEditText.setOnClickListener {
             setupCalendar()
         }
@@ -134,17 +131,6 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, result: Intent?) {
-        super.onActivityResult(requestCode, resultCode, result)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                REQUEST_PICK_IMAGE -> {
-                    registerComplementComponent.registerComplementPresenter().uploadUserPhoto(userId, result?.data)
-                }
-            }
-        }
-    }
-
     override fun showPhoto(photo: String?) {
         photo?.let { registerProfileImageView.loadUrlToBeRounded(it) }
     }
@@ -156,8 +142,6 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
     }
 
     private fun setupCalendar() {
-        registerComplementBirthdayEditText.hideKeyboard()
-
         calendar = Calendar.getInstance()
         datePickerDialog = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)
@@ -174,14 +158,8 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
     }
 
     private fun pickImage() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"),
-                    REQUEST_PICK_IMAGE)
-        } else {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_PICK_IMAGE)
+        RxImagePicker.with(this).requestImage(Sources.GALLERY).subscribe { uri ->
+            registerComplementComponent.registerComplementPresenter().uploadUserPhoto(userId, uri)
         }
     }
 }

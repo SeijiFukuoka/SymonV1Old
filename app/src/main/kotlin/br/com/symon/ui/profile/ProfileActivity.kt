@@ -1,11 +1,9 @@
 package br.com.symon.ui.profile
 
 import android.Manifest
-import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.util.Log
@@ -14,7 +12,6 @@ import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.dateFormat
-import br.com.symon.common.hideKeyboard
 import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.toast
 import br.com.symon.data.model.User
@@ -27,6 +24,8 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.github.vacxe.phonemask.PhoneMaskManager
+import com.mlsdev.rximagepicker.RxImagePicker
+import com.mlsdev.rximagepicker.Sources
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
@@ -36,10 +35,6 @@ import java.util.*
 class ProfileActivity : BaseActivity(),
         ProfileContract.View,
         FacebookCallback<LoginResult> {
-
-    companion object {
-        private val REQUEST_PICK_IMAGE = 10011
-    }
 
     private val profileActivityComponent: ProfileActivityComponent
         get() = DaggerProfileActivityComponent
@@ -88,6 +83,8 @@ class ProfileActivity : BaseActivity(),
                     }
 
         }
+
+        profileBirthdayEditText.inputType = InputType.TYPE_NULL
 
         profileBirthdayEditText.setOnClickListener {
             setupCalendar()
@@ -190,6 +187,13 @@ class ProfileActivity : BaseActivity(),
         }
     }
 
+    override fun showInvalidPassword() {
+        profilePasswordEditText.setText("")
+        profileNewPasswordTextInput.requestFocus()
+        profilePasswordTextInput.isErrorEnabled = true
+        profilePasswordTextInput.error = getString(R.string.profile_wrong_password)
+    }
+
     override fun onCancel() {
         Log.d("facebookEvent:", "Cancel")
     }
@@ -217,22 +221,6 @@ class ProfileActivity : BaseActivity(),
         parameters.putString("fields", "${getString(R.string.facebook_email)},${getString(R.string.facebook_name)}")
         request.parameters = parameters
         request.executeAsync()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, result: Intent?) {
-        super.onActivityResult(requestCode, resultCode, result)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                REQUEST_PICK_IMAGE -> {
-                    user?.apply {
-                        id?.let {
-                            profileActivityComponent.profilePresenter().uploadUserPhoto(it, result?.data)
-                        }
-                    }
-
-                }
-            }
-        }
     }
 
     private fun facebookLogin() {
@@ -320,8 +308,6 @@ class ProfileActivity : BaseActivity(),
     }
 
     private fun setupCalendar() {
-        profileBirthdayEditText.hideKeyboard()
-
         calendar = Calendar.getInstance()
 
         datePickerDialog = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
@@ -339,13 +325,12 @@ class ProfileActivity : BaseActivity(),
     }
 
     private fun pickImage() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"), REQUEST_PICK_IMAGE)
-        } else {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_PICK_IMAGE)
+        RxImagePicker.with(this).requestImage(Sources.GALLERY).subscribe { uri ->
+            user?.apply {
+                id?.let {
+                    profileActivityComponent.profilePresenter().uploadUserPhoto(it, uri)
+                }
+            }
         }
     }
 }

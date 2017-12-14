@@ -1,14 +1,10 @@
 package br.com.symon.data.webservice
 
 import br.com.symon.data.model.User
-import br.com.symon.data.model.requests.BlockUserRequest
-import br.com.symon.data.model.requests.UserAuthenticateRequest
-import br.com.symon.data.model.requests.UserFacebookRegistryRequest
-import br.com.symon.data.model.requests.UserFullUpdateRequest
-import br.com.symon.data.model.requests.UserUpdateRequest
+import br.com.symon.data.model.requests.*
 import br.com.symon.data.model.responses.CheckUserResponse
 import br.com.symon.data.model.responses.RegisterUserResponse
-import br.com.symon.data.model.responses.UploadUserPhotoResponse
+import br.com.symon.data.model.responses.UploadPhotoResponse
 import br.com.symon.data.model.responses.UserTokenResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -45,7 +41,7 @@ interface UserApiService {
     @Multipart
     @POST("/user/photo/{user_id}")
     fun uploadUserPhoto(@Path("user_id") userId: Int,
-                        @Part photo: MultipartBody.Part): Observable<UploadUserPhotoResponse>
+                        @Part photo: MultipartBody.Part): Observable<UploadPhotoResponse>
 
     @POST("/token")
     fun getToken(@Body userAuthenticateRequest: UserAuthenticateRequest): Observable<Response<UserTokenResponse>>

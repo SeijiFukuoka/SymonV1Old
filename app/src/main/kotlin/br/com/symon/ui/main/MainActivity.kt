@@ -1,11 +1,14 @@
 package br.com.symon.ui.main
 
+import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SearchView
-import android.view.Menu
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import br.com.symon.CustomApplication
@@ -22,14 +25,21 @@ import br.com.symon.injection.components.MainActivityComponent
 import br.com.symon.injection.modules.MainActivityModule
 import br.com.symon.ui.profile.ProfileFragment
 import br.com.symon.ui.sales.SalesFragment
+import br.com.symon.ui.send.SendSaleActivity
 import br.com.symon.ui.settings.SettingsActivity
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
+import com.mlsdev.rximagepicker.RxImagePicker
+import com.mlsdev.rximagepicker.Sources
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.view_choose_photo_dialog.view.*
+
 
 class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextListener {
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
+        const val REQUEST_SEND_SALE = 10412
 
         lateinit var userTokenResponse: UserTokenResponse
 
@@ -41,13 +51,13 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     }
 
     private val mainActivityComponent: MainActivityComponent
-    get() = DaggerMainActivityComponent
-            .builder()
-            .applicationComponent((application as CustomApplication).applicationComponent)
-            .mainActivityModule(MainActivityModule(this))
-            .build()
+        get() = DaggerMainActivityComponent
+                .builder()
+                .applicationComponent((application as CustomApplication).applicationComponent)
+                .mainActivityModule(MainActivityModule(this))
+                .build()
 
-    private lateinit var menuSettings : MenuItem
+    private var salesFragment: SalesFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +73,10 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
 
         setupBottomMenu()
         setupSearchView()
+
+        mainSettingsImageView.setOnClickListener {
+            startIntent(SettingsActivity::class.java)
+        }
     }
 
     override fun onBackPressed() = if (!mainActivitySearchView.isIconified) {
@@ -103,28 +117,25 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
-
-        menuSettings = menu.findItem(R.id.menu_action_settings)
-
-        openSales()
-
-        return true
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true
             }
-            R.id.menu_action_settings -> {
-                startIntent(SettingsActivity::class.java)
-                true
-            }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_SEND_SALE -> {
+                    salesFragment?.showSendSuccessMessage()
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -158,12 +169,14 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
             when (position) {
                 0 -> openSales()
                 1 -> openRatings()
-                2 -> openSendSale()
+                2 -> requestFilePermissions()
                 3 -> openNotifications()
                 4 -> openProfile()
             }
             true
         }
+
+        mainBottomNavigation.currentItem = 0
     }
 
     private fun openProfile() {
@@ -171,35 +184,89 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         if (!isDisplayedByTag(ProfileFragment::class.java.canonicalName)) {
             replace(R.id.mainFrameContent, profileFragment)
         }
-
-        mainActivitySearchView.visibility = View.GONE
-        menuSettings.isVisible = true
+        setupToolbarMenu(isSearchVisible = false, isSettingsVisible = true)
     }
 
     private fun openSales() {
         if (!isDisplayedByTag(SalesFragment::class.java.canonicalName)) {
-            replace(R.id.mainFrameContent, SalesFragment())
+            salesFragment = SalesFragment()
+            replace(R.id.mainFrameContent, salesFragment)
         }
-
-        menuSettings.isVisible = false
+        setupToolbarMenu(isSearchVisible = true, isSettingsVisible = false)
     }
 
     private fun openSearchSales(searchQuery: String) {
-        replace(R.id.mainFrameContent, SalesFragment.newInstance(searchQuery))
+        salesFragment = SalesFragment.newInstance(searchQuery)
+        replace(R.id.mainFrameContent, salesFragment)
+        setupToolbarMenu(isSearchVisible = true, isSettingsVisible = false)
     }
 
     private fun openRatings() {
         toast("Avaliações - Em progresso")
-        menuSettings.isVisible = false
+        setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false)
     }
 
-    private fun openSendSale() {
-        toast("Enviar - Em progresso")
-        menuSettings.isVisible = false
+    private fun requestFilePermissions() {
+        RxPermissions(this)
+                .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe { granted ->
+                    if (granted) {
+                        openSendSaleDialog()
+                    } else {
+                        toast(getString(R.string.general_permissions_message))
+                    }
+                }
+    }
+
+    private fun openSendSaleDialog() {
+        val dialogBuilder = AlertDialog.Builder(this)
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val dialogView = inflater.inflate(R.layout.view_choose_photo_dialog, null)
+
+        dialogBuilder.setView(dialogView)
+        dialogBuilder.setCancelable(false)
+        val alertDialog = dialogBuilder.show()
+
+        dialogView.choosePhotoCamContainerLinearLayout.setOnClickListener {
+            RxImagePicker.with(this).requestImage(Sources.CAMERA).subscribe {
+                val postInfoIntent = SendSaleActivity.newIntent(this, it, userTokenResponse.token)
+                startActivityForResult(postInfoIntent, REQUEST_SEND_SALE)
+            }
+            alertDialog.hide()
+        }
+
+        dialogView.choosePhotoGalleryContainerLinearLayout.setOnClickListener {
+            RxImagePicker.with(this).requestImage(Sources.GALLERY).subscribe {
+                val postInfoIntent = SendSaleActivity.newIntent(this, it, userTokenResponse.token)
+                startActivityForResult(postInfoIntent, REQUEST_SEND_SALE)
+            }
+            alertDialog.hide()
+        }
+
+        dialogView.choosePhotoCancelTextView.setOnClickListener {
+            alertDialog.hide()
+            mainBottomNavigation.currentItem = 0
+        }
     }
 
     private fun openNotifications() {
         toast("Notificações - Em progresso")
-        menuSettings.isVisible = false
+        setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false)
     }
+
+    private fun setupToolbarMenu(isSearchVisible: Boolean, isSettingsVisible: Boolean) {
+
+        mainActivitySearchView.visibility =
+                if (isSearchVisible)
+                    View.VISIBLE
+                else
+                    View.GONE
+
+        mainSettingsImageView.visibility =
+                if (isSettingsVisible)
+                    View.VISIBLE
+                else
+                    View.GONE
+    }
+
 }

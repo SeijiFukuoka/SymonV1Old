@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_10_dp">
+
+    <br.com.symon.common.widget.HeaderProgressView
+        android:id="@+id/searchPlacesViewHeaderProgress"
+        layout="@layout/view_header_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/searchPlacesAppBarLayout"
+        layout="@layout/view_custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/searchPlaceView"
+            android:layout_width="match_parent"
+            android:layout_height="91dp"
+            android:layout_marginTop="@dimen/margin_20_dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/searchPlaceTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="@dimen/margin_30_dp"
+            android:paddingBottom="5dp"
+            android:theme="@style/WhiteEditText"
+            app:layout_constraintBottom_toBottomOf="@+id/searchPlaceView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/searchPlaceEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_search_white_24dp"
+                android:drawableRight="@drawable/ic_search_white_24dp"
+                android:hint="@string/search_place_hint"
+                android:inputType="textAutoComplete"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/margin_15_dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textColorLink="@color/white"
+                android:textSize="@dimen/text_size_16_sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/searchPlaceRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/searchPlaceView"
+            tools:listitem="@layout/item_search_place">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>
