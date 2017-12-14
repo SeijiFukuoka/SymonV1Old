@@ -16,13 +16,15 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "br.com.symon"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 3
         versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+
+        resValue "string", "API_KEY", REACTIVE_LOCATION_GMS_API_KEY
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -69,16 +71,17 @@ kapt {
 dependencies {
 
     // Android
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile "com.android.support:appcompat-v7:$androidSupportVersion"
-    compile "com.android.support:cardview-v7:$androidSupportVersion"
-    compile "com.android.support:recyclerview-v7:$androidSupportVersion"
-    compile "com.android.support:gridlayout-v7:$androidSupportVersion"
-    compile "com.android.support:design:$androidSupportVersion"
-    compile "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
-    compile "com.android.support:support-annotations:$androidSupportVersion"
-    compile "com.android.support:support-compat:$androidSupportVersion"
-    compile "com.android.support:support-core-ui:$androidSupportVersion"
+    implementation "com.android.support:appcompat-v7:$androidSupportVersion"
+    implementation "com.android.support:cardview-v7:$androidSupportVersion"
+    implementation "com.android.support:recyclerview-v7:$androidSupportVersion"
+    implementation "com.android.support:gridlayout-v7:$androidSupportVersion"
+    implementation "com.android.support:design:$androidSupportVersion"
+    implementation "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion"
+    implementation "com.android.support:support-annotations:$androidSupportVersion"
+    implementation "com.android.support:support-compat:$androidSupportVersion"
+    implementation "com.android.support:support-core-ui:$androidSupportVersion"
+    implementation "com.google.android.gms:play-services-location:$anroidPlayServicesVersion"
+    implementation "com.google.android.gms:play-services-places:$anroidPlayServicesVersion"
 
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
@@ -99,6 +102,9 @@ dependencies {
     // RX
     compile "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     compile "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion"
+
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
 
     // Dagger 2
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
@@ -123,10 +129,15 @@ dependencies {
     // PhoneMask
     compile "com.github.vacxe:phonemask:$maskEditTextVersion"
 
+    compile 'com.mlsdev.rximagepicker:library:2.0.2'
+
     // Fabric
     compile("com.crashlytics.sdk.android:crashlytics:$fabricVersion") {
         transitive = true
     }
+
+    // Reactive Location
+    compile "pl.charmas.android:android-reactive-location2:$reactiveLocationVersion"
 
     // Test
     testCompile "junit:junit:$junitVersion"

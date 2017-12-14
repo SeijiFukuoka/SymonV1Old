@@ -104,7 +104,7 @@
                     android:editable="false"
                     android:focusable="true"
                     android:hint="@string/register_complement_birthday_hint"
-                    android:inputType="date"
+                    android:maxLength="10"
                     android:paddingBottom="@dimen/margin_15_dp"
                     android:textColor="@color/black_202020"
                     android:textSize="@dimen/text_size_16_sp" />
