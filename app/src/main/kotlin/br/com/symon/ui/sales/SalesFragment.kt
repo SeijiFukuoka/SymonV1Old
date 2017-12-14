@@ -26,6 +26,7 @@ import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSalesFragmentComponent
 import br.com.symon.injection.components.SalesFragmentComponent
 import br.com.symon.injection.modules.SalesFragmentModule
+import br.com.symon.ui.saleDetail.SaleDetailActivity
 import kotlinx.android.synthetic.main.fragment_sales.*
 import java.util.*
 
@@ -117,7 +118,8 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     override fun onSaleImageClick(sale: Sale) {
-        activity.toast("onSaleImageClick ID = ${sale.id}")
+        val saleDetailActivity = SaleDetailActivity.newIntent(activity, sale)
+        startActivity(saleDetailActivity)
     }
 
     override fun onLikeSaleClick(position: Int, sale: Sale) {

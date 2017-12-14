@@ -57,7 +57,7 @@ class LoginConfirmationActivity : BaseActivity(), LoginConfirmationContract.View
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         if (intent.extras.getString(INTENT_MSG_ACTION_EXTRA) != null) {
-            loginConfirmationViewHeaderProgress.bind(3)
+            loginConfirmationViewHeaderProgress.bind(4)
             loginConfirmationConfirmActionView.bind(intent.extras.getString(INTENT_MSG_ACTION_EXTRA))
             loginConfirmationConfirmActionView.visibility = View.VISIBLE
             loginConfirmationForgetPasswordTextButton.visibility = View.INVISIBLE

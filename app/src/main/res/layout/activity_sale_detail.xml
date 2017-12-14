@@ -19,9 +19,10 @@
             android:background="@color/white"
             android:focusableInTouchMode="true">
 
-            <include
+            <br.com.symon.common.widget.HeaderProgressView
                 android:id="@+id/saleDetailActivityHeaderProgressView"
-                layout="@layout/view_header_progress" />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_progress_view_height" />
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/saleDetailActivityAppBarLayout"
@@ -42,51 +43,63 @@
                     android:layout_height="wrap_content"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-                    <ImageView
-                        android:id="@+id/saleDetailActivityBackArrowImageView"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_20_dp"
-                        android:layout_marginStart="@dimen/margin_20_dp"
-                        android:contentDescription="@string/sale_detail_back_arrow_image_view_content_description"
-                        app:srcCompat="@drawable/ic_back_arrow" />
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/saleDetailActivityToolbarTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_15_dp"
-                        android:layout_marginStart="@dimen/margin_15_dp"
-                        android:gravity="center_vertical"
-                        android:textAppearance="@style/TextAppearance.Title.Toolbar"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_size_18_sp"
-                        tools:text="Maionese Vigor" />
+                        <ImageView
+                            android:id="@+id/saleDetailActivityBackArrowImageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/sale_detail_back_arrow_image_view_content_description"
+                            app:srcCompat="@drawable/ic_back_arrow" />
 
-                    <ImageView
-                        android:id="@+id/saleDetailActivityFavoriteImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="@dimen/margin_25_dp"
-                        android:layout_marginRight="@dimen/margin_25_dp"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/sale_detail_favorite_image_view_content_description"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/ic_sale_toolbar_favorite_off" />
+                        <TextView
+                            android:id="@+id/saleDetailActivityToolbarTextView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_15_dp"
+                            android:layout_marginStart="@dimen/margin_15_dp"
+                            android:layout_weight="1"
+                            android:ellipsize="marquee"
+                            android:gravity="center_vertical"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.Title.Toolbar"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/text_size_18_sp"
+                            tools:text="Maionese Vigor" />
 
-                    <ImageView
-                        android:id="@+id/saleDetailActivityCommentImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="@dimen/margin_15_dp"
-                        android:layout_marginRight="@dimen/margin_15_dp"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/sale_detail_comment_image_view_content_description"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/ic_sale_toolbar_comment" />
+                        <ImageView
+                            android:id="@+id/saleDetailActivityCommentImageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="@dimen/margin_15_dp"
+                            android:layout_marginLeft="@dimen/margin_10_dp"
+                            android:layout_marginRight="@dimen/margin_15_dp"
+                            android:layout_marginStart="@dimen/margin_10_dp"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="@string/sale_detail_comment_image_view_content_description"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/ic_sale_toolbar_comment" />
 
+                        <ImageView
+                            android:id="@+id/saleDetailActivityFavoriteImageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="@dimen/margin_25_dp"
+                            android:layout_marginRight="@dimen/margin_25_dp"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="@string/sale_detail_favorite_image_view_content_description"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/ic_sale_toolbar_favorite_off" />
+
+                    </LinearLayout>
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.AppBarLayout>
 
@@ -185,7 +198,7 @@
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySaleProductLabel"
                 app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySaleProductLabel"
-                tools:text="R$ 0,89" />
+                tools:text="Maionese Vigor" />
 
             <TextView
                 android:id="@+id/saleDetailActivitySalePlaceLabel"
@@ -223,7 +236,6 @@
                 android:textSize="@dimen/text_size_14_sp"
                 app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySalePlaceValue"
                 app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySalePlaceValue" />
-
 
             <LinearLayout
                 android:id="@+id/saleDetailActivityLikeLayout"
@@ -325,14 +337,18 @@
                     android:text="@string/sale_detail_comment_layout_label"
                     android:textAppearance="@style/TextAppearance.Bold"
                     android:textSize="@dimen/text_size_18_sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/saleDetailActivityCommentRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/margin_15_dp"
-                    tools:listitem="@layout/item_sale_comment" />
+                    android:visibility="gone"
+                    tools:listitem="@layout/item_sale_comment"
+                    tools:visibility="visible" />
 
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>

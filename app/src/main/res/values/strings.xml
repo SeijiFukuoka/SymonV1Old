@@ -127,4 +127,5 @@
     <string name="sale_detail_favorite_image_view_content_description">saleDetailActivityFavoriteImageView</string>
     <string name="sale_detail_comment_image_view_content_description">saleDetailActivityCommentImageView</string>
     <string name="sale_detail_send_comment_image_view_content_description">saleDetailActivitySendCommentButton</string>
+    <string name="sale_detail_price_formatted">R$ %</string>
 </resources>
