@@ -21,7 +21,7 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_40_dp"
+            android:layout_marginTop="@dimen/margin_20_dp"
             android:paddingBottom="@dimen/margin_60_dp">
 
             <ImageView
@@ -35,13 +35,16 @@
                 android:focusable="true"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/profileNameTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginLeft="@dimen/margin_40_dp"
+                android:layout_marginRight="@dimen/margin_40_dp"
                 android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginTop="@dimen/margin_20_dp"
                 android:paddingBottom="5dp"
@@ -67,6 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginLeft="@dimen/margin_40_dp"
+                android:layout_marginRight="@dimen/margin_40_dp"
                 android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginTop="@dimen/margin_20_dp"
                 android:paddingBottom="5dp"
@@ -83,8 +88,8 @@
                     android:editable="false"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:maxLength="10"
                     android:hint="@string/register_complement_birthday_hint"
+                    android:maxLength="10"
                     android:paddingBottom="@dimen/margin_15_dp"
                     android:textColor="@color/black_202020"
                     android:textSize="@dimen/text_size_16_sp" />
@@ -96,6 +101,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginLeft="@dimen/margin_40_dp"
+                android:layout_marginRight="@dimen/margin_40_dp"
                 android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginTop="@dimen/margin_20_dp"
                 android:paddingBottom="5dp"
@@ -134,6 +141,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginLeft="@dimen/margin_40_dp"
+                android:layout_marginRight="@dimen/margin_40_dp"
                 android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginTop="@dimen/margin_20_dp"
                 android:theme="@style/CustomEditText"
@@ -153,48 +162,26 @@
                     android:textStyle="bold" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/profileFacebookButtonContainerConstraint"
-                android:layout_width="0dp"
-                android:layout_height="53dp"
+            <Button
+                android:id="@+id/profileFacebookButtonButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginLeft="@dimen/margin_40_dp"
+                android:layout_marginRight="@dimen/margin_40_dp"
                 android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginTop="@dimen/margin_20_dp"
                 android:background="@drawable/button_facebook_selector"
-                android:clickable="true"
-                android:focusable="true"
+                android:drawableLeft="@drawable/ic_facebook"
+                android:drawableStart="@drawable/ic_facebook"
+                android:paddingRight="@dimen/margin_10_dp"
+                android:paddingLeft="@dimen/margin_10_dp"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:text="@string/profile_facebook_connect"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileEmailTextInput">
-
-                <ImageView
-                    android:id="@+id/profileFacebookImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_10_dp"
-                    android:layout_marginRight="@dimen/margin_10_dp"
-                    android:adjustViewBounds="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/profileFacebookTextView"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_facebook" />
-
-                <TextView
-                    android:id="@+id/profileFacebookTextView"
-                    style="@style/TextAppearance.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_10_dp"
-                    android:layout_marginStart="@dimen/margin_10_dp"
-                    android:text="@string/profile_facebook_connect"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_20_sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/profileFacebookImageView"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/profileFacebookImageView" />
-
-            </android.support.constraint.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@id/profileEmailTextInput"/>
 
             <TextView
                 android:id="@+id/profileChangePasswordTextView"
@@ -208,16 +195,16 @@
                 android:textColor="@color/gray_737373"
                 android:textSize="@dimen/text_size_15_sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileFacebookButtonContainerConstraint" />
+                app:layout_constraintTop_toBottomOf="@+id/profileFacebookButtonButton" />
 
             <LinearLayout
                 android:id="@+id/profilePasswordContainerLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/profileChangePasswordTextView">
 
                 <android.support.design.widget.TextInputLayout
@@ -304,6 +291,8 @@
                 android:layout_height="@dimen/margin_50_dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/margin_40_dp"
+                android:layout_marginLeft="@dimen/margin_40_dp"
+                android:layout_marginRight="@dimen/margin_40_dp"
                 android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginTop="@dimen/margin_20_dp"
                 android:background="@drawable/button_color_accent_selector"

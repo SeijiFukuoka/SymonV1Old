@@ -253,7 +253,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     fun showSendSuccessMessage() {
-        salesFragmentSendSuccessContainerLinearLayout.visibility = View.VISIBLE
+        salesFragmentSendSuccessContainerLinearLayout?.visibility = View.VISIBLE
         resetSaleData()
     }
 }

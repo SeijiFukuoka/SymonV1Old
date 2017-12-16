@@ -132,14 +132,14 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_SEND_SALE -> {
                     salesFragment?.showSendSuccessMessage()
+                    mainBottomNavigation.currentItem = 0
                 }
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -263,6 +263,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
                 startActivityForResult(postInfoIntent, REQUEST_SEND_SALE)
             }
             alertDialog.hide()
+            mainBottomNavigation.currentItem = 0
         }
 
         dialogView.choosePhotoGalleryContainerLinearLayout.setOnClickListener {
@@ -271,6 +272,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
                 startActivityForResult(postInfoIntent, REQUEST_SEND_SALE)
             }
             alertDialog.hide()
+            mainBottomNavigation.currentItem = 0
         }
 
         dialogView.choosePhotoCancelTextView.setOnClickListener {

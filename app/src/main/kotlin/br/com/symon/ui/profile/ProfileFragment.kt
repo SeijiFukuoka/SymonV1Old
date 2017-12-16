@@ -1,5 +1,7 @@
 package br.com.symon.ui.profile
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +10,6 @@ import br.com.symon.R
 import br.com.symon.base.BaseFragment
 import br.com.symon.common.inflate
 import br.com.symon.common.loadUrlToBeRounded
-import br.com.symon.common.startIntent
 import br.com.symon.data.model.User
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -18,7 +19,8 @@ class ProfileFragment: BaseFragment() {
 
     companion object {
 
-        private val USER_EXTRA = "user_extra"
+        const val USER_EXTRA = "user_extra"
+        const val USER_EDIT_REQUEST = 14325
 
         fun newInstance(user: User?): ProfileFragment {
             val fragment = ProfileFragment()
@@ -51,9 +53,25 @@ class ProfileFragment: BaseFragment() {
         }
 
         profileEditTextView.setOnClickListener {
-            activity.startIntent(ProfileActivity::class.java)
+            startActivityForResult(Intent(activity, ProfileActivity::class.java), USER_EDIT_REQUEST)
         }
 
         profileMessageTextView.text = getString(R.string.profile_message)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                USER_EDIT_REQUEST -> {
+                    user = data?.getParcelableExtra(USER_EXTRA)
+
+                    user?.apply {
+                        profileNameTextView.text = name
+                        profileImageView.loadUrlToBeRounded(photoUri)
+                    }
+                }
+            }
+        }
     }
 }

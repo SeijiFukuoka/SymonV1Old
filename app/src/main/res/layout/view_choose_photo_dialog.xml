@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/margin_40_dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:paddingBottom="@dimen/margin_40_dp">
 
     <TextView
         android:id="@+id/choosePhotoTitleTextView"
@@ -24,9 +24,8 @@
         android:id="@+id/choosePhotoCamContainerLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_10_dp"
-        android:layout_marginStart="@dimen/margin_10_dp"
         android:layout_marginTop="8dp"
+        android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal"
         android:padding="@dimen/margin_20_dp"
         app:layout_constraintStart_toStartOf="@+id/choosePhotoTitleTextView"
@@ -51,9 +50,8 @@
         android:id="@+id/choosePhotoGalleryContainerLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/margin_10_dp"
+        android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal"
         android:padding="@dimen/margin_20_dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,10 +78,12 @@
         style="@style/TextAppearance.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_30_dp"
+        android:layout_marginRight="@dimen/margin_30_dp"
+        android:layout_marginTop="@dimen/margin_20_dp"
         android:text="@string/view_choose_photo_cancel"
         android:textSize="@dimen/text_size_12_sp"
-        android:layout_marginTop="@dimen/margin_20_dp"
-        app:layout_constraintEnd_toEndOf="@+id/choosePhotoGalleryContainerLinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choosePhotoGalleryContainerLinearLayout" />
 
 

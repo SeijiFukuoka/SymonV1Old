@@ -31,7 +31,7 @@ class ProfilePresenter @Inject constructor(private val view: ProfileContract.Vie
                 200 -> {
                     val userTokenResponse = it.body()
                     userRepository.saveUserCache(userTokenResponse).subscribe({
-                        view.notifyDataUpdate()
+                        view.notifyDataUpdate(userTokenResponse?.user)
                     }, {
                         GeneralErrorHandler(it, view, {})
                     })

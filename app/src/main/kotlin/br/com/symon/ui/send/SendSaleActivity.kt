@@ -15,6 +15,7 @@ import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.loadUrl
+import br.com.symon.common.parseToBigDecimal
 import br.com.symon.common.toast
 import br.com.symon.common.widget.MoneyTextWatcher
 import br.com.symon.data.model.PlaceInfo
@@ -31,8 +32,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_post_info.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
 import pl.charmas.android.reactivelocation2.ReactiveLocationProvider
-import java.text.NumberFormat
-import java.util.*
 
 
 class SendSaleActivity : BaseActivity(), SendSaleContract.View {
@@ -102,11 +101,10 @@ class SendSaleActivity : BaseActivity(), SendSaleContract.View {
         sendSaleContinueButton.setOnClickListener {
 
             if (isValidFields()) {
-                val format = NumberFormat.getInstance(Locale("pt", "BR"))
-                val number = format.parse(sendSalePriceEditText.text.toString().replace("R$", ""))
+                val value = sendSalePriceEditText.text.toString().parseToBigDecimal()
                 val sendSaleRequest = SendSaleRequest(productName = sendSaleNameEditText.text.toString(),
                         placeName = sendSaleLocationEditText.text.toString(),
-                        price = number.toDouble(),
+                        price = value,
                         lat = lat,
                         lng = lng)
 
@@ -190,11 +188,6 @@ class SendSaleActivity : BaseActivity(), SendSaleContract.View {
             return false
         } else {
             sendSaleNameTextInput.isErrorEnabled = false
-        }
-
-        if (sendSalePriceEditText.text.toString().replace("R$", "").isEmpty()) {
-            sendSalePriceEditText.error =  getString(R.string.general_required_field)
-            return false
         }
 
         return true
