@@ -212,18 +212,42 @@
                 app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySaleProductValue"
                 app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySaleProductValue" />
 
-            <TextView
-                android:id="@+id/saleDetailActivitySalePlaceValue"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/saleDetailActivitySalePlaceLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_5_dp"
-                android:textAppearance="@style/TextAppearance.Bold"
-                android:textColor="@color/green_54983A"
-                android:textSize="@dimen/text_size_15_sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySalePlaceLabel"
-                app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySalePlaceLabel"
-                tools:text="Pão de Açúcar - Clodomiro Ama..." />
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintEnd_toEndOf="@+id/saleDetailActivitySaleProductDetailCardView"
+                app:layout_constraintLeft_toLeftOf="@+id/saleDetailActivitySalePlaceLabel"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySalePlaceLabel">
+
+                <br.com.symon.common.widget.EllipsizingTextView
+                    android:id="@+id/saleDetailActivitySalePlaceValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.9"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:singleLine="false"
+                    android:textAppearance="@style/TextAppearance.Bold"
+                    android:textColor="@color/green_54983A"
+                    android:textSize="@dimen/text_size_15_sp"
+                    android:textStyle="bold"
+                    tools:text="Pão de Açúcar - Clodomiro teste " />
+
+                <ImageView
+                    android:id="@+id/saleDetailActivitySalePlaceValueArrow"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_sale_detail_right_arrow"
+                    tools:visibility="visible" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/saleDetailActivityOpinionLabel"
@@ -234,8 +258,8 @@
                 android:textAppearance="@style/TextAppearance.Regular"
                 android:textColor="@color/gray_737373"
                 android:textSize="@dimen/text_size_14_sp"
-                app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySalePlaceValue"
-                app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySalePlaceValue" />
+                app:layout_constraintLeft_toLeftOf="@id/saleDetailActivitySalePlaceLayout"
+                app:layout_constraintTop_toBottomOf="@id/saleDetailActivitySalePlaceLayout" />
 
             <LinearLayout
                 android:id="@+id/saleDetailActivityLikeLayout"

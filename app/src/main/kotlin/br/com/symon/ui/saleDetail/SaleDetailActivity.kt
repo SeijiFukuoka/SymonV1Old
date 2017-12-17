@@ -11,13 +11,16 @@ import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.loadUrl
 import br.com.symon.common.toast
+import br.com.symon.common.widget.EllipsizingTextView
 import br.com.symon.data.model.Comment
 import br.com.symon.data.model.Sale
 import br.com.symon.injection.components.DaggerSaleDetailActivityComponent
 import br.com.symon.injection.components.SaleDetailActivityComponent
 import br.com.symon.injection.modules.SaleDetailActivityModule
 import kotlinx.android.synthetic.main.activity_sale_detail.*
+import java.text.NumberFormat
 import java.util.*
+
 
 class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentAdapter.OnItemClickListener {
 
@@ -73,6 +76,7 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
             saleDetailActivityCommentListLabelTextView.visibility = View.VISIBLE
             saleDetailActivityCommentRecyclerView.visibility = View.VISIBLE
         } else {
+            saleDetailActivityCommentListLayout.setPadding(0, resources.getDimensionPixelSize(R.dimen.margin_10_dp), 0, 0)
             saleDetailActivityCommentListLabelTextView.visibility = View.GONE
             saleDetailActivityCommentRecyclerView.visibility = View.GONE
         }
@@ -115,9 +119,21 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
 
     private fun setContent() {
         saleDetailActivitySaleImageView.loadUrl(extraSaleDetail.photo)
-        saleDetailActivitySaleDetailPriceValue.text = String.format(Locale.getDefault(), resources.getString(R.string.item_sale_price_formatted), extraSaleDetail.price)
+        saleDetailActivitySaleDetailPriceValue.text = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(extraSaleDetail.price)
         saleDetailActivitySaleProductValue.text = extraSaleDetail.message
         saleDetailActivitySalePlaceValue.text = extraSaleDetail.place
+
+        saleDetailActivitySalePlaceValue.maxLines = 1
+
+        saleDetailActivitySalePlaceValue.addEllipsizeListener(object : EllipsizingTextView.EllipsizeListener {
+            override fun ellipsizeStateChanged(ellipsized: Boolean) {
+                if (ellipsized)
+                    saleDetailActivitySalePlaceValueArrow.visibility = View.VISIBLE
+            }
+        })
+
+        saleDetailActivityLikeLayout.isClickable = false
+        itemSaleLikeQuantityTextView.text = extraSaleDetail.likes.toString()
 
         if (extraSaleDetail.hasLiked) {
             saleDetailActivityLikeLayout.isSelected = true
@@ -125,17 +141,17 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
             itemSaleLikeQuantityTextView.isSelected = true
         }
 
-        itemSaleLikeQuantityTextView.text = extraSaleDetail.likes.toString()
+        saleDetailActivityDislikeLayout.isClickable = false
+        itemSaleDislikeQuantityTextView.text = extraSaleDetail.dislikes.toString()
 
         if (extraSaleDetail.hasDisliked) {
             saleDetailActivityDislikeLayout.isSelected = true
             itemSaleDislikeImageView.isSelected = true
             itemSaleDislikeQuantityTextView.isSelected = true
         }
-        itemSaleDislikeQuantityTextView.text = extraSaleDetail.dislikes.toString()
     }
 
     private fun verifyComments() {
-        extraSaleDetail.id?.let { saleDetailActivityComponent.providePresenter().getComments(it) }
+        extraSaleDetail.id.let { saleDetailActivityComponent.providePresenter().getComments(it) }
     }
 }
