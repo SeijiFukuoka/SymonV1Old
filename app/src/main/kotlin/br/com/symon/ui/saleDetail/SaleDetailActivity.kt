@@ -23,6 +23,7 @@ import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSaleDetailActivityComponent
 import br.com.symon.injection.components.SaleDetailActivityComponent
 import br.com.symon.injection.modules.SaleDetailActivityModule
+import br.com.symon.ui.ratings.RatingsChildFragment
 import kotlinx.android.synthetic.main.activity_sale_detail.*
 import java.text.NumberFormat
 import java.util.*
@@ -103,6 +104,8 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
             saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_on))
         else
             saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_off))
+
+        setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
     }
 
     override fun showSendCommentResponse(sendSaleCommentResponse: SendSaleCommentResponse) {
@@ -114,6 +117,7 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
             saleCommentAdapter.addItem(commentSendResponse)
 
         scrollDown(false)
+        setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
     }
 
     override fun showBlockUserResponse() {
@@ -122,6 +126,7 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
             saleDetailActivityCommentListLabelTextView.visibility = View.GONE
             saleDetailActivityCommentRecyclerView.visibility = View.GONE
         }
+        setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
     }
 
     private fun setupToolbar() {

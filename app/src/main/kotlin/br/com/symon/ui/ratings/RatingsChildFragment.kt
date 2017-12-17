@@ -1,6 +1,7 @@
 package br.com.symon.ui.ratings
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -44,6 +45,9 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         private const val API_OPTION_KEY: String = "API_OPTION_KEY"
         const val EXTRA_ORDER_BY: String = "EXTRA_ORDER_BY"
 
+        const val REQUEST_SALE_DETAIL = 123
+        const val RESPONSE_SALE_DETAIL_NEED_UPDATE = 456
+
         fun newInstance(apiOptionKey: RatingsChildType, orderBy: Int): RatingsChildFragment {
             val f = RatingsChildFragment()
             val args = Bundle()
@@ -67,6 +71,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
     private var currentPage: Int = Constants.FIRST_PAGE
 
     private lateinit var onResponseLoaded: OnRatingsChildListener
+
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -120,7 +125,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
 
     override fun onSaleImageClick(sale: Sale) {
         val saleDetailActivity = SaleDetailActivity.newIntent(activity, sale, userTokenResponse)
-        startActivity(saleDetailActivity)
+        startActivityForResult(saleDetailActivity, REQUEST_SALE_DETAIL)
     }
 
     override fun onLikeSaleClick(position: Int, sale: Sale) {
@@ -150,6 +155,13 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
 
     override fun showBlockUserResponse() {
         activity.toast("showBlockUserResponse")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_SALE_DETAIL && resultCode == RESPONSE_SALE_DETAIL_NEED_UPDATE) {
+            fetchData(FIRST_PAGE)
+        }
     }
 
     fun updateFragment() {
