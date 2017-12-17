@@ -1,7 +1,9 @@
 package br.com.symon.ui.profile
 
 import android.Manifest
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.text.SpannableString
@@ -142,16 +144,23 @@ class ProfileActivity : BaseActivity(),
         profileActivityComponent.profilePresenter().getUserCache()
     }
 
+    override fun onBackPressed() {
+        val returnIntent = Intent()
+        setResult(Activity.RESULT_CANCELED, returnIntent)
+        super.onBackPressed()
+    }
+
+
     private fun setupFacebookButton() {
         val hasToken = AccessToken.getCurrentAccessToken() != null
 
-        profileFacebookTextView.text = if (hasToken) {
+        profileFacebookButtonButton.text = if (hasToken) {
             getString(R.string.profile_facebook_disconnect)
         } else {
             getString(R.string.profile_facebook_connect)
         }
 
-        profileFacebookButtonContainerConstraint.setOnClickListener {
+        profileFacebookButtonButton.setOnClickListener {
             if (hasToken) {
                 facebookLogout()
             } else {
@@ -160,8 +169,11 @@ class ProfileActivity : BaseActivity(),
         }
     }
 
-    override fun notifyDataUpdate() {
+    override fun notifyDataUpdate(user: User?) {
         toast(getString(R.string.profile_data_updated_success))
+        val returnIntent = Intent()
+        returnIntent.putExtra(ProfileFragment.USER_EXTRA, user)
+        setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }
 
@@ -182,8 +194,10 @@ class ProfileActivity : BaseActivity(),
             profilePhoneEditText.setText(phone)
             profileBirthdayEditText.setText(birthday?.dateFormat())
 
-            calendar = Calendar.getInstance()
-            calendar.time = birthday
+            birthday?.let {
+                calendar = Calendar.getInstance()
+                calendar.time = it
+            }
         }
     }
 

@@ -60,6 +60,8 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
 
         userId = intent.getIntExtra(EXTRA_USER_ID, 0)
 
+        registerComplementHeaderProgressView.bind(2)
+
         customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }

@@ -9,7 +9,7 @@
         style="@style/TextAppearance.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_60_dp"
+        android:layout_marginTop="44dp"
         android:text="@string/welcome_title"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_15_sp"
@@ -32,19 +32,23 @@
         style="@style/TextAppearance.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_50_dp"
-        android:layout_marginRight="@dimen/margin_50_dp"
-        android:layout_marginTop="@dimen/margin_90_dp"
+        android:layout_marginLeft="@dimen/margin_40_dp"
+        android:layout_marginRight="@dimen/margin_40_dp"
+        android:layout_marginEnd="@dimen/margin_40_dp"
+        android:layout_marginStart="@dimen/margin_40_dp"
         android:gravity="center_horizontal"
         android:text="@string/welcome_message"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_22_sp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeBrandImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeBrandImageView"
+        app:layout_constraintVertical_bias="0.3" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@color/white_F5F5F5"
@@ -52,48 +56,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/constraintLoginFacebookButtonContainer"
-            android:layout_width="0dp"
-            android:layout_height="53dp"
+        <Button
+            android:id="@+id/constraintLoginFacebookButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_20_dp"
             android:layout_marginLeft="@dimen/margin_20_dp"
             android:layout_marginRight="@dimen/margin_20_dp"
-            android:layout_marginTop="@dimen/margin_40_dp"
+            android:layout_marginStart="@dimen/margin_20_dp"
+            android:layout_marginTop="@dimen/margin_20_dp"
             android:background="@drawable/button_facebook_selector"
-            android:clickable="true"
-            android:focusable="true"
+            android:drawableLeft="@drawable/ic_facebook"
+            android:drawableStart="@drawable/ic_facebook"
+            android:paddingRight="@dimen/margin_20_dp"
+            android:paddingLeft="@dimen/margin_20_dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20_sp"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:text="@string/welcome_facebook_button"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imageViewRegisterFacebook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_10_dp"
-                android:layout_marginRight="@dimen/margin_10_dp"
-                android:adjustViewBounds="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/welcomeFacebookTextView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_facebook" />
-
-            <TextView
-                android:id="@+id/welcomeFacebookTextView"
-                style="@style/TextAppearance.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10_dp"
-                android:layout_marginStart="@dimen/margin_10_dp"
-                android:text="@string/welcome_facebook_button"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_20_sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewRegisterFacebook"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageViewRegisterFacebook" />
-
-        </android.support.constraint.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/welcomeContinueWithEmailButton"
@@ -111,7 +95,7 @@
             android:textSize="@dimen/text_size_20_sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLoginFacebookButtonContainer" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLoginFacebookButton" />
 
 
     </android.support.constraint.ConstraintLayout>

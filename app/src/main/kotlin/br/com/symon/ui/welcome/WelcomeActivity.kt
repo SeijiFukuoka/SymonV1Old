@@ -44,7 +44,7 @@ class WelcomeActivity :
 
         welcomeActivityComponent.inject(this)
 
-        constraintLoginFacebookButtonContainer.setOnClickListener {
+        constraintLoginFacebookButton.setOnClickListener {
             facebookLogin()
         }
 

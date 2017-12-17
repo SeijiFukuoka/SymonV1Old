@@ -33,6 +33,8 @@ class RegisterActivity : BaseActivity(), RegisterContract.View {
         supportActionBar?.setDisplayShowHomeEnabled(false)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        registerHeaderProgressView.bind(1)
+
         customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }

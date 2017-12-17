@@ -10,7 +10,7 @@ interface ProfileContract {
     interface View : BaseView {
         fun showUserData(user: User?)
         fun showPhoto(photo: String?)
-        fun notifyDataUpdate()
+        fun notifyDataUpdate(user: User?)
         fun showErrorMessage(error: String?)
         fun showInvalidPassword()
     }

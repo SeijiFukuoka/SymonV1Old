@@ -16,6 +16,7 @@ import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
 import kotlinx.android.synthetic.main.item_sale.view.*
 import kotlinx.android.synthetic.main.view_item_author_bottom_layout.view.*
+import java.text.NumberFormat
 import java.util.*
 
 
@@ -113,7 +114,7 @@ class SalesAdapter(private val list: MutableList<Sale>,
                 }
 
                 itemSaleSaleTitleTextView.text = sale.message
-                itemSaleSaleValueTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.item_sale_price_formatted), sale.price)
+                itemSaleSaleValueTextView.text = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(sale.price)
 
                 viewItemAuthorBottomSaleTimeTextView.text = sale.updatedAt
                 itemSaleLikeQuantityTextView.text = sale.likes.toString()

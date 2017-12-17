@@ -129,7 +129,8 @@ dependencies {
     // PhoneMask
     compile "com.github.vacxe:phonemask:$maskEditTextVersion"
 
-    compile 'com.mlsdev.rximagepicker:library:2.0.2'
+    // RxImagePicker
+    compile "com.mlsdev.rximagepicker:library:$rxImagePickerVersion"
 
     // Fabric
     compile("com.crashlytics.sdk.android:crashlytics:$fabricVersion") {

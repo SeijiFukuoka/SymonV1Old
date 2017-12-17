@@ -18,7 +18,9 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import java.math.BigDecimal
 import java.text.DateFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -73,7 +75,8 @@ fun ImageView.loadUrl(uri: Uri?) {
 }
 
 fun ImageView.loadUrlToBeRounded(url: String?) {
-    Glide.with(context).load(url).apply(RequestOptions.circleCropTransform()).into(this)
+    Glide.with(context).load(url)
+            .apply(RequestOptions.circleCropTransform()).into(this)
 }
 
 fun String.isEmailValid(): Boolean {
@@ -81,4 +84,14 @@ fun String.isEmailValid(): Boolean {
     val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
     val matcher = pattern.matcher(this)
     return matcher.matches()
+}
+
+fun String.parseToBigDecimal(): BigDecimal {
+    val replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance(Locale("pt", "BR")).currency.symbol)
+    val cleanString = this.replace(replaceable.toRegex(), "")
+    return if (cleanString.isEmpty()) {
+        BigDecimal(0.00)
+    } else {
+        BigDecimal(cleanString).setScale(2, BigDecimal.ROUND_FLOOR).divide(BigDecimal(100), BigDecimal.ROUND_FLOOR)
+    }
 }

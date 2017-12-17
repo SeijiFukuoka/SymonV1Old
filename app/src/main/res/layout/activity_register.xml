@@ -6,9 +6,10 @@
     android:background="@color/white"
     android:focusableInTouchMode="true">
 
-    <include
-        android:id="@+id/view_header_progress"
-        layout="@layout/view_header_progress" />
+    <br.com.symon.common.widget.HeaderProgressView
+        android:id="@+id/registerHeaderProgressView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <include
         android:id="@+id/registerAppBarLayout"
@@ -17,7 +18,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_header_progress" />
+        app:layout_constraintTop_toBottomOf="@id/registerHeaderProgressView" />
 
     <TextView
         android:id="@+id/registerTitleTextView"
@@ -39,6 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_40_dp"
+        android:layout_marginRight="@dimen/margin_40_dp"
+        android:layout_marginLeft="@dimen/margin_40_dp"
         android:layout_marginStart="@dimen/margin_40_dp"
         android:layout_marginTop="@dimen/margin_30_dp"
         android:theme="@style/CustomEditText"
@@ -64,6 +67,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_40_dp"
         android:layout_marginStart="@dimen/margin_40_dp"
+        android:layout_marginRight="@dimen/margin_40_dp"
+        android:layout_marginLeft="@dimen/margin_40_dp"
         android:layout_marginTop="@dimen/margin_20_dp"
         android:paddingBottom="5dp"
         android:theme="@style/CustomEditText"
@@ -92,6 +97,8 @@
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/margin_30_dp"
         android:layout_marginStart="@dimen/margin_30_dp"
+        android:layout_marginRight="@dimen/margin_30_dp"
+        android:layout_marginLeft="@dimen/margin_30_dp"
         android:layout_marginTop="@dimen/margin_35_dp"
         android:background="@drawable/button_color_accent_selector"
         android:shadowColor="@color/buttonShadow"
