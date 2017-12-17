@@ -124,16 +124,16 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     override fun onSaleImageClick(sale: Sale) {
-        val saleDetailActivity = SaleDetailActivity.newIntent(activity, sale)
+        val saleDetailActivity = SaleDetailActivity.newIntent(activity, sale, user!!)
         startActivity(saleDetailActivity)
     }
 
     override fun onLikeSaleClick(position: Int, sale: Sale) {
-        salesFragmentComponent.salesPresenter().likeSale(position, sale.id!!, user?.token!!)
+        salesFragmentComponent.salesPresenter().likeSale(position, sale.id, user?.token!!)
     }
 
     override fun onDislikeSaleClick(position: Int, sale: Sale) {
-        salesFragmentComponent.salesPresenter().disLikeSale(position, sale.id!!, user?.token!!)
+        salesFragmentComponent.salesPresenter().disLikeSale(position, sale.id, user?.token!!)
     }
 
     override fun onReportSaleClick(sale: Sale) {
@@ -141,7 +141,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     override fun onBlockUserClick(blockUser: User) {
-        salesFragmentComponent.salesPresenter().blockUser(user?.token, userBlockedId = BlockUserRequest(blockUser.id))
+        salesFragmentComponent.salesPresenter().blockUser(user?.token, userBlockedId = BlockUserRequest(blockUser.id!!))
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) =

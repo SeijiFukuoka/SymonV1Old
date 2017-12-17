@@ -28,6 +28,7 @@
     <color name="green_54983A">#54983A</color>
 
     <color name="orange_F5A623">#F5A623</color>
+    <color name="orange_F5A623_darken">#DC8D0A</color>
 
     <color name="buttonShadow">#19000000</color>
 </resources>

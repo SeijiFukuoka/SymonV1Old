@@ -10,8 +10,8 @@ import br.com.symon.injection.scope.ActivityScope
 @ActivityScope
 class SaleDetailPresenter(val view: SaleDetailContract.View, private val saleRepository: SaleRepository, private val userRepository: UserRepository) : SaleDetailContract.Presenter {
 
-    override fun getComments(saleId: Int) {
-        saleRepository.getComments(saleId)
+    override fun getComments(userToken: String, saleId: Int) {
+        saleRepository.getComments(userToken, saleId)
                 .subscribe({
                     view.showComments(it)
                 }, {
@@ -19,20 +19,32 @@ class SaleDetailPresenter(val view: SaleDetailContract.View, private val saleRep
                 })
     }
 
-    override fun setFavorite() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setFavorite(userToken: String, saleId: Int) {
+        saleRepository.setFavorite(userToken, saleId)
+                .subscribe({
+                    when (it.code()) {
+                        in 201..204 -> {
+                            view.showFavoriteResponse()
+                        }
+                    }
+                })
     }
 
-    override fun sendComment(saleId: Int, sendSaleCommentRequest: SendSaleCommentRequest) {
-        saleRepository.sendComment(saleId, sendSaleCommentRequest)
+    override fun sendComment(userToken: String, saleId: Int, sendSaleCommentRequest: SendSaleCommentRequest) {
+        saleRepository.sendComment(userToken, saleId, sendSaleCommentRequest)
                 .subscribe({
-                    view.showSendCommentResponse()
+                    view.showSendCommentResponse(it)
                 }, {
                     GeneralErrorHandler(it, view, {})
                 })
     }
 
     override fun blockUser(userToken: String?, userBlockedId: BlockUserRequest?) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        userRepository.blockUSer(userToken, userBlockedId)
+                .subscribe({
+                    view.showBlockUserResponse()
+                }, {
+                    GeneralErrorHandler(it, view, {})
+                })
     }
 }

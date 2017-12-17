@@ -7,12 +7,12 @@ import com.google.gson.annotations.SerializedName
 data class SendSaleCommentResponse(
         @SerializedName("id") var id: Int,
         @SerializedName("message") var message: String,
-        @SerializedName("sale_id") var saleId: String,
+        @SerializedName("sale_id") var saleId: Int,
         @SerializedName("user_id") var userId: Int) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
             source.readString(),
-            source.readString(),
+            source.readInt(),
             source.readInt()
     )
 
@@ -21,7 +21,7 @@ data class SendSaleCommentResponse(
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeInt(id)
         writeString(message)
-        writeString(saleId)
+        writeInt(saleId)
         writeInt(userId)
     }
 

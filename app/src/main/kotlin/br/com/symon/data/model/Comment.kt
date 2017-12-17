@@ -5,30 +5,30 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Comment(
-        @SerializedName("id") var id: Int?,
-        @SerializedName("message") var message: String?,
+        @SerializedName("id") var id: Int,
+        @SerializedName("message") var message: String,
         @SerializedName("created_at") var createdAt: String?,
         @SerializedName("updated_at") var updatedAt: String?,
-        @SerializedName("sale_id") var saleId: Int?,
+        @SerializedName("sale_id") var saleId: Int,
         @SerializedName("user_id") var userId: Int
 ) : Parcelable {
     constructor(source: Parcel) : this(
-            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readInt(),
             source.readString(),
             source.readString(),
             source.readString(),
-            source.readValue(Int::class.java.classLoader) as Int?,
+            source.readInt(),
             source.readInt()
     )
 
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeValue(id)
+        writeInt(id)
         writeString(message)
         writeString(createdAt)
         writeString(updatedAt)
-        writeValue(saleId)
+        writeInt(saleId)
         writeInt(userId)
     }
 

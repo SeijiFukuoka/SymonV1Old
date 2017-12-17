@@ -6,17 +6,17 @@ import com.google.gson.annotations.SerializedName
 
 data class SendSaleCommentRequest(
         @SerializedName("message") var commentMessage: String,
-        @SerializedName("sale_id") var saleId: String) : Parcelable {
+        @SerializedName("sale_id") var saleId: Int) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
-            source.readString()
+            source.readInt()
     )
 
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeString(commentMessage)
-        writeString(saleId)
+        writeInt(saleId)
     }
 
     companion object {

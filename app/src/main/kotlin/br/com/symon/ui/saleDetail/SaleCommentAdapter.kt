@@ -26,12 +26,20 @@ class SaleCommentAdapter(private val list: MutableList<Comment>,
 
     interface OnItemClickListener {
         fun onBlockUserClick(userId: Int)
-//        fun onBlockUserClick(user: User)
     }
 
     fun addItem(comment: Comment) {
         this.list.add(comment)
-        notifyItemInserted(list.size)
+        notifyItemInserted(list.size - 1)
+    }
+
+    fun removeBlockUserComments(blockedUserId: Int) {
+        val filteredList: List<Comment> = list.filter {
+            it.userId != blockedUserId
+        }
+        this.list.clear()
+        this.list.addAll(filteredList)
+        notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View?,

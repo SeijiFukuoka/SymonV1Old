@@ -21,6 +21,7 @@ import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerRatingsChildFragmentComponent
 import br.com.symon.injection.components.RatingsChildFragmentComponent
 import br.com.symon.injection.modules.RatingsChildFragmentModule
+import br.com.symon.ui.saleDetail.SaleDetailActivity
 import br.com.symon.ui.sales.SalesAdapter
 import kotlinx.android.synthetic.main.fragment_ratings_child.*
 
@@ -118,7 +119,8 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
     }
 
     override fun onSaleImageClick(sale: Sale) {
-        activity.toast("onSaleImageClick ID = ${sale.id}")
+        val saleDetailActivity = SaleDetailActivity.newIntent(activity, sale, userTokenResponse)
+        startActivity(saleDetailActivity)
     }
 
     override fun onLikeSaleClick(position: Int, sale: Sale) {

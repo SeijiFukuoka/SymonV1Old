@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/saleDetailActivityMainContentLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/saleDetailActivityScrollView"
@@ -124,7 +125,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/saleDetailActivitySaleProductDetailCardView"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_25_dp"
                 android:layout_marginLeft="@dimen/margin_25_dp"
@@ -369,6 +370,7 @@
                     android:id="@+id/saleDetailActivityCommentRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clipToPadding="false"
                     android:paddingTop="@dimen/margin_15_dp"
                     android:visibility="gone"
                     tools:listitem="@layout/item_sale_comment"
@@ -392,9 +394,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
+            android:hint="@string/sale_detail_comment_comment_input_hint"
             android:inputType="text"
             android:padding="@dimen/margin_15_dp"
-            android:text="@string/sale_detail_comment_comment_input_hint"
             android:textAppearance="@style/TextAppearance.Regular"
             android:textColor="@color/black_202020"
             android:textColorHint="@color/black_202020"
@@ -404,8 +406,10 @@
             android:id="@+id/saleDetailActivitySendCommentButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/orange_F5A623"
+            android:background="@drawable/bg_ic_sale_send_comment_selector"
+            android:clickable="true"
             android:contentDescription="@string/sale_detail_send_comment_image_view_content_description"
+            android:focusable="true"
             android:padding="@dimen/margin_15_dp"
             app:srcCompat="@drawable/ic_sale_send_comment" />
 
