@@ -210,9 +210,8 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     }
 
     private fun openProfile() {
-        val profileFragment = ProfileFragment.newInstance(user = userTokenResponse.user)
         if (!isDisplayedByTag(ProfileFragment::class.java.canonicalName)) {
-            replace(R.id.mainFrameContent, profileFragment)
+            replace(R.id.mainFrameContent, ProfileFragment())
         }
         setupToolbarMenu(isSearchVisible = false, isSettingsVisible = true, isRatingsOrderVisible = false)
     }

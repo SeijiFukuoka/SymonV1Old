@@ -78,7 +78,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name=".ui.editProfile.EditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 

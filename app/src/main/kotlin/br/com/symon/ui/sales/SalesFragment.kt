@@ -127,19 +127,19 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     override fun onLikeSaleClick(position: Int, sale: Sale) {
-        salesFragmentComponent.salesPresenter().likeSale(position, sale.id!!, user?.token!!)
+        salesFragmentComponent.salesPresenter().likeSale(position, sale.id, user?.token!!)
     }
 
     override fun onDislikeSaleClick(position: Int, sale: Sale) {
-        salesFragmentComponent.salesPresenter().disLikeSale(position, sale.id!!, user?.token!!)
+        salesFragmentComponent.salesPresenter().disLikeSale(position, sale.id, user?.token!!)
     }
 
     override fun onReportSaleClick(sale: Sale) {
         salesFragmentComponent.salesPresenter().reportSale(user?.token, saleReportRequest = SaleReportRequest(sale.id))
     }
 
-    override fun onBlockUserClick(blockUser: User) {
-        salesFragmentComponent.salesPresenter().blockUser(user?.token, userBlockedId = BlockUserRequest(blockUser.id))
+    override fun onBlockUserClick(user: User) {
+        salesFragmentComponent.salesPresenter().blockUser(this.user?.token, userBlockedId = BlockUserRequest(user.id))
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) =

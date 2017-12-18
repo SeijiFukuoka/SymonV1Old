@@ -1,4 +1,4 @@
-package br.com.symon.ui.profile
+package br.com.symon.ui.editProfile
 
 import android.Manifest
 import android.app.Activity
@@ -19,9 +19,10 @@ import br.com.symon.common.toast
 import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.data.model.requests.UserFullUpdateRequest
-import br.com.symon.injection.components.DaggerProfileActivityComponent
-import br.com.symon.injection.components.ProfileActivityComponent
-import br.com.symon.injection.modules.ProfileActivityModule
+import br.com.symon.injection.components.DaggerEditProfileActivityComponent
+import br.com.symon.injection.components.EditProfileActivityComponent
+import br.com.symon.injection.modules.EditProfileActivityModule
+import br.com.symon.ui.profile.ProfileFragment
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -34,15 +35,15 @@ import kotlinx.android.synthetic.main.view_custom_toolbar.*
 import java.util.*
 
 
-class ProfileActivity : BaseActivity(),
-        ProfileContract.View,
+class EditProfileActivity : BaseActivity(),
+        EditProfileContract.View,
         FacebookCallback<LoginResult> {
 
-    private val profileActivityComponent: ProfileActivityComponent
-        get() = DaggerProfileActivityComponent
+    private val editProfileActivityComponent: EditProfileActivityComponent
+        get() = DaggerEditProfileActivityComponent
                 .builder()
                 .applicationComponent((application as CustomApplication).applicationComponent)
-                .profileActivityModule(ProfileActivityModule(this))
+                .editProfileActivityModule(EditProfileActivityModule(this))
                 .build()
 
     private var isPasswordChange = false
@@ -55,7 +56,7 @@ class ProfileActivity : BaseActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        profileActivityComponent.inject(this)
+        editProfileActivityComponent.inject(this)
 
         setSupportActionBar(customToolbar)
         supportActionBar?.setDisplayShowHomeEnabled(false)
@@ -135,13 +136,13 @@ class ProfileActivity : BaseActivity(),
 
                 user?.apply {
                     id?.let {
-                        profileActivityComponent.profilePresenter().updateUserInfo(it, userUpdateRequest)
+                        editProfileActivityComponent.profilePresenter().updateUserInfo(it, userUpdateRequest)
                     }
                 }
             }
         }
 
-        profileActivityComponent.profilePresenter().getUserCache()
+        editProfileActivityComponent.profilePresenter().getUserCache()
     }
 
     override fun onBackPressed() {
@@ -342,7 +343,7 @@ class ProfileActivity : BaseActivity(),
         RxImagePicker.with(this).requestImage(Sources.GALLERY).subscribe { uri ->
             user?.apply {
                 id?.let {
-                    profileActivityComponent.profilePresenter().uploadUserPhoto(it, uri)
+                    editProfileActivityComponent.profilePresenter().uploadUserPhoto(it, uri)
                 }
             }
         }

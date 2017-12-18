@@ -55,4 +55,6 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
     fun getDislikes(userToken: String, page: Int, pageSize: Int, order: Int) = call(userApiService.getDislikes(userToken, page, pageSize, order))
 
     fun getComments(userToken: String, page: Int, pageSize: Int, order: Int) = call(userApiService.getComments(userToken, page, pageSize, order))
+
+    fun getSales(userToken: String, page: Int, pageSize: Int) = call(userApiService.getSales(userToken, page, pageSize))
 }

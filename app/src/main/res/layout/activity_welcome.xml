@@ -66,7 +66,6 @@
             android:layout_marginStart="@dimen/margin_20_dp"
             android:layout_marginTop="@dimen/margin_20_dp"
             android:background="@drawable/button_facebook_selector"
-            android:drawableLeft="@drawable/ic_facebook"
             android:drawableStart="@drawable/ic_facebook"
             android:paddingRight="@dimen/margin_20_dp"
             android:paddingLeft="@dimen/margin_20_dp"

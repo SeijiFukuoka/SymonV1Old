@@ -2,11 +2,6 @@ package br.com.symon.data.webservice
 
 import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.*
-import br.com.symon.data.model.responses.CheckUserResponse
-import br.com.symon.data.model.responses.RegisterUserResponse
-import br.com.symon.data.model.responses.UploadPhotoResponse
-import br.com.symon.data.model.responses.UserTokenResponse
-import br.com.symon.data.model.requests.*
 import br.com.symon.data.model.responses.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -55,7 +50,7 @@ interface UserApiService {
     fun blockUser(@Header("Authorization") userToken: String?,
                   @Body userBlockedId: BlockUserRequest?): Observable<Response<Void>>
 
-    @GET("/user/sale")
+    @GET("/user/favorite")
     fun getFavorites(@Header("Authorization") userToken: String,
                      @Query("page") page: Int,
                      @Query("pageSize") pageSize: Int,
@@ -78,4 +73,10 @@ interface UserApiService {
                     @Query("page") page: Int,
                     @Query("pageSize") pageSize: Int,
                     @Query("order") order: Int): Observable<SalesListResponse>
+
+    @GET("/user/sale")
+    fun getSales(@Header("Authorization") userToken: String,
+                     @Query("page") page: Int,
+                     @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
+
 }
