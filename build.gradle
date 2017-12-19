@@ -24,7 +24,7 @@ buildscript {
     ext.ahBottomNavigationVersion = "2.1.0"
     ext.maskEditTextVersion = "1.0.5"
 
-    ext.fabricVersion = '2.7.1@aar'
+    ext.fabricVersion = '2.8.0@aar'
     ext.junitVersion = '4.12'
     ext.espressoVersion = '2.2.2'
 

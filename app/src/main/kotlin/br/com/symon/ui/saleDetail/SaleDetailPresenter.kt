@@ -3,12 +3,13 @@ package br.com.symon.ui.saleDetail
 import br.com.gold360.financas.common.GeneralErrorHandler
 import br.com.symon.data.model.requests.BlockUserRequest
 import br.com.symon.data.model.requests.SendSaleCommentRequest
+import br.com.symon.data.repository.CommentRepository
 import br.com.symon.data.repository.SaleRepository
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.ActivityScope
 
 @ActivityScope
-class SaleDetailPresenter(val view: SaleDetailContract.View, private val saleRepository: SaleRepository, private val userRepository: UserRepository) : SaleDetailContract.Presenter {
+class SaleDetailPresenter(val view: SaleDetailContract.View, private val saleRepository: SaleRepository, private val commentRepository: CommentRepository, private val userRepository: UserRepository) : SaleDetailContract.Presenter {
 
     override fun getComments(userToken: String, saleId: Int) {
         saleRepository.getComments(userToken, saleId)
@@ -45,6 +46,17 @@ class SaleDetailPresenter(val view: SaleDetailContract.View, private val saleRep
                     view.showBlockUserResponse()
                 }, {
                     GeneralErrorHandler(it, view, {})
+                })
+    }
+
+    override fun deleteComment(userToken: String, commentId: Int, position: Int) {
+        commentRepository.deleteComment(userToken, commentId)
+                .subscribe({
+                    when (it.code()) {
+                        in 201..204 -> {
+                            view.showDeleteCommentResponse(position)
+                        }
+                    }
                 })
     }
 }

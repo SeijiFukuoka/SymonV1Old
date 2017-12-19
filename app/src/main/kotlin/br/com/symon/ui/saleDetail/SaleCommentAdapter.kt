@@ -13,24 +13,31 @@ import kotlinx.android.synthetic.main.item_sale_comment.view.*
 import kotlinx.android.synthetic.main.view_item_author_bottom_layout.view.*
 
 class SaleCommentAdapter(private val list: MutableList<Comment>,
+                         private val currentUserId: Int,
                          private val listener: OnItemClickListener)
     : RecyclerView.Adapter<SaleCommentAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent.inflate(R.layout.item_sale_comment), listener)
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.bind(list[position], position)
+        holder?.bind(list[position], position, currentUserId)
     }
 
     override fun getItemCount(): Int = list.size
 
     interface OnItemClickListener {
         fun onBlockUserClick(userId: Int)
+        fun onDeleteCommentClick(commentId: Int, position: Int)
     }
 
     fun addItem(comment: Comment) {
         this.list.add(comment)
         notifyItemInserted(list.size - 1)
+    }
+
+    fun remove(position: Int) {
+        this.list.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     fun removeBlockUserComments(blockedUserId: Int) {
@@ -46,7 +53,7 @@ class SaleCommentAdapter(private val list: MutableList<Comment>,
                      private val listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
         @SuppressLint("NewApi")
-        fun bind(comment: Comment, position: Int) = with(itemView) {
+        fun bind(comment: Comment, position: Int, currentUserId: Int) = with(itemView) {
             with(comment) {
                 itemSaleCommentTextView.text = message
 
@@ -58,12 +65,18 @@ class SaleCommentAdapter(private val list: MutableList<Comment>,
 
             viewItemAuthorBottomUserOptionsImageView.setOnClickListener {
                 val popup = PopupMenu(context, viewItemAuthorBottomUserOptionsImageView, Gravity.TOP)
-                popup.inflate(R.menu.user_options_menu)
-                popup.menu.getItem(0).isVisible = false
+                popup.inflate(R.menu.sale_comment_menu)
+
+                if (comment.userId == currentUserId) {
+                    popup.menu.getItem(0).isVisible = false
+                } else {
+                    popup.menu.getItem(1).isVisible = false
+                }
 
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
-                        R.id.userOptionsMenuBlockUser -> listener.onBlockUserClick(comment.userId)
+                        R.id.saleCommentMenuBlockUser -> listener.onBlockUserClick(comment.userId)
+                        R.id.saleCommentMenuDeleteComment -> listener.onDeleteCommentClick(comment.id, adapterPosition)
                     }
                     false
                 }

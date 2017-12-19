@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.ScrollView
 import br.com.symon.CustomApplication
 import br.com.symon.R
@@ -36,6 +37,7 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
 
     private var mUserBlockedId: Int = 0
     private var mEmptyCommentList: Boolean = true
+    private var mCurrentSaleIsFavorited: Boolean = false
 
     companion object {
         private const val EXTRA_SALE = "EXTRA_SALE"
@@ -82,28 +84,33 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         saleDetailActivityComponent.providePresenter().blockUser(extraUser.token, userBlockRequest)
     }
 
+    override fun onDeleteCommentClick(commentId: Int, position: Int) {
+        saleDetailActivityComponent.providePresenter().deleteComment(extraUser.token, commentId, position)
+    }
+
     override fun showComments(commentList: MutableList<Comment>) {
         if (commentList.isNotEmpty()) {
             setUpRecyclerView()
-            saleCommentAdapter = SaleCommentAdapter(commentList, this)
+            saleCommentAdapter = SaleCommentAdapter(commentList, extraUser.user?.id!!, this)
             saleDetailActivityCommentRecyclerView.adapter = saleCommentAdapter
-
-            saleDetailActivityCommentListLabelTextView.visibility = View.VISIBLE
-            saleDetailActivityCommentRecyclerView.visibility = View.VISIBLE
-            mEmptyCommentList = false
+            hideShowCommentList(hide = false)
         } else {
             saleDetailActivityCommentListLayout.setPadding(0, resources.getDimensionPixelSize(R.dimen.margin_10_dp), 0, 0)
-            saleDetailActivityCommentListLabelTextView.visibility = View.GONE
-            saleDetailActivityCommentRecyclerView.visibility = View.GONE
-            mEmptyCommentList = true
+            hideShowCommentList(hide = true)
         }
     }
 
     override fun showFavoriteResponse() {
-        if (extraSaleDetail.hasLiked)
-            saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_on))
-        else
-            saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_off))
+        mCurrentSaleIsFavorited = when {
+            mCurrentSaleIsFavorited -> {
+                saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_off))
+                false
+            }
+            else -> {
+                saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_on))
+                true
+            }
+        }
 
         setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
     }
@@ -122,10 +129,17 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
 
     override fun showBlockUserResponse() {
         saleCommentAdapter.removeBlockUserComments(mUserBlockedId)
-        if (saleCommentAdapter.itemCount == 0) {
-            saleDetailActivityCommentListLabelTextView.visibility = View.GONE
-            saleDetailActivityCommentRecyclerView.visibility = View.GONE
-        }
+        if (saleCommentAdapter.itemCount == 0)
+            hideShowCommentList(hide = true)
+
+        setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
+    }
+
+    override fun showDeleteCommentResponse(position: Int) {
+        saleCommentAdapter.remove(position)
+        if (saleCommentAdapter.itemCount <= 0)
+            hideShowCommentList(hide = true)
+
         setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
     }
 
@@ -133,11 +147,16 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         saleDetailActivityHeaderProgressView.bind(3)
         saleDetailActivityToolbarTextView.text = extraSaleDetail.message
 
-//        TODO("Falta a API devolver se o sale é favorito ou não")
-        if (extraSaleDetail.hasLiked)
-            saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_off))
-        else
-            saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_on))
+        mCurrentSaleIsFavorited = when {
+            extraSaleDetail.favorited -> {
+                saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_on))
+                true
+            }
+            else -> {
+                saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_off))
+                false
+            }
+        }
 
         saleDetailActivityBackArrowImageView.setOnClickListener {
             onBackPressed()
@@ -189,14 +208,14 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
     private fun verifyComments() {
         extraSaleDetail.id.let { saleDetailActivityComponent.providePresenter().getComments(extraUser.token, it) }
         saleDetailActivitySendCommentButton.setOnClickListener {
-            if (saleDetailActivityCommentEditText.text.isNotEmpty()) {
-                val sendSaleCommentRequest = SendSaleCommentRequest(saleDetailActivityCommentEditText.text.toString(), extraSaleDetail.id)
-                saleDetailActivityComponent.providePresenter().sendComment(extraUser.token, extraSaleDetail.id, sendSaleCommentRequest)
-                saleDetailActivityCommentEditText.hideKeyboard()
-                saleDetailActivityCommentEditText.text.clear()
-            } else {
-                toast("Favor adicionar ao menos 1 caracter para enviar o comentário")
-            }
+            handleSendCommentButtonClick()
+        }
+
+        saleDetailActivityCommentEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                handleSendCommentButtonClick()
+                true
+            } else false
         }
     }
 
@@ -217,13 +236,11 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         val commentList: MutableList<Comment> = arrayListOf()
         commentList += comment
 
-        saleCommentAdapter = SaleCommentAdapter(commentList, this)
+        saleCommentAdapter = SaleCommentAdapter(commentList, extraUser.user?.id!!, this)
         saleDetailActivityCommentRecyclerView.adapter = saleCommentAdapter
 
         saleDetailActivityCommentListLayout.setPadding(0, 0, 0, resources.getDimensionPixelSize(R.dimen.margin_30_dp))
-        saleDetailActivityCommentListLabelTextView.visibility = View.VISIBLE
-        saleDetailActivityCommentRecyclerView.visibility = View.VISIBLE
-        mEmptyCommentList = false
+        hideShowCommentList(hide = false)
     }
 
     private fun scrollDown(requestFocus: Boolean) {
@@ -232,5 +249,28 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
             if (requestFocus)
                 saleDetailActivityCommentEditText.requestFocus()
         })
+    }
+
+    private fun hideShowCommentList(hide: Boolean) {
+        if (hide) {
+            mEmptyCommentList = true
+            saleDetailActivityCommentListLabelTextView.visibility = View.GONE
+            saleDetailActivityCommentRecyclerView.visibility = View.GONE
+        } else {
+            mEmptyCommentList = false
+            saleDetailActivityCommentListLabelTextView.visibility = View.VISIBLE
+            saleDetailActivityCommentRecyclerView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun handleSendCommentButtonClick() {
+        if (saleDetailActivityCommentEditText.text.isNotEmpty()) {
+            val sendSaleCommentRequest = SendSaleCommentRequest(saleDetailActivityCommentEditText.text.toString(), extraSaleDetail.id)
+            saleDetailActivityComponent.providePresenter().sendComment(extraUser.token, extraSaleDetail.id, sendSaleCommentRequest)
+            saleDetailActivityCommentEditText.hideKeyboard()
+            saleDetailActivityCommentEditText.text.clear()
+        } else {
+            toast("Favor adicionar ao menos 1 caracter para enviar o comentário")
+        }
     }
 }

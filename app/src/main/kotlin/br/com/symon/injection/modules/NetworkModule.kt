@@ -1,9 +1,6 @@
 package br.com.symon.injection.modules
 
-import br.com.symon.data.webservice.ApiManager
-import br.com.symon.data.webservice.ApiSettings
-import br.com.symon.data.webservice.SaleApiService
-import br.com.symon.data.webservice.UserApiService
+import br.com.symon.data.webservice.*
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -27,4 +24,9 @@ class NetworkModule {
     @Singleton
     fun providesSaleApiService(@Named("provideBaseApi") retrofit: Retrofit): SaleApiService =
             retrofit.create<SaleApiService>(SaleApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun providesCommentApiService(@Named("provideBaseApi") retrofit: Retrofit): CommentApiService =
+            retrofit.create<CommentApiService>(CommentApiService::class.java)
 }

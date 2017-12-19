@@ -13,6 +13,7 @@ interface SaleDetailContract {
         fun showFavoriteResponse()
         fun showSendCommentResponse(sendSaleCommentResponse: SendSaleCommentResponse)
         fun showBlockUserResponse()
+        fun showDeleteCommentResponse(position: Int)
     }
 
     interface Presenter {
@@ -20,5 +21,6 @@ interface SaleDetailContract {
         fun setFavorite(userToken: String, saleId: Int)
         fun sendComment(userToken: String, saleId: Int, sendSaleCommentRequest: SendSaleCommentRequest)
         fun blockUser(userToken: String?, userBlockedId: BlockUserRequest?)
+        fun deleteComment(userToken: String, commentId: Int, position: Int)
     }
 }
