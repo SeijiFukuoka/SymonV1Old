@@ -10,15 +10,16 @@ data class Comment(
         @SerializedName("created_at") var createdAt: String?,
         @SerializedName("updated_at") var updatedAt: String?,
         @SerializedName("sale_id") var saleId: Int,
-        @SerializedName("user_id") var userId: Int
-) : Parcelable {
+        @SerializedName("formatted_date") var formattedDate: String,
+        @SerializedName("user") var user: User) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
             source.readString(),
             source.readString(),
             source.readString(),
             source.readInt(),
-            source.readInt()
+            source.readString(),
+            source.readParcelable<User>(User::class.java.classLoader)
     )
 
     override fun describeContents() = 0
@@ -29,7 +30,8 @@ data class Comment(
         writeString(createdAt)
         writeString(updatedAt)
         writeInt(saleId)
-        writeInt(userId)
+        writeString(formattedDate)
+        writeParcelable(user, 0)
     }
 
     companion object {

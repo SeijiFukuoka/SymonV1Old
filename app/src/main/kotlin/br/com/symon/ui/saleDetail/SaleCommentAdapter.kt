@@ -42,7 +42,7 @@ class SaleCommentAdapter(private val list: MutableList<Comment>,
 
     fun removeBlockUserComments(blockedUserId: Int) {
         val filteredList: List<Comment> = list.filter {
-            it.userId != blockedUserId
+            it.user.id != blockedUserId
         }
         this.list.clear()
         this.list.addAll(filteredList)
@@ -59,15 +59,15 @@ class SaleCommentAdapter(private val list: MutableList<Comment>,
 
 //                TODO("Aguardando API - Usuário")
 //                with(viewItemAuthorBottomUserPhotoImageView)
-                viewItemAuthorBottomUserNameTextView.text = userId.toString()
-                viewItemAuthorBottomSaleTimeTextView.text = updatedAt
+                viewItemAuthorBottomUserNameTextView.text = user.name
+                viewItemAuthorBottomSaleTimeTextView.text = formattedDate
             }
 
             viewItemAuthorBottomUserOptionsImageView.setOnClickListener {
                 val popup = PopupMenu(context, viewItemAuthorBottomUserOptionsImageView, Gravity.TOP)
                 popup.inflate(R.menu.sale_comment_menu)
 
-                if (comment.userId == currentUserId) {
+                if (comment.user.id == currentUserId) {
                     popup.menu.getItem(0).isVisible = false
                 } else {
                     popup.menu.getItem(1).isVisible = false
@@ -75,7 +75,7 @@ class SaleCommentAdapter(private val list: MutableList<Comment>,
 
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
-                        R.id.saleCommentMenuBlockUser -> listener.onBlockUserClick(comment.userId)
+                        R.id.saleCommentMenuBlockUser -> comment.user.id?.let { it1 -> listener.onBlockUserClick(it1) }
                         R.id.saleCommentMenuDeleteComment -> listener.onDeleteCommentClick(comment.id, adapterPosition)
                     }
                     false

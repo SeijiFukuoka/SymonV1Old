@@ -116,7 +116,14 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
     }
 
     override fun showSendCommentResponse(sendSaleCommentResponse: SendSaleCommentResponse) {
-        val commentSendResponse = Comment(sendSaleCommentResponse.id, sendSaleCommentResponse.message, "Agora", "Agora", sendSaleCommentResponse.saleId, sendSaleCommentResponse.userId)
+        val commentSendResponse = Comment(
+                sendSaleCommentResponse.id,
+                sendSaleCommentResponse.message,
+                "Agora",
+                "Agora",
+                sendSaleCommentResponse.saleId,
+                "Agora",
+                extraUser.user!!)
 
         if (mEmptyCommentList)
             createAndUpdateCommentList(commentSendResponse)

@@ -2,18 +2,21 @@ package br.com.symon.data.model.responses
 
 import android.os.Parcel
 import android.os.Parcelable
+import br.com.symon.data.model.User
 import com.google.gson.annotations.SerializedName
 
 data class SendSaleCommentResponse(
         @SerializedName("id") var id: Int,
         @SerializedName("message") var message: String,
         @SerializedName("sale_id") var saleId: Int,
-        @SerializedName("user_id") var userId: Int) : Parcelable {
+        @SerializedName("formatted_date") var formattedDate: String,
+        @SerializedName("user") var user: User) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
             source.readString(),
             source.readInt(),
-            source.readInt()
+            source.readString(),
+            source.readParcelable<User>(User::class.java.classLoader)
     )
 
     override fun describeContents() = 0
@@ -22,7 +25,8 @@ data class SendSaleCommentResponse(
         writeInt(id)
         writeString(message)
         writeInt(saleId)
-        writeInt(userId)
+        writeString(formattedDate)
+        writeParcelable(user, 0)
     }
 
     companion object {
