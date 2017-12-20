@@ -154,6 +154,34 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         saleDetailActivityHeaderProgressView.bind(3)
         saleDetailActivityToolbarTextView.text = extraSaleDetail.message
 
+        if (extraSaleDetail.user.id!! == extraUser.user!!.id) {
+            saleDetailActivitySaleActionLayout.visibility = View.GONE
+            saleDetailActivityEditSaleTextView.visibility = View.VISIBLE
+
+            saleDetailActivityEditSaleTextView.setOnClickListener {
+                toast("saleDetailActivityEditSaleTextView")
+            }
+
+        } else {
+            saleDetailActivitySaleActionLayout.visibility = View.VISIBLE
+            saleDetailActivityEditSaleTextView.visibility = View.GONE
+            setFavoriteState()
+
+            saleDetailActivityFavoriteImageView.setOnClickListener {
+                saleDetailActivityComponent.providePresenter().setFavorite(extraUser.token, extraSaleDetail.id)
+            }
+
+            saleDetailActivityCommentImageView.setOnClickListener {
+                scrollDown(true)
+            }
+        }
+
+        saleDetailActivityBackArrowImageView.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    private fun setFavoriteState() {
         mCurrentSaleIsFavorited = when {
             extraSaleDetail.favorited -> {
                 saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_on))
@@ -163,18 +191,6 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
                 saleDetailActivityFavoriteImageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_sale_toolbar_favorite_off))
                 false
             }
-        }
-
-        saleDetailActivityBackArrowImageView.setOnClickListener {
-            onBackPressed()
-        }
-
-        saleDetailActivityFavoriteImageView.setOnClickListener {
-            saleDetailActivityComponent.providePresenter().setFavorite(extraUser.token, extraSaleDetail.id)
-        }
-
-        saleDetailActivityCommentImageView.setOnClickListener {
-            scrollDown(true)
         }
     }
 
