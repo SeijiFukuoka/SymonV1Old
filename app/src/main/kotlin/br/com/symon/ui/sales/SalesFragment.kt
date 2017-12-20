@@ -27,6 +27,7 @@ import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSalesFragmentComponent
 import br.com.symon.injection.components.SalesFragmentComponent
 import br.com.symon.injection.modules.SalesFragmentModule
+import br.com.symon.ui.saleDetail.SaleDetailActivity
 import kotlinx.android.synthetic.main.fragment_sales.*
 import java.util.*
 
@@ -123,7 +124,8 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     override fun onSaleImageClick(sale: Sale) {
-        activity.toast("onSaleImageClick ID = ${sale.id}")
+        val saleDetailActivity = SaleDetailActivity.newIntent(activity, sale, user!!)
+        startActivity(saleDetailActivity)
     }
 
     override fun onLikeSaleClick(position: Int, sale: Sale) {
@@ -138,8 +140,8 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         salesFragmentComponent.salesPresenter().reportSale(user?.token, saleReportRequest = SaleReportRequest(sale.id))
     }
 
-    override fun onBlockUserClick(user: User) {
-        salesFragmentComponent.salesPresenter().blockUser(this.user?.token, userBlockedId = BlockUserRequest(user.id))
+    override fun onBlockUserClick(blockUser: User) {
+        salesFragmentComponent.salesPresenter().blockUser(user?.token, userBlockedId = BlockUserRequest(blockUser.id!!))
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) =

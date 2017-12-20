@@ -1,21 +1,18 @@
-package br.com.symon.data.model
+package br.com.symon.data.model.responses
 
 import android.os.Parcel
 import android.os.Parcelable
+import br.com.symon.data.model.User
 import com.google.gson.annotations.SerializedName
 
-data class Comment(
+data class SendSaleCommentResponse(
         @SerializedName("id") var id: Int,
         @SerializedName("message") var message: String,
-        @SerializedName("created_at") var createdAt: String?,
-        @SerializedName("updated_at") var updatedAt: String?,
         @SerializedName("sale_id") var saleId: Int,
         @SerializedName("formatted_date") var formattedDate: String,
         @SerializedName("user") var user: User) : Parcelable {
     constructor(source: Parcel) : this(
             source.readInt(),
-            source.readString(),
-            source.readString(),
             source.readString(),
             source.readInt(),
             source.readString(),
@@ -27,8 +24,6 @@ data class Comment(
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeInt(id)
         writeString(message)
-        writeString(createdAt)
-        writeString(updatedAt)
         writeInt(saleId)
         writeString(formattedDate)
         writeParcelable(user, 0)
@@ -36,9 +31,9 @@ data class Comment(
 
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<Comment> = object : Parcelable.Creator<Comment> {
-            override fun createFromParcel(source: Parcel): Comment = Comment(source)
-            override fun newArray(size: Int): Array<Comment?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<SendSaleCommentResponse> = object : Parcelable.Creator<SendSaleCommentResponse> {
+            override fun createFromParcel(source: Parcel): SendSaleCommentResponse = SendSaleCommentResponse(source)
+            override fun newArray(size: Int): Array<SendSaleCommentResponse?> = arrayOfNulls(size)
         }
     }
 }

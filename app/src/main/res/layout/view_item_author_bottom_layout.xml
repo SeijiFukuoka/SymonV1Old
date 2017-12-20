@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewItemAuthorBottomLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/itemSaleSaleDetailLayout"
+    android:layout_centerVertical="true"
+    android:background="@color/gray_F8F8F8"
+    android:padding="@dimen/margin_15_dp">
+
+    <ImageView
+        android:id="@+id/viewItemAuthorBottomUserPhotoImageView"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/item_sale_user_avatar_image_content_description"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_profile" />
+
+    <LinearLayout
+        android:id="@+id/viewItemAuthorBottomUserDetailLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/margin_15_dp"
+        android:layout_marginLeft="@dimen/margin_15_dp"
+        android:layout_marginRight="@dimen/margin_15_dp"
+        android:layout_marginStart="@dimen/margin_15_dp"
+        android:layout_toEndOf="@id/viewItemAuthorBottomUserPhotoImageView"
+        android:layout_toLeftOf="@id/viewItemAuthorBottomUserOptionsImageView"
+        android:layout_toRightOf="@id/viewItemAuthorBottomUserPhotoImageView"
+        android:layout_toStartOf="@id/viewItemAuthorBottomUserOptionsImageView"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/viewItemAuthorBottomUserNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Bold"
+            android:textColor="@color/black_202020"
+            android:textSize="@dimen/text_size_10_sp"
+            android:textStyle="bold"
+            tools:text="Nome do usuário" />
+
+        <TextView
+            android:id="@+id/viewItemAuthorBottomSaleTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Regular"
+            android:textColor="@color/gray_9B9B9B"
+            android:textSize="@dimen/text_size_10_sp"
+            tools:text="10 minutos atrás" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/viewItemAuthorBottomUserOptionsImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:contentDescription="@string/item_sale_user_options_image_content_description"
+        android:focusable="true"
+        android:padding="@dimen/margin_10_dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_sale_user_options" />
+
+</RelativeLayout>

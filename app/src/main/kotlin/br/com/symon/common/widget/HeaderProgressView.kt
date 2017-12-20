@@ -21,6 +21,7 @@ constructor(
         viewHeaderProgressFirstStepLayout.visibility = View.GONE
         viewHeaderProgressSecondStepLayout.visibility = View.GONE
         viewHeaderProgressThirdStepLayout.visibility = View.GONE
+        viewHeaderProgressFourthStepLayout.visibility = View.GONE
     }
 
     fun bind(step: Int?) {
@@ -28,6 +29,7 @@ constructor(
             1 -> viewHeaderProgressFirstStepLayout.visibility = View.VISIBLE
             2 -> viewHeaderProgressSecondStepLayout.visibility = View.VISIBLE
             3 -> viewHeaderProgressThirdStepLayout.visibility = View.VISIBLE
+            4 -> viewHeaderProgressFourthStepLayout.visibility = View.VISIBLE
         }
     }
 }

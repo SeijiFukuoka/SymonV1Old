@@ -33,7 +33,7 @@ interface UserApiService {
 
     @PUT("/user/{user_id}")
     fun updateFullUser(@Path("user_id") userId: Int,
-                   @Body userFullUpdateRequest: UserFullUpdateRequest): Observable<Response<UserTokenResponse>>
+                       @Body userFullUpdateRequest: UserFullUpdateRequest): Observable<Response<UserTokenResponse>>
 
     @Multipart
     @POST("/user/photo/{user_id}")

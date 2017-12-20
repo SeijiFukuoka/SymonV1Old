@@ -19,5 +19,7 @@ interface CommentApiService {
     fun updateComment(@Body comment: Comment): Observable<Response<Void>>
 
     @DELETE("/comment/{comment_id}")
-    fun deleteComment(@Path("comment_id") commentId: Int): Observable<Response<Void>>
+    fun deleteComment(
+            @Header("Authorization") userToken: String,
+            @Path("comment_id") commentId: Int): Observable<Response<Void>>
 }

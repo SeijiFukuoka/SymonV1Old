@@ -1,9 +1,12 @@
 package br.com.symon.data.webservice
 
+import br.com.symon.data.model.Comment
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.requests.SaleReportRequest
+import br.com.symon.data.model.requests.SendSaleCommentRequest
 import br.com.symon.data.model.requests.SendSaleRequest
 import br.com.symon.data.model.responses.SalesListResponse
+import br.com.symon.data.model.responses.SendSaleCommentResponse
 import br.com.symon.data.model.responses.SendSaleResponse
 import br.com.symon.data.model.responses.UploadPhotoResponse
 import io.reactivex.Observable
@@ -46,4 +49,13 @@ interface SaleApiService {
 
     @POST("/sale/report")
     fun reportSale(@Header("Authorization") userToken: String?, @Body saleReportRequest: SaleReportRequest?): Observable<Response<Void>>
+
+    @GET("/sale/{sale_id}/comment")
+    fun getComments(@Header("Authorization") userToken: String?, @Path("sale_id") saleId: Int): Observable<MutableList<Comment>>
+
+    @POST("/sale/{sale_id}/comment")
+    fun sendComment(@Header("Authorization") userToken: String?, @Path("sale_id") saleId: Int, @Body sendSaleCommentRequest: SendSaleCommentRequest): Observable<SendSaleCommentResponse>
+
+    @POST("/sale/{sale_id}/favorite")
+    fun setFavorite(@Header("Authorization") userToken: String?, @Path("sale_id") saleId: Int): Observable<Response<Void>>
 }
