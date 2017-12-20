@@ -2,6 +2,7 @@ package br.com.symon.ui.saleDetail
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -208,6 +209,13 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
                     saleDetailActivitySalePlaceValueArrow.visibility = View.VISIBLE
             }
         })
+
+        saleDetailActivitySalePlaceLayout.setOnClickListener {
+            val gmmIntentUri = Uri.parse("geo:0,0?q=${saleDetailActivitySalePlaceValue.text}")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.`package` = "com.google.android.apps.maps"
+            startActivity(mapIntent)
+        }
 
         saleDetailActivityLikeLayout.isClickable = false
         itemSaleLikeQuantityTextView.text = extraSaleDetail.likes.toString()
