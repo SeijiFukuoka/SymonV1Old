@@ -155,13 +155,13 @@ class EditProfileActivity : BaseActivity(),
     private fun setupFacebookButton() {
         val hasToken = AccessToken.getCurrentAccessToken() != null
 
-        profileFacebookButtonButton.text = if (hasToken) {
+        profileFacebookTextView.text = if (hasToken) {
             getString(R.string.profile_facebook_disconnect)
         } else {
             getString(R.string.profile_facebook_connect)
         }
 
-        profileFacebookButtonButton.setOnClickListener {
+        profileFacebookButtonContainerConstraint.setOnClickListener {
             if (hasToken) {
                 facebookLogout()
             } else {

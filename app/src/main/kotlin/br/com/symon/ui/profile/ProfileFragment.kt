@@ -94,6 +94,7 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
         profileMyPostsRecyclerView.layoutManager = linearLayoutManager
         profileMyPostsRecyclerView.isNestedScrollingEnabled = false
         profileMyPostsRecyclerView.adapter = profileSalesAdapter
+        profileMyPostsRecyclerView.itemAnimator.changeDuration = 0
         profileMyPostsRecyclerView.addOnScrollListener(EndlessScrollListener({
             currentPage++
             fetchData(currentPage)
