@@ -3,9 +3,9 @@ package br.com.symon.data.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Settings(val itsCheapPushNotificationEnable: Boolean = false,
-                    val itsExpensivePushNotificationEnable: Boolean = false,
-                    val commentsPushNotificationEnable: Boolean = false) : Parcelable {
+data class Settings(val itsCheapPushNotificationEnable: Boolean = true,
+                    val itsExpensivePushNotificationEnable: Boolean = true,
+                    val commentsPushNotificationEnable: Boolean = true) : Parcelable {
     constructor(source: Parcel) : this(
             1 == source.readInt(),
             1 == source.readInt(),
