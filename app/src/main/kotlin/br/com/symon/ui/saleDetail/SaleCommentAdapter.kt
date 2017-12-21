@@ -1,6 +1,5 @@
 package br.com.symon.ui.saleDetail
 
-import android.annotation.SuppressLint
 import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
@@ -8,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.symon.R
 import br.com.symon.common.inflate
+import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.data.model.Comment
 import kotlinx.android.synthetic.main.item_sale_comment.view.*
 import kotlinx.android.synthetic.main.view_item_author_bottom_layout.view.*
@@ -52,13 +52,11 @@ class SaleCommentAdapter(private val list: MutableList<Comment>,
     class ViewHolder(itemView: View?,
                      private val listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
-        @SuppressLint("NewApi")
         fun bind(comment: Comment, position: Int, currentUserId: Int) = with(itemView) {
             with(comment) {
                 itemSaleCommentTextView.text = message
 
-//                TODO("Aguardando API - Usuário")
-//                with(viewItemAuthorBottomUserPhotoImageView)
+                viewItemAuthorBottomUserPhotoImageView.loadUrlToBeRounded(user.photoUri)
                 viewItemAuthorBottomUserNameTextView.text = user.name
                 viewItemAuthorBottomSaleTimeTextView.text = formattedDate
             }

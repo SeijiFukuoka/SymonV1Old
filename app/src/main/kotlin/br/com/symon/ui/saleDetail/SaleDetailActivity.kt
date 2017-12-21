@@ -20,7 +20,6 @@ import br.com.symon.data.model.Comment
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.requests.BlockUserRequest
 import br.com.symon.data.model.requests.SendSaleCommentRequest
-import br.com.symon.data.model.responses.SendSaleCommentResponse
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSaleDetailActivityComponent
 import br.com.symon.injection.components.SaleDetailActivityComponent
@@ -116,20 +115,11 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
     }
 
-    override fun showSendCommentResponse(sendSaleCommentResponse: SendSaleCommentResponse) {
-        val commentSendResponse = Comment(
-                sendSaleCommentResponse.id,
-                sendSaleCommentResponse.message,
-                "Agora",
-                "Agora",
-                sendSaleCommentResponse.saleId,
-                "Agora",
-                extraUser.user!!)
-
+    override fun showSendCommentResponse(commentResponse: Comment) {
         if (mEmptyCommentList)
-            createAndUpdateCommentList(commentSendResponse)
+            createAndUpdateCommentList(commentResponse)
         else
-            saleCommentAdapter.addItem(commentSendResponse)
+            saleCommentAdapter.addItem(commentResponse)
 
         scrollDown(false)
         setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
