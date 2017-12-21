@@ -19,8 +19,8 @@ class SalesPresenter @Inject constructor(val view: SalesContract.View, private v
         })
     }
 
-    override fun loadSales(userToken: String, page: Int, pageSize: Int) {
-        saleRepository.getSalesList(userToken, page, pageSize)
+    override fun loadSales(userToken: String, page: Int, pageSize: Int, radius: Int, latitude: Double, longitude: Double) {
+        saleRepository.getSalesList(userToken, page, pageSize, radius, latitude, longitude)
                 .subscribe({
                     view.showSales(it)
                 }, {

@@ -19,7 +19,7 @@ interface SalesContract {
 
     interface Presenter {
         fun getUser()
-        fun loadSales(userToken: String, page: Int, pageSize: Int)
+        fun loadSales(userToken: String, page: Int, pageSize: Int, radius: Int, latitude: Double, longitude: Double)
         fun likeSale(position: Int, saleId: Int, userToken: String)
         fun disLikeSale(position: Int, saleId: Int, userToken: String)
         fun searchQuerySale(query: String, userToken: String, page: Int, pageSize: Int)

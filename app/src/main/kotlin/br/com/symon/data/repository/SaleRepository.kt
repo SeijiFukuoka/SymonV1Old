@@ -11,7 +11,10 @@ import javax.inject.Singleton
 
 @Singleton
 class SaleRepository @Inject constructor(private val saleApiService: SaleApiService) : BaseRepository() {
-    fun getSalesList(userToken: String, page: Int, pageSize: Int) = call(saleApiService.getSalesList(userToken, page, pageSize))
+
+    fun getSalesList(userToken: String, page: Int, pageSize: Int, radius: Int, latitude: Double, longitude: Double) =
+            call(saleApiService.getSalesList(userToken, page, pageSize, radius, latitude, longitude))
+
     fun getSaleDetail(saleId: Int) = call((saleApiService.getSaleDetail(saleId)))
     fun uploadSale(userToken: String, sendSaleRequest: SendSaleRequest) = call(saleApiService.uploadSale(sendSaleRequest, userToken))
     fun uploadSalePhoto(userToken: String, saleId: Int, photo: MultipartBody.Part) = call(saleApiService.uploadSalePhoto(saleId, photo, userToken))

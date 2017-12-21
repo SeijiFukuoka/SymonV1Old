@@ -7,7 +7,7 @@ class Constants {
         @JvmField
         val RESULTS_PER_PAGE: Int = 10
 
-        var SEEK_BAR_MIN = 5
+        var SEEK_BAR_MIN = 1
         var SEEK_BAR_MAX = 20
     }
 }

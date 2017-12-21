@@ -1,5 +1,9 @@
 package br.com.symon.ui.sales
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.location.Address
+import android.location.Location
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatDelegate
@@ -28,13 +32,17 @@ import br.com.symon.injection.components.DaggerSalesFragmentComponent
 import br.com.symon.injection.components.SalesFragmentComponent
 import br.com.symon.injection.modules.SalesFragmentModule
 import br.com.symon.ui.saleDetail.SaleDetailActivity
+import br.com.symon.ui.send.SendSaleActivity
+import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_sales.*
+import pl.charmas.android.reactivelocation2.ReactiveLocationProvider
 import java.util.*
 
 
 class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
-
-    private var extraSearchQuery: String? = ""
 
     companion object {
         private const val EXTRA_SEARCH_QUERY = "EXTRA_SEARCH_QUERY"
@@ -56,14 +64,34 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
 
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var salesAdapter: SalesAdapter
+    private lateinit var locationProvider: ReactiveLocationProvider
+
+    private var extraSearchQuery: String? = ""
     private var currentPage: Int = Constants.FIRST_PAGE
     private var user: UserTokenResponse? = null
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
+    private var radius: Int = Constants.SEEK_BAR_MIN
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         salesFragmentComponent.inject(this)
         fragmentId = SalesFragment::class.java.canonicalName
+
+        locationProvider = ReactiveLocationProvider(activity)
+
+        RxPermissions(activity)
+                .request(Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribe({ granted ->
+                    if (granted) {
+                        getLastKnowLocation()
+                    } else {
+                        hideLoading()
+                        activity.toast(getString(R.string.general_permissions_message))
+                    }
+                })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -78,7 +106,6 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
 
         showLoading()
         setUpRecyclersViews()
-        getUser()
         setUpSeekBar()
 
         salesFragmentSendSuccessContainerLinearLayout.setOnClickListener {
@@ -140,39 +167,42 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         salesFragmentComponent.salesPresenter().reportSale(user?.token, saleReportRequest = SaleReportRequest(sale.id))
     }
 
-    override fun onBlockUserClick(blockUser: User) {
-        salesFragmentComponent.salesPresenter().blockUser(user?.token, userBlockedId = BlockUserRequest(blockUser.id!!))
+    override fun onBlockUserClick(user: User) {
+        salesFragmentComponent.salesPresenter().blockUser(this.user?.token, userBlockedId = BlockUserRequest(user.id!!))
     }
 
-    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) =
-            when (progress) {
-                in 0..5 -> {
-                    salesFragmentHeaderRangeSeekBar.progress = Constants.SEEK_BAR_MIN
-                    salesFragmentHeaderRangeTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), 5)
-                    salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_low, null))
-//                    TODO("PENDENTE CHAMADA DA API")
-                }
-                6 -> {
-                    salesFragmentHeaderRangeTextView.text = getRangeFilterText()
-                    salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_low, null))
-//                    TODO("PENDENTE CHAMADA DA API")
-                }
-                in 7..12 -> {
-                    salesFragmentHeaderRangeTextView.text = getRangeFilterText()
-                    salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_medium, null))
-//                    TODO("PENDENTE CHAMADA DA API")
-                }
-                else -> {
-                    salesFragmentHeaderRangeTextView.text = getRangeFilterText()
-                    salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_high, null))
-//                    TODO("PENDENTE CHAMADA DA API")
-                }
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        radius = progress
+        when (progress) {
+            0 -> {
+                salesFragmentHeaderRangeSeekBar.progress = SEEK_BAR_MIN
+                salesFragmentHeaderRangeTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), 1)
+                salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_low, null))
             }
+            in 1..5 -> {
+                salesFragmentHeaderRangeTextView.text = getRangeFilterText()
+                salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_low, null))
+            }
+            6 -> {
+                salesFragmentHeaderRangeTextView.text = getRangeFilterText()
+                salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_low, null))
+            }
+            in 7..12 -> {
+                salesFragmentHeaderRangeTextView.text = getRangeFilterText()
+                salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_medium, null))
+            }
+            else -> {
+                salesFragmentHeaderRangeTextView.text = getRangeFilterText()
+                salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_high, null))
+            }
+        }
+    }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
+        fetchData(FIRST_PAGE)
     }
 
     override fun showReportSaleResponse() {
@@ -203,9 +233,13 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     private fun fetchData(page: Int) {
-        salesFragmentComponent.salesPresenter().loadSales(user?.token!!,
-                if (page > 1) page else Constants.FIRST_PAGE,
-                Constants.RESULTS_PER_PAGE
+        salesFragmentComponent.salesPresenter().loadSales(
+                userToken = user?.token!!,
+                page = if (page > 1) page else Constants.FIRST_PAGE,
+                pageSize = Constants.RESULTS_PER_PAGE,
+                radius = radius,
+                latitude = latitude,
+                longitude = longitude
         )
     }
 
@@ -257,5 +291,28 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     fun showSendSuccessMessage() {
         salesFragmentSendSuccessContainerLinearLayout?.visibility = View.VISIBLE
         resetSaleData()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLastKnowLocation() {
+        locationProvider.lastKnownLocation
+                .subscribe({
+                    getAddressFromLocation(it)
+                })
+    }
+
+    private fun getAddressFromLocation(location: Location) {
+        val reverseGeocodeObservable: Observable<MutableList<Address>> =
+                locationProvider.getReverseGeocodeObservable(
+                        location.latitude, location.longitude, SendSaleActivity.MAX_ADDRESSES)
+
+        reverseGeocodeObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    latitude = it[0].latitude
+                    longitude = it[0].longitude
+                    getUser()
+                })
     }
 }
