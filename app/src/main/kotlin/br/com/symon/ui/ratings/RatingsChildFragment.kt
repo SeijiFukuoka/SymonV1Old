@@ -103,6 +103,13 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         showLoading()
         setUpRecyclersViews()
         ratingsChildComponent.ratingsChildFragmentPresenter().getUserCache()
+
+        ratingsChildFragmentSwipeRefreshLayout.setOnRefreshListener {
+            ratingsChildFragmentSwipeRefreshLayout.visibility = View.GONE
+            ratingsChildFragmentSwipeRefreshLayout.isRefreshing = true
+            showLoading()
+            fetchData(FIRST_PAGE)
+        }
     }
 
     override fun setUser(userTokenResponse: UserTokenResponse) {
@@ -111,12 +118,15 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
     }
 
     override fun showTabResponse(salesListResponse: SalesListResponse) {
+        if (ratingsChildFragmentSwipeRefreshLayout.isRefreshing)
+            ratingsChildFragmentSwipeRefreshLayout.isRefreshing = false
+
         if (salesListResponse.salesList.isNotEmpty()) {
             setSalesAdapter(salesListResponse)
-            ratingsChildFragmentRecyclerView.visibility = View.VISIBLE
+            ratingsChildFragmentSwipeRefreshLayout.visibility = View.VISIBLE
             ratingsChildFragmentNoContent.visibility = View.GONE
         } else {
-            ratingsChildFragmentRecyclerView.visibility = View.GONE
+            ratingsChildFragmentSwipeRefreshLayout.visibility = View.GONE
             ratingsChildFragmentNoContent.visibility = View.VISIBLE
         }
         onResponseLoaded.onResponseQuantityLoaded(apiOptionKey, salesListResponse.totalItems)
