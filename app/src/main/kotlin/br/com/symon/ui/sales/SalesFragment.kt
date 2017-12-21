@@ -261,6 +261,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         if (currentPage == Constants.FIRST_PAGE) {
             salesAdapter = SalesAdapter(salesListResponse.salesList, user?.user!!, this)
             salesFragmentSalesRecyclerView.adapter = salesAdapter
+            salesFragmentSalesRecyclerView.visibility = View.VISIBLE
         } else {
             salesAdapter.addList(salesListResponse.salesList)
         }

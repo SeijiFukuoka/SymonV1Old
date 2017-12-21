@@ -5,7 +5,7 @@ buildscript {
     ext.gradleVersion = '3.0.1'
     ext.androidSupportVersion = '26.1.0'
     ext.androidConstraintLayoutVersion = '1.0.2'
-    ext.anroidPlayServicesVersion = "11.6.2"
+    ext.anroidPlayServicesVersion = "11.8.0"
 
     ext.multiDexVersion = '1.0.1'
     ext.okHttpVersion = '3.8.0'
@@ -28,6 +28,9 @@ buildscript {
     ext.junitVersion = '4.12'
     ext.espressoVersion = '2.2.2'
 
+    ext.googleServices = '3.1.2'
+    ext.firebase = '11.8.0'
+
     repositories {
         jcenter()
         google()
@@ -35,6 +38,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.google.gms:google-services:$googleServices"
     }
 }
 

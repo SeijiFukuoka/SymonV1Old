@@ -83,6 +83,10 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:$anroidPlayServicesVersion"
     implementation "com.google.android.gms:play-services-places:$anroidPlayServicesVersion"
 
+    // Firebase
+    compile "com.google.firebase:firebase-core:$firebase"
+    compile "com.google.firebase:firebase-messaging:$firebase"
+
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
@@ -154,3 +158,4 @@ repositories {
     maven { url "http://repository.jetbrains.com/all" }
     maven { url "http://maven.fabric.io/public" }
 }
+apply plugin: 'com.google.gms.google-services'
