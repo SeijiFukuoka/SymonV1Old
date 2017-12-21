@@ -11,6 +11,7 @@
         android:id="@+id/saleDetailActivityScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/gray_F3F3F3"
         android:layout_above="@+id/saleDetailActivitySendCommentLayout">
 
         <android.support.constraint.ConstraintLayout
