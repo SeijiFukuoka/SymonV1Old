@@ -154,4 +154,6 @@
 
     <string name="item_sale_comment_menu_block_user">Bloquear usuário</string>
     <string name="item_sale_comment_menu_delete_comment">Excluir comentário</string>
+
+    <string name="item_blocked_user_unblock">Desbloquear</string>
 </resources>

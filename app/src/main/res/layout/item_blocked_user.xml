@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemBlockedUserLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_margin="1dp"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_20_dp">
+
+    <ImageView
+        android:id="@+id/itemBlockedUserImageView"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:contentDescription="@string/item_sale_user_avatar_image_content_description"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_profile" />
+
+    <LinearLayout
+        android:id="@+id/itemBlockedUserUserDetailLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_15_dp"
+        android:layout_marginLeft="@dimen/margin_15_dp"
+        android:layout_marginRight="@dimen/margin_15_dp"
+        android:layout_marginStart="@dimen/margin_15_dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/itemBlockedUserNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Bold"
+            android:textColor="@color/black_202020"
+            android:textSize="@dimen/text_size_10_sp"
+            android:textStyle="bold"
+            tools:text="Nome do usuário" />
+
+        <TextView
+            android:id="@+id/itemBlockedUserTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Regular"
+            android:textColor="@color/gray_9B9B9B"
+            android:textSize="@dimen/text_size_10_sp"
+            tools:text="10 minutos atrás" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/itemBlockedUserUnblockTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0.3"
+        android:gravity="center"
+        android:lineSpacingExtra="0sp"
+        android:text="@string/item_blocked_user_unblock"
+        android:textAppearance="@style/TextAppearance.Medium"
+        android:textColor="@color/gray_737373"
+        android:textSize="@dimen/text_size_12_sp" />
+
+    <ImageView
+        android:id="@+id/itemBlockedUserUnblockImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin_10_dp"
+        android:layout_marginStart="@dimen/margin_10_dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_item_unblock_user" />
+
+</LinearLayout>
