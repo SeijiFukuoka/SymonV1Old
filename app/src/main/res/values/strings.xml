@@ -144,6 +144,7 @@
     <string name="sale_detail_favorite_image_view_content_description">saleDetailActivityFavoriteImageView</string>
     <string name="sale_detail_comment_image_view_content_description">saleDetailActivityCommentImageView</string>
     <string name="sale_detail_send_comment_image_view_content_description">saleDetailActivitySendCommentButton</string>
+    <string name="sale_detail_ic_sale_detail_right_arrow_content_description">saleDetailActivitySalePlaceValueArrow</string>
     <string name="sale_detail_price_formatted">R$ %</string>
     <string name="sale_detail_edit_sale_option">Editar</string>
 

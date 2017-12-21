@@ -11,8 +11,8 @@
         android:id="@+id/saleDetailActivityScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_F3F3F3"
-        android:layout_above="@+id/saleDetailActivitySendCommentLayout">
+        android:layout_above="@+id/saleDetailActivitySendCommentLayout"
+        android:background="@color/gray_F3F3F3">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/saleDetailActivityContraintLayout"
@@ -271,6 +271,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.1"
+                    android:contentDescription="@string/sale_detail_ic_sale_detail_right_arrow_content_description"
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_sale_detail_right_arrow"
                     tools:visibility="visible" />
