@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/salesFragmentHeaderLinearLayout"
@@ -147,15 +147,24 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/margin_20_dp"
             android:layout_marginStart="@dimen/margin_20_dp"
+            android:text="@string/main_send_success_msg"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14_sp"
-            android:text="@string/main_send_success_msg" />
+            android:textSize="@dimen/text_size_14_sp" />
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/salesFragmentSalesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/salesFragmentSalesSwipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/salesFragmentSalesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

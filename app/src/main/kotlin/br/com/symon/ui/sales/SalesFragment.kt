@@ -16,12 +16,12 @@ import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseFragment
 import br.com.symon.common.inflate
+import br.com.symon.common.setPrimaryColors
 import br.com.symon.common.toast
 import br.com.symon.common.widget.EndlessScrollListener
 import br.com.symon.data.model.Constants
 import br.com.symon.data.model.Constants.Companion.FIRST_PAGE
 import br.com.symon.data.model.Constants.Companion.SEEK_BAR_MAX
-import br.com.symon.data.model.Constants.Companion.SEEK_BAR_MIN
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.BlockUserRequest
@@ -119,6 +119,12 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         salesFragmentSalesSearchCloseImageView.setOnClickListener {
             resetSaleData()
         }
+
+        salesFragmentSalesSwipeRefreshLayout.setPrimaryColors()
+        salesFragmentSalesSwipeRefreshLayout.setOnRefreshListener {
+            salesFragmentSalesSwipeRefreshLayout.isRefreshing = true
+            fetchData(FIRST_PAGE)
+        }
     }
 
     override fun setUser(userTokenResponse: UserTokenResponse) {
@@ -131,11 +137,12 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     override fun showSales(salesListResponse: SalesListResponse) {
+        if (salesFragmentSalesSwipeRefreshLayout.isRefreshing)
+            salesFragmentSalesSwipeRefreshLayout.isRefreshing = false
         if (!salesListResponse.salesList.isEmpty()) {
             setSalesAdapter(salesListResponse)
         }
-        salesFragmentSalesRecyclerView.visibility = View.VISIBLE
-        hideLoading()
+        showContent(showContent = true)
     }
 
     override fun showSearchSales(salesListResponse: SalesListResponse) {
@@ -144,8 +151,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         } else {
             activity.toast("Nenhum resultado encontrado para a palavra $extraSearchQuery")
         }
-        salesFragmentSalesRecyclerView.visibility = View.VISIBLE
-        hideLoading()
+        showContent(showContent = true)
     }
 
     override fun updateActionSAle(position: Int, isLike: Boolean) {
@@ -178,7 +184,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         when (progress) {
             0 -> {
                 radius = 1
-                seekBar?.progress  = 1
+                seekBar?.progress = 1
                 salesFragmentHeaderRangeTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), 1)
                 salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_low, null))
             }
@@ -236,8 +242,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     private fun fetchData(page: Int) {
-        showLoading()
-        salesFragmentSalesRecyclerView.visibility = View.GONE
+        showContent(showContent = false)
         salesFragmentComponent.salesPresenter().loadSales(
                 userToken = user?.token!!,
                 page = if (page > 1) page else Constants.FIRST_PAGE,
@@ -261,7 +266,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         if (currentPage == Constants.FIRST_PAGE) {
             salesAdapter = SalesAdapter(salesListResponse.salesList, user?.user!!, this)
             salesFragmentSalesRecyclerView.adapter = salesAdapter
-            salesFragmentSalesRecyclerView.visibility = View.VISIBLE
+            showContent(showContent = true)
         } else {
             salesAdapter.addList(salesListResponse.salesList)
         }
@@ -286,9 +291,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
             String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), salesFragmentHeaderRangeSeekBar.progress)
 
     private fun resetSaleData() {
-        showLoading()
         salesFragmentSalesSearchHeaderLayout.visibility = View.GONE
-        salesFragmentSalesRecyclerView.visibility = View.GONE
         extraSearchQuery = ""
         fetchData(FIRST_PAGE)
     }
@@ -319,5 +322,15 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
                     longitude = it[0].longitude
                     getUser()
                 })
+    }
+
+    private fun showContent(showContent: Boolean) {
+        if (showContent) {
+            salesFragmentSalesSwipeRefreshLayout.visibility = View.VISIBLE
+            hideLoading()
+        } else {
+            salesFragmentSalesSwipeRefreshLayout.visibility = View.GONE
+            showLoading()
+        }
     }
 }

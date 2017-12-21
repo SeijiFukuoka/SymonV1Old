@@ -8,6 +8,8 @@ import android.net.Uri
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.support.v4.content.res.ResourcesCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -16,6 +18,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import br.com.symon.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import java.math.BigDecimal
@@ -94,4 +97,10 @@ fun String.parseToBigDecimal(): BigDecimal {
     } else {
         BigDecimal(cleanString).setScale(2, BigDecimal.ROUND_FLOOR).divide(BigDecimal(100), BigDecimal.ROUND_FLOOR)
     }
+}
+
+fun SwipeRefreshLayout.setPrimaryColors() {
+    this.setColorSchemeColors(
+            ResourcesCompat.getColor(resources, R.color.colorPrimary, null),
+            ResourcesCompat.getColor(resources, R.color.colorPrimaryDark, null))
 }

@@ -11,6 +11,7 @@ import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseFragment
 import br.com.symon.common.inflate
+import br.com.symon.common.setPrimaryColors
 import br.com.symon.common.toast
 import br.com.symon.common.widget.EndlessScrollListener
 import br.com.symon.data.model.Constants
@@ -104,6 +105,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         setUpRecyclersViews()
         ratingsChildComponent.ratingsChildFragmentPresenter().getUserCache()
 
+        ratingsChildFragmentSwipeRefreshLayout.setPrimaryColors()
         ratingsChildFragmentSwipeRefreshLayout.setOnRefreshListener {
             ratingsChildFragmentSwipeRefreshLayout.visibility = View.GONE
             ratingsChildFragmentSwipeRefreshLayout.isRefreshing = true
