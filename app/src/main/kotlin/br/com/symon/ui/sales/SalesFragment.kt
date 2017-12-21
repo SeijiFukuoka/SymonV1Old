@@ -134,6 +134,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         if (!salesListResponse.salesList.isEmpty()) {
             setSalesAdapter(salesListResponse)
         }
+        salesFragmentSalesRecyclerView.visibility = View.VISIBLE
         hideLoading()
     }
 
@@ -143,6 +144,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         } else {
             activity.toast("Nenhum resultado encontrado para a palavra $extraSearchQuery")
         }
+        salesFragmentSalesRecyclerView.visibility = View.VISIBLE
         hideLoading()
     }
 
@@ -175,7 +177,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         radius = progress
         when (progress) {
             0 -> {
-                salesFragmentHeaderRangeSeekBar.progress = SEEK_BAR_MIN
+                radius = 1
                 salesFragmentHeaderRangeTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), 1)
                 salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_low, null))
             }
@@ -226,13 +228,15 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     private fun setUpSeekBar() {
-        salesFragmentHeaderRangeSeekBar.progress = SEEK_BAR_MIN
-        salesFragmentHeaderRangeTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), salesFragmentHeaderRangeSeekBar.progress)
+        salesFragmentHeaderRangeSeekBar.progress = 0
+        salesFragmentHeaderRangeTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), 1)
         salesFragmentHeaderRangeSeekBar!!.max = SEEK_BAR_MAX
         salesFragmentHeaderRangeSeekBar!!.setOnSeekBarChangeListener(this)
     }
 
     private fun fetchData(page: Int) {
+        showLoading()
+        salesFragmentSalesRecyclerView.visibility = View.GONE
         salesFragmentComponent.salesPresenter().loadSales(
                 userToken = user?.token!!,
                 page = if (page > 1) page else Constants.FIRST_PAGE,
