@@ -148,6 +148,8 @@
     <string name="sale_detail_edit_sale_option">Editar</string>
 
     <string name="send_sale_initial_value">R$0,00</string>
+    <string name="send_sale_save">Salvar</string>
+    <string name="send_sale_formatted_place">%s - %s</string>
 
     <string name="item_sale_comment_menu_block_user">Bloquear usuário</string>
     <string name="item_sale_comment_menu_delete_comment">Excluir comentário</string>

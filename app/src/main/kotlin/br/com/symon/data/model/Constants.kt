@@ -9,5 +9,7 @@ class Constants {
 
         var SEEK_BAR_MIN = 1
         var SEEK_BAR_MAX = 20
+
+        var NEED_UPDATE_RESULT = 12345
     }
 }

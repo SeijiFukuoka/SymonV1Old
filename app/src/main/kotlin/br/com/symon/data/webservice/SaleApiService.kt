@@ -39,7 +39,9 @@ interface SaleApiService {
                         @Header("Authorization") userToken: String): Observable<Response<UploadPhotoResponse>>
 
     @PUT("/sale/{sale_id}")
-    fun updateSale(@Body sale: Sale): Observable<Response<Void>>
+    fun updateSale(@Path("sale_id") saleId: Int,
+                   @Body sendSaleRequest: SendSaleRequest,
+                   @Header("Authorization") userToken: String): Observable<Response<Void>>
 
     @DELETE("/sale/{sale_id}")
     fun deleteSale(@Path("sale_id") saleId: Int): Observable<Response<Void>>

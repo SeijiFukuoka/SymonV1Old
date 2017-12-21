@@ -16,6 +16,7 @@ import br.com.symon.common.toast
 import br.com.symon.common.widget.EndlessScrollListener
 import br.com.symon.data.model.Constants
 import br.com.symon.data.model.Constants.Companion.FIRST_PAGE
+import br.com.symon.data.model.Constants.Companion.NEED_UPDATE_RESULT
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
 import br.com.symon.data.model.responses.SalesListResponse
@@ -171,7 +172,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_SALE_DETAIL && resultCode == RESPONSE_SALE_DETAIL_NEED_UPDATE) {
+        if (requestCode == REQUEST_SALE_DETAIL && ((resultCode == RESPONSE_SALE_DETAIL_NEED_UPDATE) or (resultCode == NEED_UPDATE_RESULT))) {
             fetchData(FIRST_PAGE)
         }
     }

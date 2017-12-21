@@ -17,14 +17,17 @@ import br.com.symon.common.loadUrl
 import br.com.symon.common.toast
 import br.com.symon.common.widget.EllipsizingTextView
 import br.com.symon.data.model.Comment
+import br.com.symon.data.model.Constants.Companion.NEED_UPDATE_RESULT
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.requests.BlockUserRequest
 import br.com.symon.data.model.requests.SendSaleCommentRequest
+import br.com.symon.data.model.requests.SendSaleRequest
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSaleDetailActivityComponent
 import br.com.symon.injection.components.SaleDetailActivityComponent
 import br.com.symon.injection.modules.SaleDetailActivityModule
 import br.com.symon.ui.ratings.RatingsChildFragment
+import br.com.symon.ui.send.SendSaleActivity
 import kotlinx.android.synthetic.main.activity_sale_detail.*
 import java.text.NumberFormat
 import java.util.*
@@ -34,14 +37,19 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
 
     private lateinit var extraSaleDetail: Sale
     private lateinit var extraUser: UserTokenResponse
+    private lateinit var extraUpdatedSale: SendSaleRequest
 
     private var mUserBlockedId: Int = 0
     private var mEmptyCommentList: Boolean = true
     private var mCurrentSaleIsFavorited: Boolean = false
+    private var mLatitude: Double = 0.0
+    private var mLongitude: Double = 0.0
 
     companion object {
         private const val EXTRA_SALE = "EXTRA_SALE"
         private const val EXTRA_USER = "EXTRA_USER"
+        const val EXTRA_UPDATED_SALE = "EXTRA_UPDATED_SALE"
+        const val REQUEST_UPDATE_SALE = 10412
 
         fun newIntent(context: Context, sale: Sale, user: UserTokenResponse): Intent {
             val intent = Intent(context, SaleDetailActivity::class.java)
@@ -141,6 +149,23 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_UPDATE_SALE && resultCode == NEED_UPDATE_RESULT) {
+
+            extraUpdatedSale = data?.getParcelableExtra(EXTRA_UPDATED_SALE)!!
+
+            saleDetailActivityToolbarTextView.text = extraUpdatedSale.productName
+            saleDetailActivitySaleDetailPriceValue.text = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(extraUpdatedSale.price)
+            saleDetailActivitySaleProductValue.text = extraUpdatedSale.productName
+            saleDetailActivitySalePlaceValue.text = extraUpdatedSale.placeName
+            mLatitude = extraUpdatedSale.lat
+            mLongitude = extraUpdatedSale.lng
+
+            setResult(NEED_UPDATE_RESULT)
+        }
+    }
+
     private fun setupToolbar() {
         saleDetailActivityHeaderProgressView.bind(3)
         saleDetailActivityToolbarTextView.text = extraSaleDetail.message
@@ -150,7 +175,9 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
             saleDetailActivityEditSaleTextView.visibility = View.VISIBLE
 
             saleDetailActivityEditSaleTextView.setOnClickListener {
-                toast("saleDetailActivityEditSaleTextView")
+                val uri: Uri = Uri.parse(extraSaleDetail.photo)
+                val postInfoIntent = SendSaleActivity.newIntent(this, uri, extraUser.token, extraSaleDetail)
+                startActivityForResult(postInfoIntent, REQUEST_UPDATE_SALE)
             }
 
         } else {
@@ -191,6 +218,9 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         saleDetailActivitySaleProductValue.text = extraSaleDetail.message
         saleDetailActivitySalePlaceValue.text = extraSaleDetail.place
 
+        mLatitude = extraSaleDetail.latitude
+        mLongitude = extraSaleDetail.longitude
+
         saleDetailActivitySalePlaceValue.maxLines = 1
 
         saleDetailActivitySalePlaceValue.addEllipsizeListener(object : EllipsizingTextView.EllipsizeListener {
@@ -201,7 +231,7 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         })
 
         saleDetailActivitySalePlaceLayout.setOnClickListener {
-            val gmmIntentUri = Uri.parse("geo:0,0?q=${saleDetailActivitySalePlaceValue.text}")
+            val gmmIntentUri = Uri.parse("geo:$mLatitude,$mLongitude?q=${saleDetailActivitySalePlaceValue.text}")
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.`package` = "com.google.android.apps.maps"
             startActivity(mapIntent)

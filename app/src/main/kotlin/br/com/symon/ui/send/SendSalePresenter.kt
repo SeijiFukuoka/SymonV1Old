@@ -17,7 +17,7 @@ class SendSalePresenter @Inject constructor(private val view: SendSaleContract.V
 
     override fun sendSale(userToken: String, sendSaleRequest: SendSaleRequest) {
         view.showLoading()
-        saleRepository.updateSale(userToken, sendSaleRequest).subscribe({
+        saleRepository.uploadSale(userToken, sendSaleRequest).subscribe({
             view.hideLoading()
             view.notifySendSuccessfully(it.body()?.id)
         }, {
@@ -26,7 +26,15 @@ class SendSalePresenter @Inject constructor(private val view: SendSaleContract.V
         })
     }
 
-    override fun uploadUserPhoto(userToken: String, saleId: Int,  uri: Uri?) {
+    override fun updateSale(saleId: Int, userToken: String, sendSaleRequest: SendSaleRequest) {
+        view.showLoading()
+        saleRepository.updateSale(saleId, userToken, sendSaleRequest).subscribe({
+            view.hideLoading()
+            view.updateSaleSuccessfully()
+        })
+    }
+
+    override fun uploadUserPhoto(userToken: String, saleId: Int, uri: Uri?) {
         view.showLoading()
 
         fileRepository.createMultipartFromUri(uri).subscribe {

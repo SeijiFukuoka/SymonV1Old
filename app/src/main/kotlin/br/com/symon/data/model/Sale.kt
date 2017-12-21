@@ -9,6 +9,8 @@ data class Sale(
         @SerializedName("message") var message: String?,
         @SerializedName("price") var price: Float?,
         @SerializedName("place") var place: String?,
+        @SerializedName("latitude") var latitude: Double,
+        @SerializedName("longitude") var longitude: Double,
         @SerializedName("created_at") private var createdAt: String?,
         @SerializedName("updated_at") var updatedAt: String?,
         @SerializedName("photo") var photo: String?,
@@ -24,6 +26,8 @@ data class Sale(
             source.readString(),
             source.readValue(Float::class.java.classLoader) as Float?,
             source.readString(),
+            source.readDouble(),
+            source.readDouble(),
             source.readString(),
             source.readString(),
             source.readString(),
@@ -42,6 +46,8 @@ data class Sale(
         writeString(message)
         writeValue(price)
         writeString(place)
+        writeDouble(latitude)
+        writeDouble(longitude)
         writeString(createdAt)
         writeString(updatedAt)
         writeString(photo)

@@ -46,6 +46,16 @@ class SalesAdapter(private val list: MutableList<Sale>,
         notifyDataSetChanged()
     }
 
+    fun clear() {
+        val size = this.list.size
+        if (size > 0) {
+            for (i in 0 until size) {
+                this.list.removeAt(0)
+            }
+            this.notifyItemRangeRemoved(0, size)
+        }
+    }
+
     fun updateItem(position: Int, isLike: Boolean) {
         val saleToBeChanged = list[position]
 

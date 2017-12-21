@@ -2,6 +2,7 @@ package br.com.symon.ui.sales
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.location.Address
 import android.location.Location
 import android.os.Bundle
@@ -21,6 +22,7 @@ import br.com.symon.common.toast
 import br.com.symon.common.widget.EndlessScrollListener
 import br.com.symon.data.model.Constants
 import br.com.symon.data.model.Constants.Companion.FIRST_PAGE
+import br.com.symon.data.model.Constants.Companion.NEED_UPDATE_RESULT
 import br.com.symon.data.model.Constants.Companion.SEEK_BAR_MAX
 import br.com.symon.data.model.Sale
 import br.com.symon.data.model.User
@@ -46,6 +48,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
 
     companion object {
         private const val EXTRA_SEARCH_QUERY = "EXTRA_SEARCH_QUERY"
+        const val REQUEST_SALE_DETAIL = 123
 
         fun newInstance(searchQuery: String?): SalesFragment {
             val f = SalesFragment()
@@ -127,6 +130,13 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_SALE_DETAIL && resultCode == NEED_UPDATE_RESULT) {
+            fetchData(FIRST_PAGE)
+        }
+    }
+
     override fun setUser(userTokenResponse: UserTokenResponse) {
         user = userTokenResponse
         if (extraSearchQuery!!.isNotEmpty()) {
@@ -137,12 +147,15 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     override fun showSales(salesListResponse: SalesListResponse) {
-        if (salesFragmentSalesSwipeRefreshLayout.isRefreshing)
-            salesFragmentSalesSwipeRefreshLayout.isRefreshing = false
         if (!salesListResponse.salesList.isEmpty()) {
             setSalesAdapter(salesListResponse)
+        } else {
+            salesAdapter.clear()
+            activity.toast("Nenhum resultado encontrado na região procurada")
         }
         showContent(showContent = true)
+        if (salesFragmentSalesSwipeRefreshLayout.isRefreshing)
+            salesFragmentSalesSwipeRefreshLayout.isRefreshing = false
     }
 
     override fun showSearchSales(salesListResponse: SalesListResponse) {
@@ -160,7 +173,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
 
     override fun onSaleImageClick(sale: Sale) {
         val saleDetailActivity = SaleDetailActivity.newIntent(activity, sale, user!!)
-        startActivity(saleDetailActivity)
+        startActivityForResult(saleDetailActivity, REQUEST_SALE_DETAIL)
     }
 
     override fun onLikeSaleClick(position: Int, sale: Sale) {
@@ -242,8 +255,11 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     private fun fetchData(page: Int) {
-        if (page == Constants.FIRST_PAGE)
+        if (page == Constants.FIRST_PAGE) {
             showContent(showContent = false)
+            currentPage = 1
+        }
+
         salesFragmentComponent.salesPresenter().loadSales(
                 userToken = user?.token!!,
                 page = if (page > 1) page else Constants.FIRST_PAGE,

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -12,13 +13,63 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include
-        android:id="@+id/sendSaleAppBarLayout"
-        layout="@layout/view_custom_toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@android:color/white"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/customToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <ImageView
+                android:id="@+id/sendSaleActivityToolbarBackImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10_dp"
+                android:layout_marginStart="@dimen/margin_10_dp"
+                android:padding="@dimen/margin_10_dp"
+                app:srcCompat="@drawable/ic_back_arrow" />
+
+            <TextView
+                android:id="@+id/sendSaleActivityToolbarTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_20_dp"
+                android:layout_marginStart="@dimen/margin_20_dp"
+                android:gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.Title.Toolbar"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_18_sp"
+                tools:text="@string/app_name" />
+
+            <TextView
+                android:id="@+id/sendSaleActivityToolbarSaveTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/margin_25_dp"
+                android:layout_marginRight="@dimen/margin_25_dp"
+                android:text="@string/send_sale_save"
+                android:textAppearance="@style/TextAppearance.SemiBold"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_15_sp"
+                android:textStyle="normal"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -50,10 +101,7 @@
                     android:adjustViewBounds="true"
                     android:background="@color/gray_E0E0E0"
                     android:scaleType="centerCrop" />
-
-
             </android.support.v7.widget.CardView>
-
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/sendSaleNameTextInput"
@@ -79,7 +127,6 @@
                     android:paddingBottom="@dimen/margin_15_dp"
                     android:textColor="@color/black_202020"
                     android:textSize="@dimen/text_size_16_sp" />
-
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -112,7 +159,6 @@
                     android:singleLine="true"
                     android:textColor="@color/black_202020"
                     android:textSize="@dimen/text_size_16_sp" />
-
             </android.support.design.widget.TextInputLayout>
 
             <View
@@ -135,13 +181,13 @@
                 android:layout_marginRight="@dimen/margin_20_dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="@dimen/margin_30_dp"
-                android:maxLength="12"
                 android:inputType="numberDecimal"
+                android:maxLength="12"
+                android:text="@string/send_sale_initial_value"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textColorLink="@color/white"
                 android:textSize="@dimen/text_size_16_sp"
-                android:text="@string/send_sale_initial_value"
                 android:theme="@style/WhiteEditText"
                 app:layout_constraintBottom_toBottomOf="@+id/view"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -171,11 +217,6 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sendSalePriceEditText" />
-
-
         </android.support.constraint.ConstraintLayout>
-
-
     </android.support.v4.widget.NestedScrollView>
-
 </LinearLayout>
