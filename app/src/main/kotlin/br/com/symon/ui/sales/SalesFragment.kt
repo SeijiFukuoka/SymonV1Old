@@ -242,7 +242,8 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     private fun fetchData(page: Int) {
-        showContent(showContent = false)
+        if (page == Constants.FIRST_PAGE)
+            showContent(showContent = false)
         salesFragmentComponent.salesPresenter().loadSales(
                 userToken = user?.token!!,
                 page = if (page > 1) page else Constants.FIRST_PAGE,
