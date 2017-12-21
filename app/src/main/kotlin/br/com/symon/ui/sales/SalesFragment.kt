@@ -178,6 +178,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         when (progress) {
             0 -> {
                 radius = 1
+                seekBar?.progress  = 1
                 salesFragmentHeaderRangeTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), 1)
                 salesFragmentHeaderRangeImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_range_filter_low, null))
             }
@@ -228,7 +229,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     private fun setUpSeekBar() {
-        salesFragmentHeaderRangeSeekBar.progress = 0
+        salesFragmentHeaderRangeSeekBar.progress = 1
         salesFragmentHeaderRangeTextView.text = String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), 1)
         salesFragmentHeaderRangeSeekBar!!.max = SEEK_BAR_MAX
         salesFragmentHeaderRangeSeekBar!!.setOnSeekBarChangeListener(this)
@@ -260,7 +261,6 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         if (currentPage == Constants.FIRST_PAGE) {
             salesAdapter = SalesAdapter(salesListResponse.salesList, user?.user!!, this)
             salesFragmentSalesRecyclerView.adapter = salesAdapter
-            salesFragmentSalesRecyclerView.visibility = View.VISIBLE
         } else {
             salesAdapter.addList(salesListResponse.salesList)
         }
