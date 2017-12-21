@@ -1,10 +1,8 @@
 package br.com.symon.ui.retrievePassword
 
 import br.com.gold360.financas.common.GeneralErrorHandler
-import br.com.symon.data.model.responses.ErrorResponse
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.ActivityScope
-import com.google.gson.Gson
 import javax.inject.Inject
 
 @ActivityScope
@@ -15,18 +13,15 @@ class RetrievePasswordPresenter @Inject constructor(
 
     override fun requestNewPassword(userEmail: String) {
         view.showLoading()
-
         userRepository.retrievePassword(userEmail).subscribe({
-            if (it.code() == 200) {
-                view.hideLoading()
-                view.goToNextStep()
-            } else {
-//                TODO(Aguardando API)
-                view.goToNextStep()
-//                TODO(FIM - Aguardando API)
-//                val errorResponse = Gson().fromJson(it.errorBody().toString(), ErrorResponse::class.java)
-//                view.hideLoading()
-//                view.showErrorMessage(errorResponse?.error)
+            when (it.code()) {
+                in 200..204 -> {
+                    view.hideLoading()
+                    it.body()?.let { it1 -> view.showRetrievePasswordResponse(it1) }
+                }
+                else -> {
+                    view.showErrorMessage(it.message())
+                }
             }
         }, {
             view.hideLoading()

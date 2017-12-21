@@ -43,8 +43,8 @@ interface UserApiService {
     @POST("/token")
     fun getToken(@Body userAuthenticateRequest: UserAuthenticateRequest): Observable<Response<UserTokenResponse>>
 
-    @POST("/user/retrievePassword/{user_email}")
-    fun retrievePassword(@Path("user_email") userEmail: String?): Observable<Response<Void>>
+    @POST("/forgot")
+    fun retrievePassword(@Header("Authorization") userToken: String): Observable<Response<RetrievePasswordResponse>>
 
     @POST("/user/block")
     fun blockUser(@Header("Authorization") userToken: String?,
@@ -76,7 +76,7 @@ interface UserApiService {
 
     @GET("/user/sale")
     fun getSales(@Header("Authorization") userToken: String,
-                     @Query("page") page: Int,
-                     @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
+                 @Query("page") page: Int,
+                 @Query("pageSize") pageSize: Int): Observable<SalesListResponse>
 
 }

@@ -8,6 +8,7 @@ import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.isEmailValid
 import br.com.symon.common.toast
+import br.com.symon.data.model.responses.RetrievePasswordResponse
 import br.com.symon.injection.components.DaggerRetrieverPasswordActivityComponent
 import br.com.symon.injection.components.RetrieverPasswordActivityComponent
 import br.com.symon.injection.modules.RetrievePasswordActivityModule
@@ -76,7 +77,8 @@ class RetrieverPasswordActivity : BaseActivity(), RetrievePasswordContract.View 
         }
     }
 
-    override fun goToNextStep() {
+    override fun showRetrievePasswordResponse(retrievePasswordResponse: RetrievePasswordResponse) {
+        toast(retrievePasswordResponse.message)
         val loginConfirmationActivity = LoginConfirmationActivity.newIntent(this,
                 retrievePasswordEmailEditText.text.toString(), getString(R.string.retrieve_password_text_confirm_action))
         loginConfirmationActivity.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
