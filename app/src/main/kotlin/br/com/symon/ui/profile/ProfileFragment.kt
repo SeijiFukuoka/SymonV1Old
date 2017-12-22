@@ -82,8 +82,10 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
     }
 
     override fun showSaleList(saleListResponse: SalesListResponse) {
-        profileMessageTextView.text = getString(R.string.profile_my_posts_label)
-        profileSalesAdapter.setList(saleListResponse.salesList)
+        if (saleListResponse.salesList.size > 0) {
+            profileMessageTextView.text = getString(R.string.profile_my_posts_label)
+            profileSalesAdapter.setList(saleListResponse.salesList)
+        }
     }
 
     private fun setupRecyclerView() {
