@@ -3,7 +3,7 @@ package br.com.symon.data.repository
 import br.com.symon.base.BaseRepository
 import br.com.symon.data.cache.UserCacheManagerImpl
 import br.com.symon.data.model.requests.UserAuthenticateRequest
-import br.com.symon.data.model.requests.UserFacebookRegistryRequest
+import br.com.symon.data.model.requests.UserFacebookAuthenticateRequest
 import br.com.symon.data.model.requests.UserFullUpdateRequest
 import br.com.symon.data.model.requests.UserUpdateRequest
 import br.com.symon.data.model.responses.UserTokenResponse
@@ -38,7 +38,6 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
 
     fun registryUserFacebook(userFacebookAuthenticateRequest: UserFacebookAuthenticateRequest)
             = call(userApiService.registryUserFacebook(userFacebookAuthenticateRequest))
-
 
     fun deleteUser(userId: Int) = call(userApiService.deleteUser(userId))
 
