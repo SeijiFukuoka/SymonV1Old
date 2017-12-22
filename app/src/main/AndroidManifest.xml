@@ -114,6 +114,11 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
+        <!-- Glide -->
+        <meta-data
+            android:name="br.com.symon.injection.modules.MyAppGlideModule"
+            android:value="MyAppGlideModule" />
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

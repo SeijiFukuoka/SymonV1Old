@@ -19,7 +19,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import br.com.symon.R
-import com.bumptech.glide.Glide
+import br.com.symon.injection.modules.GlideApp
 import com.bumptech.glide.request.RequestOptions
 import java.math.BigDecimal
 import java.text.DateFormat
@@ -70,15 +70,15 @@ fun dpToPixels(dp: Float): Int =
         TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().displayMetrics).toInt()
 
 fun ImageView.loadUrl(url: String?) {
-    Glide.with(context).load(url).into(this)
+    GlideApp.with(context).load(url).into(this)
 }
 
 fun ImageView.loadUrl(uri: Uri?) {
-    Glide.with(context).load(uri).into(this)
+    GlideApp.with(context).load(uri).into(this)
 }
 
-fun ImageView.loadUrlToBeRounded(url: String?) {
-    Glide.with(context).load(url)
+fun ImageView.loadUrlToBeRounded(url: String?, placeholder: Int) {
+    GlideApp.with(context).load(url).placeholder(placeholder)
             .apply(RequestOptions.circleCropTransform()).into(this)
 }
 

@@ -23,7 +23,6 @@ import br.com.symon.ui.editProfile.EditProfileActivity
 import br.com.symon.ui.profile.adapter.ProfileSalesAdapter
 import kotlinx.android.synthetic.main.fragment_profile.*
 
-
 class ProfileFragment : BaseFragment(), ProfileContract.View {
 
     companion object {
@@ -35,11 +34,11 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
     }
 
     private val profileFragmentComponent: ProfileFragmentComponent
-    get() = DaggerProfileFragmentComponent
-            .builder()
-            .applicationComponent((activity.application as CustomApplication).applicationComponent)
-            .profileFragmentModule(ProfileFragmentModule(this))
-            .build()
+        get() = DaggerProfileFragmentComponent
+                .builder()
+                .applicationComponent((activity.application as CustomApplication).applicationComponent)
+                .profileFragmentModule(ProfileFragmentModule(this))
+                .build()
 
     private var currentPage = 1
 
@@ -75,7 +74,7 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
 
         userTokenResponse.user?.apply {
             profileNameTextView.text = name
-            profileImageView.loadUrlToBeRounded(photoUri)
+            profileImageView.loadUrlToBeRounded(photoUri, R.drawable.ic_profile_placeholder)
         }
 
         fetchData(currentPage)
@@ -116,7 +115,7 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
 
                     userTokenResponse.user?.apply {
                         profileNameTextView.text = name
-                        profileImageView.loadUrlToBeRounded(photoUri)
+                        profileImageView.loadUrlToBeRounded(photoUri, R.drawable.ic_profile_placeholder)
                     }
                 }
             }

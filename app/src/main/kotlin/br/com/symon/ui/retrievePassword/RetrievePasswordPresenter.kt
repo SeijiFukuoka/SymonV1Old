@@ -1,6 +1,7 @@
 package br.com.symon.ui.retrievePassword
 
 import br.com.gold360.financas.common.GeneralErrorHandler
+import br.com.symon.data.model.requests.RetrievePasswordRequest
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.ActivityScope
 import javax.inject.Inject
@@ -11,9 +12,9 @@ class RetrievePasswordPresenter @Inject constructor(
         private val userRepository: UserRepository) :
         RetrievePasswordContract.Presenter {
 
-    override fun requestNewPassword(userEmail: String) {
+    override fun requestNewPassword(retrievePasswordRequest: RetrievePasswordRequest) {
         view.showLoading()
-        userRepository.retrievePassword(userEmail).subscribe({
+        userRepository.retrievePassword(retrievePasswordRequest).subscribe({
             when (it.code()) {
                 in 200..204 -> {
                     view.hideLoading()

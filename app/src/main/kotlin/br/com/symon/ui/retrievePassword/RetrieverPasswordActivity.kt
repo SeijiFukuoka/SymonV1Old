@@ -8,6 +8,7 @@ import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.isEmailValid
 import br.com.symon.common.toast
+import br.com.symon.data.model.requests.RetrievePasswordRequest
 import br.com.symon.data.model.responses.RetrievePasswordResponse
 import br.com.symon.injection.components.DaggerRetrieverPasswordActivityComponent
 import br.com.symon.injection.components.RetrieverPasswordActivityComponent
@@ -69,7 +70,7 @@ class RetrieverPasswordActivity : BaseActivity(), RetrievePasswordContract.View 
         retrievePasswordSendNewPasswordButton.setOnClickListener {
             if (retrievePasswordEmailEditText.text.toString().isEmailValid()) {
                 retrievePasswordTextInputLayout.isErrorEnabled = false
-                retrieverPasswordActivityComponent.retrievePasswordPresenter().requestNewPassword(retrievePasswordEmailEditText.text.toString())
+                retrieverPasswordActivityComponent.retrievePasswordPresenter().requestNewPassword(RetrievePasswordRequest(retrievePasswordEmailEditText.text.toString()))
             } else {
                 retrievePasswordTextInputLayout.isErrorEnabled = true
                 retrievePasswordTextInputLayout.error = getString(R.string.register_email_invalid_msg)

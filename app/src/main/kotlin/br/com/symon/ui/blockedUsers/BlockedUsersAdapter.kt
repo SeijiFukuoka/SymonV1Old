@@ -36,7 +36,7 @@ class BlockedUsersAdapter(private val list: MutableList<BlockedUser>,
 
         fun bind(blockedUser: BlockedUser) = with(itemView) {
             blockedUser.user.apply {
-                itemBlockedUserImageView.loadUrlToBeRounded(photoUri)
+                itemBlockedUserImageView.loadUrlToBeRounded(photoUri, R.drawable.ic_profile)
                 itemBlockedUserNameTextView.text = name
             }
 
