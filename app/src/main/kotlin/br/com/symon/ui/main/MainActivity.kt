@@ -193,7 +193,9 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
 
         mainBottomNavigation.setNotificationBackgroundColor(
                 ContextCompat.getColor(this, R.color.colorAccent))
-        mainBottomNavigation.setNotification("!", 3)
+
+//        TODO("Verificar como será feito esta parte - Pendente API")
+//        mainBottomNavigation.setNotification("!", 3)
 
         mainBottomNavigation.isBehaviorTranslationEnabled = true
 
