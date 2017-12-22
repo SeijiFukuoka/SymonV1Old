@@ -13,11 +13,13 @@ interface EditProfileContract {
         fun notifyDataUpdate(user: User?)
         fun showErrorMessage(error: String?)
         fun showInvalidPassword()
+        fun logout()
     }
 
     interface Presenter{
         fun getUserCache()
         fun updateUserInfo(userId: Int, userFullUpdateRequest: UserFullUpdateRequest)
         fun uploadUserPhoto(userId: Int, uri: Uri?)
+        fun deleteUserCache()
     }
 }

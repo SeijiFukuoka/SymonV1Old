@@ -94,7 +94,9 @@ class WelcomeActivity :
     }
 
     override fun handleTokenResponse(userTokenResponse: UserTokenResponse?) {
-        startActivity(MainActivity.newIntent(this, userTokenResponse))
+        val intent = MainActivity.newIntent(this, userTokenResponse)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
         finish()
     }
 

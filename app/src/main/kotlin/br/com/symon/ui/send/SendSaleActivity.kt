@@ -50,8 +50,10 @@ class SendSaleActivity : BaseActivity(), SendSaleContract.View {
         private lateinit var uri: Uri
         private lateinit var token: String
         private lateinit var locationProvider: ReactiveLocationProvider
+        private lateinit var sale: Sale
+        private lateinit var sendSaleRequest: SendSaleRequest
 
-        fun newIntent(context: Context, uri: Uri?, token: String): Intent {
+        fun newIntent(context: Context, uri: Uri?, token: String?): Intent {
             val intent = Intent(context, SendSaleActivity::class.java)
             intent.putExtra(EXTRA_URI, uri)
             intent.putExtra(EXTRA_TOKEN, token)
@@ -77,8 +79,6 @@ class SendSaleActivity : BaseActivity(), SendSaleContract.View {
     private var lat: Double = 0.0
     private var lng: Double = 0.0
     private var isUpdate: Boolean = false
-    private lateinit var sale: Sale
-    private lateinit var sendSaleRequest: SendSaleRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -22,6 +22,7 @@ import br.com.symon.injection.components.DaggerEditProfileActivityComponent
 import br.com.symon.injection.components.EditProfileActivityComponent
 import br.com.symon.injection.modules.EditProfileActivityModule
 import br.com.symon.ui.profile.ProfileFragment
+import br.com.symon.ui.welcome.WelcomeActivity
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -99,6 +100,10 @@ class EditProfileActivity : BaseActivity(),
             }
         }
 
+        profileLogoutButton.setOnClickListener {
+            editProfileActivityComponent.profilePresenter().deleteUserCache()
+        }
+
         profileChangePasswordTextView.setOnClickListener {
             if (!isPasswordChange) {
                 profilePasswordContainerLinearLayout.visibility = View.VISIBLE
@@ -153,6 +158,12 @@ class EditProfileActivity : BaseActivity(),
         super.onBackPressed()
     }
 
+    override fun logout() {
+        val intent = Intent(this, WelcomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
+    }
 
     private fun setupFacebookButton() {
         val hasToken = AccessToken.getCurrentAccessToken() != null

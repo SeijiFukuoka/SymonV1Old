@@ -16,6 +16,12 @@ class EditProfilePresenter @Inject constructor(private val view: EditProfileCont
                                                private val fileRepository: FileRepository)
     : EditProfileContract.Presenter {
 
+    override fun deleteUserCache() {
+        userRepository.deleteCache().subscribe{
+            view.logout()
+        }
+    }
+
     override fun getUserCache() {
         userRepository.getUserCache().subscribe {
             view.showUserData(it.user)

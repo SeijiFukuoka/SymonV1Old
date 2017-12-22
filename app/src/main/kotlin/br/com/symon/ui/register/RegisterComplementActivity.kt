@@ -29,13 +29,13 @@ import java.util.*
 
 class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.View {
     companion object {
-        private const val EXTRA_USER_ID = "EXTRA_USER_ID"
+        private const val EXTRA_USER = "EXTRA_USER"
 
         private lateinit var user: User
 
         fun newIntent(context: Context, user: User?): Intent {
             val intent = Intent(context, RegisterComplementActivity::class.java)
-            intent.putExtra(EXTRA_USER_ID, user)
+            intent.putExtra(EXTRA_USER, user)
             return intent
         }
     }
@@ -60,7 +60,7 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
 
         registerComplementComponent.inject(this)
 
-        user = intent.getParcelableExtra(EXTRA_USER_ID)
+        user = intent.getParcelableExtra(EXTRA_USER)
 
         fillUserData()
 
@@ -148,6 +148,7 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
 
     override fun goToMain(userTokenResponse: UserTokenResponse?) {
         val intent = MainActivity.newIntent(this, userTokenResponse)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
         finish()
     }

@@ -43,7 +43,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         const val EXTRA_USER = "EXTRA_USER"
         const val REQUEST_SEND_SALE = 10412
 
-        lateinit var userTokenResponse: UserTokenResponse
+        private var userTokenResponse: UserTokenResponse? = null
 
         fun newIntent(context: Context, user: UserTokenResponse?): Intent {
             val intent = Intent(context, MainActivity::class.java)
@@ -79,7 +79,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
 
         mainSettingsImageView.setOnClickListener {
             val settingsActivity = SettingsActivity.newIntent(this,
-                    userTokenResponse.token)
+                    userTokenResponse?.token)
             startActivity(settingsActivity)
         }
     }
@@ -259,7 +259,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
 
         dialogView.choosePhotoCamContainerLinearLayout.setOnClickListener {
             RxImagePicker.with(this).requestImage(Sources.CAMERA).subscribe {
-                val postInfoIntent = SendSaleActivity.newIntent(this, it, userTokenResponse.token)
+                val postInfoIntent = SendSaleActivity.newIntent(this, it, userTokenResponse?.token)
                 startActivityForResult(postInfoIntent, REQUEST_SEND_SALE)
             }
             alertDialog.hide()
@@ -268,7 +268,7 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
 
         dialogView.choosePhotoGalleryContainerLinearLayout.setOnClickListener {
             RxImagePicker.with(this).requestImage(Sources.GALLERY).subscribe {
-                val postInfoIntent = SendSaleActivity.newIntent(this, it, userTokenResponse.token)
+                val postInfoIntent = SendSaleActivity.newIntent(this, it, userTokenResponse?.token)
                 startActivityForResult(postInfoIntent, REQUEST_SEND_SALE)
             }
             alertDialog.hide()

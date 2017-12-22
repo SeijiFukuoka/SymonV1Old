@@ -9,6 +9,7 @@
     <string name="general_enter">Entrar</string>
     <string name="general_email">E-mail</string>
     <string name="general_save">Salvar</string>
+    <string name="general_logout">Sair</string>
     <string name="general_continue_lower_case">Continuar</string>
     <string name="general_required_field">Campo obrigatório</string>
     <string name="general_permissions_message">Por favor libere as permissões de acesso ;)</string>
