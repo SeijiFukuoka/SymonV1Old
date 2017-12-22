@@ -138,12 +138,12 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
     }
 
     private fun fillUserData() {
-        registerProfileImageView.loadUrlToBeRounded(user.photoUri)
+        registerProfileImageView.loadUrlToBeRounded(user.photoUri, R.drawable.ic_profile_placeholder)
         registerComplementNameEditText.setText(user.name)
     }
 
     override fun showPhoto(photo: String?) {
-        photo?.let { registerProfileImageView.loadUrlToBeRounded(it) }
+        photo?.let { registerProfileImageView.loadUrlToBeRounded(it, R.drawable.ic_profile_placeholder) }
     }
 
     override fun goToMain(userTokenResponse: UserTokenResponse?) {

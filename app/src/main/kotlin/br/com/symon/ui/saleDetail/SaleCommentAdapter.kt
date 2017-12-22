@@ -56,7 +56,7 @@ class SaleCommentAdapter(private val list: MutableList<Comment>,
             with(comment) {
                 itemSaleCommentTextView.text = message
 
-                viewItemAuthorBottomUserPhotoImageView.loadUrlToBeRounded(user.photoUri)
+                viewItemAuthorBottomUserPhotoImageView.loadUrlToBeRounded(user.photoUri, R.drawable.ic_profile)
                 viewItemAuthorBottomUserNameTextView.text = user.name
                 viewItemAuthorBottomSaleTimeTextView.text = formattedDate
             }

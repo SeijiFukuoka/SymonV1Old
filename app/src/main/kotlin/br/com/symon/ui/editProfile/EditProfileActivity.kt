@@ -196,13 +196,13 @@ class EditProfileActivity : BaseActivity(),
     }
 
     override fun showPhoto(photo: String?) {
-        profileImageView.loadUrlToBeRounded(photo)
+        profileImageView.loadUrlToBeRounded(photo, R.drawable.ic_profile_placeholder)
     }
 
     override fun showUserData(user: User?) {
         this.user = user
         user?.apply {
-            profileImageView.loadUrlToBeRounded(photoUri)
+            profileImageView.loadUrlToBeRounded(photoUri, R.drawable.ic_profile_placeholder)
             profileNameEditText.setText(name)
             profileEmailEditText.setText(email)
             profilePhoneEditText.setText(phone)
