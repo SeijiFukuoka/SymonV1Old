@@ -25,7 +25,7 @@ class NotificationAdapter(private val notifications: MutableList<Notification>) 
         fun bind(notification: Notification) = with(itemView) {
 
             with(notification) {
-                itemNotificationUserImageView.loadUrlToBeRounded(user.photoUri)
+                itemNotificationUserImageView.loadUrlToBeRounded(user.photoUri, R.drawable.ic_profile_placeholder)
                 itemNotificationUserNameTextView.text = user.name
                 itemNotificationCreateAtTextView.text = formattedDate
                 itemNotificationSaleImageView.loadUrl(salePhoto)
