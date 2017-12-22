@@ -17,6 +17,7 @@ data class Sale(
         @SerializedName("likes") var likes: Int,
         @SerializedName("dislikes") var dislikes: Int,
         @SerializedName("favorited") var favorited: Boolean,
+        @SerializedName("formatted_date") var formattedDate: String?,
         @SerializedName("hasLiked") var hasLiked: Boolean,
         @SerializedName("hasDisliked") var hasDisliked: Boolean,
         @SerializedName("user") var user: User
@@ -34,6 +35,7 @@ data class Sale(
             source.readInt(),
             source.readInt(),
             1 == source.readInt(),
+            source.readString(),
             1 == source.readInt(),
             1 == source.readInt(),
             source.readParcelable<User>(User::class.java.classLoader)
@@ -54,6 +56,7 @@ data class Sale(
         writeInt(likes)
         writeInt(dislikes)
         writeInt((if (favorited) 1 else 0))
+        writeString(formattedDate)
         writeInt((if (hasLiked) 1 else 0))
         writeInt((if (hasDisliked) 1 else 0))
         writeParcelable(user, 0)

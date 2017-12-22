@@ -103,7 +103,7 @@ class SalesAdapter(private val list: MutableList<Sale>,
         fun bind(sale: Sale, position: Int, currentUser: User) = with(itemView) {
             with(sale) {
 
-                if (currentUser.id == sale.user.id) {
+                if (currentUser.id == user.id) {
                     itemSaleCardLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_item_sale_label_mine, null)
                     itemSaleMineSponsoredLabelTextView.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_item_sale_label_mine, null)
                     itemSaleMineSponsoredLabelTextView.setTextColor(ResourcesCompat.getColor(resources, R.color.gray_737373, null))
@@ -125,15 +125,15 @@ class SalesAdapter(private val list: MutableList<Sale>,
 //                }
 
                 with(itemSaleImageView) {
-                    sale.photo?.let { loadUrl(it) }
+                    photo?.let { loadUrl(it) }
                 }
 
-                itemSaleSaleTitleTextView.text = sale.message
-                itemSaleSaleValueTextView.text = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(sale.price)
+                itemSaleSaleTitleTextView.text = message
+                itemSaleSaleValueTextView.text = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(price)
 
-                viewItemAuthorBottomSaleTimeTextView.text = sale.updatedAt
-                itemSaleLikeQuantityTextView.text = sale.likes.toString()
-                itemSaleDislikeQuantityTextView.text = sale.dislikes.toString()
+                viewItemAuthorBottomSaleTimeTextView.text = formattedDate
+                itemSaleLikeQuantityTextView.text = likes.toString()
+                itemSaleDislikeQuantityTextView.text = dislikes.toString()
 
                 hasLiked.let {
                     itemSaleLikeLayout.isSelected = hasLiked
@@ -158,12 +158,12 @@ class SalesAdapter(private val list: MutableList<Sale>,
                     photoUri?.let { loadUrlToBeRounded(it) }
                 }
 
-                viewItemAuthorBottomUserNameTextView.text = sale.user.name
+                viewItemAuthorBottomUserNameTextView.text = name
                 viewItemAuthorBottomUserOptionsImageView.setOnClickListener {
                     val popup = PopupMenu(context, viewItemAuthorBottomUserOptionsImageView, Gravity.TOP)
                     popup.inflate(R.menu.user_options_menu)
 
-                    if (currentUser.id == sale.user.id) {
+                    if (currentUser.id == id) {
                         popup.menu.getItem(1).isVisible = false
                     }
 
@@ -173,7 +173,7 @@ class SalesAdapter(private val list: MutableList<Sale>,
                                 listener.onReportSaleClick(sale)
                             }
                             R.id.userOptionsMenuBlockUser -> {
-                                listener.onBlockUserClick(sale.user.id!!)
+                                listener.onBlockUserClick(id!!)
                             }
                         }
                         false
