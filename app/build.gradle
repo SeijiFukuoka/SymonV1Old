@@ -8,9 +8,9 @@ android {
     signingConfigs {
         release {
             keyAlias 'alias'
-            keyPassword 'ppnl2017'
+            keyPassword KEY_PASSWORD
             storeFile file('../keystore.jks')
-            storePassword 'ppnl2017'
+            storePassword KEYSTORE_PASSWORD
         }
     }
     compileSdkVersion 26
@@ -19,7 +19,7 @@ android {
         applicationId "br.com.symon"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 13
+        versionCode 14
         versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
