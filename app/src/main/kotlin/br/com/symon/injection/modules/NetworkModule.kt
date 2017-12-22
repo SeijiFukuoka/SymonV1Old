@@ -34,4 +34,9 @@ class NetworkModule {
     @Singleton
     fun providesBlockedUsersApiService(@Named("provideBaseApi") retrofit: Retrofit): BlockedUsersApiService =
             retrofit.create<BlockedUsersApiService>(BlockedUsersApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun providesNotificationApiService(@Named("provideBaseApi") retrofit: Retrofit): NotificationApiService =
+            retrofit.create<NotificationApiService>(NotificationApiService::class.java)
 }

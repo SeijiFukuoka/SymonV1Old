@@ -24,6 +24,7 @@ import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerMainActivityComponent
 import br.com.symon.injection.components.MainActivityComponent
 import br.com.symon.injection.modules.MainActivityModule
+import br.com.symon.ui.notification.NotificationFragment
 import br.com.symon.ui.profile.ProfileFragment
 import br.com.symon.ui.ratings.RatingsFragment
 import br.com.symon.ui.sales.SalesFragment
@@ -236,6 +237,13 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false, isRatingsOrderVisible = true)
     }
 
+    private fun openNotifications() {
+        if (!isDisplayedByTag(NotificationFragment::class.java.canonicalName)) {
+            replace(R.id.mainFrameContent, NotificationFragment.newInstance(userTokenResponse?.token))
+        }
+        setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false, isRatingsOrderVisible = false)
+    }
+
     private fun requestFilePermissions() {
         RxPermissions(this)
                 .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -279,11 +287,6 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
             alertDialog.hide()
             mainBottomNavigation.currentItem = 0
         }
-    }
-
-    private fun openNotifications() {
-        toast("Notificações - Em progresso")
-        setupToolbarMenu(isSearchVisible = false, isSettingsVisible = false, isRatingsOrderVisible = false)
     }
 
     private fun setupToolbarMenu(isSearchVisible: Boolean, isSettingsVisible: Boolean, isRatingsOrderVisible: Boolean) {

@@ -20,4 +20,5 @@ interface ApplicationComponent {
     fun saleRepository(): SaleRepository
     fun commentRepository(): CommentRepository
     fun blockedUsersRepository(): BlockedUsersRepository
+    fun notificationRepository(): NotificationRepository
 }
