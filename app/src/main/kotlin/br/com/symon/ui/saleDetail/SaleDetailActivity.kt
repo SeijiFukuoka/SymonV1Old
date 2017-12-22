@@ -87,9 +87,7 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
     }
 
     override fun onBlockUserClick(userId: Int) {
-        val userBlockRequest = BlockUserRequest(userId)
-        mUserBlockedId = userId
-        saleDetailActivityComponent.providePresenter().blockUser(extraUser.token, userBlockRequest)
+        saleDetailActivityComponent.providePresenter().blockUser(extraUser.token, BlockUserRequest(userId))
     }
 
     override fun onDeleteCommentClick(commentId: Int, position: Int) {
@@ -133,12 +131,16 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
     }
 
-    override fun showBlockUserResponse() {
-        saleCommentAdapter.removeBlockUserComments(mUserBlockedId)
+    override fun showBlockUserResponse(blockedUserRequest: BlockUserRequest) {
+        saleCommentAdapter.removeBlockUserComments(blockedUserRequest.userBlockedId)
         if (saleCommentAdapter.itemCount == 0)
             hideShowCommentList(hide = true)
 
         setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
+    }
+
+    override fun showBlockUserResponseError() {
+        toast("Erro ao bloquear o usuário, tente novamente mais tarde")
     }
 
     override fun showDeleteCommentResponse(position: Int) {

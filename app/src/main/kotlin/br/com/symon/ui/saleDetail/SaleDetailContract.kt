@@ -11,15 +11,16 @@ interface SaleDetailContract {
         fun showComments(commentList: MutableList<Comment>)
         fun showFavoriteResponse()
         fun showSendCommentResponse(commentResponse: Comment)
-        fun showBlockUserResponse()
         fun showDeleteCommentResponse(position: Int)
+        fun showBlockUserResponse(blockedUserRequest: BlockUserRequest)
+        fun showBlockUserResponseError()
     }
 
     interface Presenter {
         fun getComments(userToken: String, saleId: Int)
         fun setFavorite(userToken: String, saleId: Int)
         fun sendComment(userToken: String, saleId: Int, sendSaleCommentRequest: SendSaleCommentRequest)
-        fun blockUser(userToken: String?, userBlockedId: BlockUserRequest?)
         fun deleteComment(userToken: String, commentId: Int, position: Int)
+        fun blockUser(userToken: String, blockedUserRequest: BlockUserRequest)
     }
 }

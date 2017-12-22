@@ -49,10 +49,6 @@ interface UserApiService {
     @POST("/forgot")
     fun retrievePassword(@Header("Authorization") userToken: String): Observable<Response<RetrievePasswordResponse>>
 
-    @POST("/user/block")
-    fun blockUser(@Header("Authorization") userToken: String?,
-                  @Body userBlockedId: BlockUserRequest?): Observable<Response<Void>>
-
     @GET("/user/favorite")
     fun getFavorites(@Header("Authorization") userToken: String,
                      @Query("page") page: Int,

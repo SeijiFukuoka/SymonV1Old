@@ -29,4 +29,9 @@ class NetworkModule {
     @Singleton
     fun providesCommentApiService(@Named("provideBaseApi") retrofit: Retrofit): CommentApiService =
             retrofit.create<CommentApiService>(CommentApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun providesBlockedUsersApiService(@Named("provideBaseApi") retrofit: Retrofit): BlockedUsersApiService =
+            retrofit.create<BlockedUsersApiService>(BlockedUsersApiService::class.java)
 }

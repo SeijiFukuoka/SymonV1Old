@@ -1,18 +1,32 @@
 package br.com.symon.ui.settings
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
-import br.com.symon.common.toast
 import br.com.symon.data.model.Settings
 import br.com.symon.injection.components.DaggerSettingsComponent
 import br.com.symon.injection.components.SettingsComponent
 import br.com.symon.injection.modules.SettingsModule
+import br.com.symon.ui.blockedUsers.BlockedUsersActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.view_custom_toolbar.*
 
 class SettingsActivity : BaseActivity(), SettingsContract.View {
+
+    companion object {
+
+        private val INTENT_USER_TOKEN = "INTENT_USER_TOKEN"
+        lateinit var userToken: String
+
+        fun newIntent(context: Context, userToken: String?): Intent {
+            val intent = Intent(context, SettingsActivity::class.java)
+            intent.putExtra(INTENT_USER_TOKEN, userToken)
+            return intent
+        }
+    }
 
     private val settingsComponent: SettingsComponent
         get() = DaggerSettingsComponent
@@ -34,6 +48,11 @@ class SettingsActivity : BaseActivity(), SettingsContract.View {
         settingsComponent.settingsPresenter().getNotificationsSettings()
 
         customToolbarTitleTextView.text = getString(R.string.settings_toolbar_title)
+
+
+        if (intent.extras.getString(INTENT_USER_TOKEN) != null) {
+            userToken = intent.extras.getString(INTENT_USER_TOKEN)
+        }
 
         customToolbarBackImageView.setOnClickListener {
             onBackPressed()
@@ -66,8 +85,8 @@ class SettingsActivity : BaseActivity(), SettingsContract.View {
             }
         }
         settingsBlockedUsersLayout.setOnClickListener {
-            toast("Pendente")
-//            TODO("PENDENTE CRIAR ACTIVITY")
+            val blockedUsersActivity = BlockedUsersActivity.newIntent(this, userToken)
+            startActivity(blockedUsersActivity)
         }
     }
 
