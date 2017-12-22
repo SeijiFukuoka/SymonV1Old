@@ -1,6 +1,7 @@
 package br.com.symon.ui.retrievePassword
 
 import br.com.symon.base.BaseView
+import br.com.symon.data.model.requests.RetrievePasswordRequest
 import br.com.symon.data.model.responses.RetrievePasswordResponse
 
 
@@ -11,6 +12,6 @@ interface RetrievePasswordContract {
     }
 
     interface Presenter {
-        fun requestNewPassword(userEmail: String)
+        fun requestNewPassword(retrievePasswordRequest: RetrievePasswordRequest)
     }
 }
