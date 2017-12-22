@@ -47,7 +47,7 @@ interface UserApiService {
     fun getToken(@Body userFacebookAuthenticateRequest: UserFacebookAuthenticateRequest): Observable<Response<UserTokenResponse>>
 
     @POST("/forgot")
-    fun retrievePassword(@Header("Authorization") userToken: String): Observable<Response<RetrievePasswordResponse>>
+    fun retrievePassword(@Body retrievePasswordRequest: RetrievePasswordRequest): Observable<Response<RetrievePasswordResponse>>
 
     @GET("/user/favorite")
     fun getFavorites(@Header("Authorization") userToken: String,
