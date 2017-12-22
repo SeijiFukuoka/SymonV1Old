@@ -18,7 +18,6 @@ import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.isDisplayedByTag
 import br.com.symon.common.replace
-import br.com.symon.common.startIntent
 import br.com.symon.common.toast
 import br.com.symon.data.model.responses.SalesListResponse
 import br.com.symon.data.model.responses.UserTokenResponse
@@ -79,7 +78,9 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
         setupBottomMenu()
 
         mainSettingsImageView.setOnClickListener {
-            startIntent(SettingsActivity::class.java)
+            val settingsActivity = SettingsActivity.newIntent(this,
+                    userTokenResponse.token)
+            startActivity(settingsActivity)
         }
     }
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/gray_E6E6E6">
 
     <include
@@ -16,16 +17,33 @@
         app:layout_constraintTop_toBottomOf="parent" />
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/blockedUsersActivityNestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/blockedUsersActivityAppBarLayout">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/settingsNotificationLabelTextView"
+            android:id="@+id/blockedUsersActivityRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             tools:listitem="@layout/item_blocked_user" />
     </android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/blockedUsersActivityNoContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/blocked_users_activity_no_content"
+        android:textAppearance="@style/TextAppearance.Medium"
+        android:textColor="@color/gray_737373"
+        android:textSize="@dimen/text_size_15_sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
 </android.support.constraint.ConstraintLayout>

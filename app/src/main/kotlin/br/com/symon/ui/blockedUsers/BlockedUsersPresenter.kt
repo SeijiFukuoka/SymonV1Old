@@ -13,7 +13,11 @@ class BlockedUsersPresenter @Inject constructor(val view: BlockedUsersContract.V
         view.showLoading()
         blockedUsersRepository.getBlockedUsersList(userToken)
                 .subscribe({
-                    view.showUsersBlocked(it.body())
+                    if (it.body()?.isNotEmpty()!!) {
+                        view.showUsersBlocked(it.body())
+                    } else {
+                        view.showNoContentView()
+                    }
                 }, {
                     GeneralErrorHandler(it, view, {})
                 })
@@ -28,5 +32,6 @@ class BlockedUsersPresenter @Inject constructor(val view: BlockedUsersContract.V
                 }, {
                     GeneralErrorHandler(it, view, {})
                 })
+        view.hideLoading()
     }
 }

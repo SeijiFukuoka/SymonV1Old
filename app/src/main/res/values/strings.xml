@@ -156,4 +156,7 @@
     <string name="item_sale_comment_menu_delete_comment">Excluir comentário</string>
 
     <string name="item_blocked_user_unblock">Desbloquear</string>
+
+    <string name="blocked_users_activity_toolbar_title">Usuários bloqueados</string>
+    <string name="blocked_users_activity_no_content">Não existem usuários bloqueados</string>
 </resources>
