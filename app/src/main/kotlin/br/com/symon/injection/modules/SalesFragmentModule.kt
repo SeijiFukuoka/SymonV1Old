@@ -1,5 +1,6 @@
 package br.com.symon.injection.modules
 
+import br.com.symon.data.repository.BlockedUsersRepository
 import br.com.symon.data.repository.SaleRepository
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.FragmentScope
@@ -18,6 +19,7 @@ class SalesFragmentModule(val view: SalesContract.View) {
     @FragmentScope
     fun providerPresenter(view: SalesContract.View,
                           saleRepository: SaleRepository,
-                          userRepository: UserRepository) =
-            SalesPresenter(view, saleRepository, userRepository)
+                          userRepository: UserRepository,
+                          blockedUsersRepository: BlockedUsersRepository) =
+            SalesPresenter(view, saleRepository, userRepository, blockedUsersRepository)
 }

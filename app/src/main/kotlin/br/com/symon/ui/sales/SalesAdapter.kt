@@ -38,7 +38,7 @@ class SalesAdapter(private val list: MutableList<Sale>,
         fun onLikeSaleClick(position: Int, sale: Sale)
         fun onDislikeSaleClick(position: Int, sale: Sale)
         fun onReportSaleClick(sale: Sale)
-        fun onBlockUserClick(user: User)
+        fun onBlockUserClick(userId: Int)
     }
 
     fun addList(list: MutableList<Sale>) {
@@ -89,6 +89,11 @@ class SalesAdapter(private val list: MutableList<Sale>,
 
         list[position] = saleToBeChanged
         notifyItemChanged(position)
+    }
+
+    fun filterBlockedUsers(userId: Int) {
+        this.list.removeAll { it.user.id!! == userId }
+        notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View?,
@@ -168,7 +173,7 @@ class SalesAdapter(private val list: MutableList<Sale>,
                                 listener.onReportSaleClick(sale)
                             }
                             R.id.userOptionsMenuBlockUser -> {
-                                listener.onBlockUserClick(sale.user)
+                                listener.onBlockUserClick(sale.user.id!!)
                             }
                         }
                         false

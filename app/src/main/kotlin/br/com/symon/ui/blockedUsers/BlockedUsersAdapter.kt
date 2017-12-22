@@ -42,8 +42,14 @@ class BlockedUsersAdapter(private val list: MutableList<BlockedUser>,
 
             blockedUser.apply {
                 itemBlockedUserTimeTextView.text = formattedDate
-                itemBlockedUserUnblockTextView.setOnClickListener { listener.onUnblockUserClick(blockedUser) }
-                itemBlockedUserUnblockImageView.setOnClickListener { listener.onUnblockUserClick(blockedUser) }
+                itemBlockedUserUnblockTextView.setOnClickListener {
+                    listener.onUnblockUserClick(blockedUser)
+                    itemBlockedUserLayout.isPressed = true
+                }
+                itemBlockedUserUnblockImageView.setOnClickListener {
+                    listener.onUnblockUserClick(blockedUser)
+                    itemBlockedUserLayout.isPressed = true
+                }
             }
         }
     }

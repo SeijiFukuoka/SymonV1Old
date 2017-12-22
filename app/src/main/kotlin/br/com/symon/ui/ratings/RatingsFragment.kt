@@ -114,7 +114,7 @@ class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.On
     }
 
     private fun updateChildFragment() {
-        var currentFragment = ratingsFragmentAdapter.getItem(fragmentRatingsTabLayout.selectedTabPosition) as RatingsChildFragment
+        val currentFragment = ratingsFragmentAdapter.getItem(fragmentRatingsTabLayout.selectedTabPosition) as RatingsChildFragment
         currentFragment.updateFragment()
     }
 }

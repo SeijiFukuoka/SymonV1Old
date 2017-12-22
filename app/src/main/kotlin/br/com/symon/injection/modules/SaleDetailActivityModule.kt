@@ -1,8 +1,8 @@
 package br.com.symon.injection.modules
 
+import br.com.symon.data.repository.BlockedUsersRepository
 import br.com.symon.data.repository.CommentRepository
 import br.com.symon.data.repository.SaleRepository
-import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.ActivityScope
 import br.com.symon.ui.saleDetail.SaleDetailContract
 import br.com.symon.ui.saleDetail.SaleDetailPresenter
@@ -21,6 +21,6 @@ class SaleDetailActivityModule(val view: SaleDetailContract.View) {
     fun providePresenter(view: SaleDetailContract.View,
                          saleRepository: SaleRepository,
                          commentRepository: CommentRepository,
-                         userRepository: UserRepository) =
-            SaleDetailPresenter(view, saleRepository, commentRepository, userRepository)
+                         blockedUsersRepository: BlockedUsersRepository) =
+            SaleDetailPresenter(view, saleRepository, commentRepository, blockedUsersRepository)
 }

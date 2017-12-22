@@ -1,5 +1,6 @@
 package br.com.symon.injection.modules
 
+import br.com.symon.data.repository.BlockedUsersRepository
 import br.com.symon.data.repository.SaleRepository
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.FragmentScope
@@ -19,7 +20,7 @@ class RatingsChildFragmentModule(val view: RatingsChildFragmentContract.View) {
 
     @Provides
     @FragmentScope
-    fun providePresenter(view: RatingsChildFragmentContract.View, userRepository: UserRepository, saleRepository: SaleRepository): RatingsChildFragmentPresenter {
-        return RatingsChildFragmentPresenter(view, userRepository, saleRepository)
+    fun providePresenter(view: RatingsChildFragmentContract.View, userRepository: UserRepository, saleRepository: SaleRepository, blockedUsersRepository: BlockedUsersRepository): RatingsChildFragmentPresenter {
+        return RatingsChildFragmentPresenter(view, userRepository, saleRepository, blockedUsersRepository)
     }
 }

@@ -25,7 +25,6 @@ import br.com.symon.data.model.Constants.Companion.FIRST_PAGE
 import br.com.symon.data.model.Constants.Companion.NEED_UPDATE_RESULT
 import br.com.symon.data.model.Constants.Companion.SEEK_BAR_MAX
 import br.com.symon.data.model.Sale
-import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.BlockUserRequest
 import br.com.symon.data.model.requests.SaleReportRequest
 import br.com.symon.data.model.responses.SalesListResponse
@@ -75,6 +74,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
     private var radius: Int = Constants.SEEK_BAR_MIN
+    private var unblockUserId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -188,8 +188,9 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         salesFragmentComponent.salesPresenter().reportSale(user?.token, saleReportRequest = SaleReportRequest(sale.id))
     }
 
-    override fun onBlockUserClick(user: User) {
-        salesFragmentComponent.salesPresenter().blockUser(this.user?.token, userBlockedId = BlockUserRequest(user.id!!))
+    override fun onBlockUserClick(userId: Int) {
+        unblockUserId = userId
+        salesFragmentComponent.salesPresenter().blockUser(user!!.token, BlockUserRequest(unblockUserId))
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -231,8 +232,12 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         activity.toast("showReportSaleResponse")
     }
 
-    override fun showBlockUserResponse() {
-        activity.toast("showBlockUserResponse")
+    override fun showBlockUserResponse(blockedUserRequest: BlockUserRequest) {
+        salesAdapter.filterBlockedUsers(blockedUserRequest.userBlockedId)
+    }
+
+    override fun showBlockUserResponseError() {
+        activity.toast("Erro ao bloquear o usuário, tente novamente mais tarde")
     }
 
     private fun setUpRecyclersViews() {

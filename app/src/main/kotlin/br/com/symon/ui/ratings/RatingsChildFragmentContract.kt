@@ -12,7 +12,8 @@ interface RatingsChildFragmentContract {
         fun showTabResponse(salesListResponse: SalesListResponse)
         fun updateActionSAle(position: Int, isLike: Boolean)
         fun showReportSaleResponse()
-        fun showBlockUserResponse()
+        fun showBlockUserResponse(blockedUserRequest: BlockUserRequest)
+        fun showBlockUserResponseError()
     }
 
     interface Presenter {
@@ -21,6 +22,6 @@ interface RatingsChildFragmentContract {
         fun likeSale(position: Int, saleId: Int, userToken: String)
         fun disLikeSale(position: Int, saleId: Int, userToken: String)
         fun reportSale(userToken: String?, saleReportRequest: SaleReportRequest?)
-        fun blockUser(userToken: String?, userBlockedId: BlockUserRequest?)
+        fun blockUser(userToken: String, blockedUserRequest: BlockUserRequest)
     }
 }

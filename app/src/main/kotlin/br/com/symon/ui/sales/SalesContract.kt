@@ -14,7 +14,8 @@ interface SalesContract {
         fun showSearchSales(salesListResponse: SalesListResponse)
 
         fun showReportSaleResponse()
-        fun showBlockUserResponse()
+        fun showBlockUserResponse(blockedUserRequest: BlockUserRequest)
+        fun showBlockUserResponseError()
     }
 
     interface Presenter {
@@ -24,6 +25,6 @@ interface SalesContract {
         fun disLikeSale(position: Int, saleId: Int, userToken: String)
         fun searchQuerySale(query: String, userToken: String, page: Int, pageSize: Int)
         fun reportSale(userToken: String?, saleReportRequest: SaleReportRequest?)
-        fun blockUser(userToken: String?, userBlockedId: BlockUserRequest?)
+        fun blockUser(userToken: String, blockedUserRequest: BlockUserRequest)
     }
 }

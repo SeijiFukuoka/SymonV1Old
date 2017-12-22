@@ -3,13 +3,14 @@ package br.com.symon.ui.sales
 import br.com.gold360.financas.common.GeneralErrorHandler
 import br.com.symon.data.model.requests.BlockUserRequest
 import br.com.symon.data.model.requests.SaleReportRequest
+import br.com.symon.data.repository.BlockedUsersRepository
 import br.com.symon.data.repository.SaleRepository
 import br.com.symon.data.repository.UserRepository
 import br.com.symon.injection.scope.FragmentScope
 import javax.inject.Inject
 
 @FragmentScope
-class SalesPresenter @Inject constructor(val view: SalesContract.View, private val saleRepository: SaleRepository, private val userRepository: UserRepository) : SalesContract.Presenter {
+class SalesPresenter @Inject constructor(val view: SalesContract.View, private val saleRepository: SaleRepository, private val userRepository: UserRepository, private val blockedUsersRepository: BlockedUsersRepository) : SalesContract.Presenter {
 
     override fun getUser() {
         userRepository.getUserCache().subscribe({
@@ -72,10 +73,18 @@ class SalesPresenter @Inject constructor(val view: SalesContract.View, private v
                 })
     }
 
-    override fun blockUser(userToken: String?, userBlockedId: BlockUserRequest?) {
-        userRepository.blockUSer(userToken, userBlockedId)
+
+    override fun blockUser(userToken: String, blockedUserRequest: BlockUserRequest) {
+        blockedUsersRepository.blockUser(userToken, blockedUserRequest)
                 .subscribe({
-                    view.showBlockUserResponse()
+                    when (it.code()) {
+                        in 200..204 -> {
+                            view.showBlockUserResponse(blockedUserRequest)
+                        }
+                        else -> {
+                            view.showBlockUserResponseError()
+                        }
+                    }
                 }, {
                     GeneralErrorHandler(it, view, {})
                 })

@@ -18,7 +18,7 @@ import br.com.symon.data.model.Constants
 import br.com.symon.data.model.Constants.Companion.FIRST_PAGE
 import br.com.symon.data.model.Constants.Companion.NEED_UPDATE_RESULT
 import br.com.symon.data.model.Sale
-import br.com.symon.data.model.User
+import br.com.symon.data.model.requests.BlockUserRequest
 import br.com.symon.data.model.responses.SalesListResponse
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerRatingsChildFragmentComponent
@@ -65,15 +65,15 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         fun onTabsUpdateNeeded()
     }
 
-    private var extraOrderBy: Int = 0
     private lateinit var apiOptionKey: RatingsChildType
     private lateinit var userTokenResponse: UserTokenResponse
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var salesAdapter: SalesAdapter
-    private var currentPage: Int = Constants.FIRST_PAGE
-
     private lateinit var onResponseLoaded: OnRatingsChildListener
 
+    private var extraOrderBy: Int = 0
+    private var currentPage: Int = Constants.FIRST_PAGE
+    private var unblockUserId: Int = 0
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -153,8 +153,9 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         activity.toast("showReportSaleResponse")
     }
 
-    override fun onBlockUserClick(user: User) {
-        activity.toast("showBlockUserResponse")
+    override fun onBlockUserClick(userId: Int) {
+        unblockUserId = userId
+        ratingsChildComponent.ratingsChildFragmentPresenter().blockUser(userTokenResponse.token, BlockUserRequest(unblockUserId))
     }
 
     override fun updateActionSAle(position: Int, isLike: Boolean) {
@@ -166,8 +167,13 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         activity.toast("showReportSaleResponse")
     }
 
-    override fun showBlockUserResponse() {
-        activity.toast("showBlockUserResponse")
+    override fun showBlockUserResponse(blockedUserRequest: BlockUserRequest) {
+        salesAdapter.filterBlockedUsers(blockedUserRequest.userBlockedId)
+        onResponseLoaded.onTabsUpdateNeeded()
+    }
+
+    override fun showBlockUserResponseError() {
+        activity.toast("Erro ao bloquear o usuário, tente novamente mais tarde")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
