@@ -10,7 +10,7 @@ import javax.inject.Singleton
 class BlockedUsersRepository @Inject constructor(private val blockedUsersApiService: BlockedUsersApiService) : BaseRepository() {
 
     fun getBlockedUsersList(userToken: String) = call(blockedUsersApiService.getBlockedUsersList(userToken))
-    fun blockUser(userToken: String, blockeduserRequest: BlockUserRequest) = call(blockedUsersApiService.blockUser(userToken, blockeduserRequest))
+    fun blockUser(userToken: String, blockedUserRequest: BlockUserRequest) = call(blockedUsersApiService.blockUser(userToken, blockedUserRequest))
     fun unblockUser(userToken: String, unblockUserRequest: BlockUserRequest) = call(blockedUsersApiService.unblockUser(userToken, unblockUserRequest))
 
 }
