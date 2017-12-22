@@ -21,8 +21,8 @@ interface UserApiService {
             : Observable<Response<RegisterUserResponse>>
 
     @POST("/user")
-    fun registryUserFacebook(@Body user: UserFacebookRegistryRequest)
-            : Observable<RegisterUserResponse>
+    fun registryUserFacebook(@Body userFacebookAuthenticateRequest: UserFacebookAuthenticateRequest)
+            : Observable<Response<RegisterUserResponse>>
 
     @DELETE("/user/{user_id}")
     fun deleteUser(@Path("user_id") userId: Int): Observable<Response<Void>>
@@ -42,6 +42,9 @@ interface UserApiService {
 
     @POST("/token")
     fun getToken(@Body userAuthenticateRequest: UserAuthenticateRequest): Observable<Response<UserTokenResponse>>
+
+    @POST("/token/facebook")
+    fun getToken(@Body userFacebookAuthenticateRequest: UserFacebookAuthenticateRequest): Observable<Response<UserTokenResponse>>
 
     @POST("/forgot")
     fun retrievePassword(@Header("Authorization") userToken: String): Observable<Response<RetrievePasswordResponse>>

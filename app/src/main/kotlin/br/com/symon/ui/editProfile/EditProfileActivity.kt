@@ -17,7 +17,6 @@ import br.com.symon.common.dateFormat
 import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.toast
 import br.com.symon.data.model.User
-import br.com.symon.data.model.requests.UserFacebookRegistryRequest
 import br.com.symon.data.model.requests.UserFullUpdateRequest
 import br.com.symon.injection.components.DaggerEditProfileActivityComponent
 import br.com.symon.injection.components.EditProfileActivityComponent
@@ -48,6 +47,7 @@ class EditProfileActivity : BaseActivity(),
 
     private var isPasswordChange = false
     private var user: User? = null
+    private var facebookId: String? = null
 
     private lateinit var calendar: Calendar
     private lateinit var datePickerDialog: DatePickerDialog.OnDateSetListener
@@ -123,13 +123,15 @@ class EditProfileActivity : BaseActivity(),
                             name = profileNameEditText.text.toString(),
                             phone = profilePhoneEditText.text.toString(),
                             birthday = calendar.time,
-                            email = profileEmailEditText.text.toString())
+                            email = profileEmailEditText.text.toString(),
+                            facebookId = facebookId)
                 } else {
                     UserFullUpdateRequest(
                             name = profileNameEditText.text.toString(),
                             phone = profilePhoneEditText.text.toString(),
                             birthday = calendar.time,
                             email = profileEmailEditText.text.toString(),
+                            facebookId = facebookId,
                             currentPassword = profilePasswordEditText.text.toString(),
                             newPassword = profileNewPasswordEditText.text.toString())
                 }
@@ -220,16 +222,8 @@ class EditProfileActivity : BaseActivity(),
 
     override fun onSuccess(result: LoginResult?) {
         Log.d("facebookEvent:", "Success")
-        val request: GraphRequest = GraphRequest.newMeRequest(result?.accessToken) { jsonObject, _ ->
-            val email = jsonObject.getString(getString(R.string.facebook_email))
-            val name = jsonObject.getString(getString(R.string.facebook_name))
-
-            val user = UserFacebookRegistryRequest(
-                    name = name,
-                    email = email,
-                    facebookId = result?.accessToken?.userId)
-
-            //welcomeActivityComponent.welcomePresenter().registerUserFacebook(user)
+        val request: GraphRequest = GraphRequest.newMeRequest(result?.accessToken) { _, _ ->
+            facebookId = result?.accessToken?.userId
         }
 
         val parameters = Bundle()

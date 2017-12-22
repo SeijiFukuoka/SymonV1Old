@@ -9,12 +9,15 @@ import br.com.symon.base.BaseActivity
 import br.com.symon.common.startIntent
 import br.com.symon.common.toast
 import br.com.symon.data.model.User
-import br.com.symon.data.model.requests.UserFacebookRegistryRequest
+import br.com.symon.data.model.requests.UserFacebookAuthenticateRequest
+import br.com.symon.data.model.responses.RegisterUserResponse
+import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerWelcomeActivityComponent
 import br.com.symon.injection.components.WelcomeActivityComponent
 import br.com.symon.injection.modules.WelcomeActivityModule
 import br.com.symon.ui.login.LoginActivity
 import br.com.symon.ui.main.MainActivity
+import br.com.symon.ui.register.RegisterComplementActivity
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -36,6 +39,8 @@ class WelcomeActivity :
                 .welcomeActivityModule(WelcomeActivityModule(this))
                 .build()
 
+    private lateinit var userAuthenticate: UserFacebookAuthenticateRequest
+
     private var callbackManager: CallbackManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,12 +57,6 @@ class WelcomeActivity :
 
         callbackManager = CallbackManager.Factory.create()
         LoginManager.getInstance().registerCallback(callbackManager, this)
-    }
-
-    override fun redirectMainActivity(user: User) {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra(MainActivity.EXTRA_USER, user)
-        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -80,18 +79,44 @@ class WelcomeActivity :
             val email = jsonObject.getString(getString(R.string.facebook_email))
             val name = jsonObject.getString(getString(R.string.facebook_name))
 
-            val user = UserFacebookRegistryRequest(
+            userAuthenticate = UserFacebookAuthenticateRequest(
                     name = name,
                     email = email,
                     facebookId = result?.accessToken?.userId)
 
-            welcomeActivityComponent.welcomePresenter().registerUserFacebook(user)
+            welcomeActivityComponent.welcomePresenter().getUserToken(userAuthenticate)
         }
 
         val parameters = Bundle()
         parameters.putString("fields", "${getString(R.string.facebook_email)},${getString(R.string.facebook_name)}")
         request.parameters = parameters
         request.executeAsync()
+    }
+
+    override fun handleTokenResponse(userTokenResponse: UserTokenResponse?) {
+        startActivity(MainActivity.newIntent(this, userTokenResponse))
+        finish()
+    }
+
+    override fun handleUserNotFoundResponse() {
+        welcomeActivityComponent.welcomePresenter().register(userAuthenticate)
+    }
+
+    override fun goToNextStep(registerUserResponse: RegisterUserResponse?) {
+        val user = User(id = registerUserResponse?.id,
+                name = userAuthenticate.name,
+                phone = "",
+                email = userAuthenticate.email,
+                birthday = null,
+                facebookId = userAuthenticate.facebookId,
+                photoUri = registerUserResponse?.photo)
+
+        startActivity(RegisterComplementActivity.newIntent(this, user))
+        finish()
+    }
+
+    override fun showErrorMessage(message: String?) {
+        toast(message)
     }
 
     private fun facebookLogin() {

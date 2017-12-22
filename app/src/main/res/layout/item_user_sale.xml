@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_20_dp"
         android:layout_marginStart="@dimen/margin_20_dp"
+        app:cardElevation="@dimen/margin_5_dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,6 +30,7 @@
         android:id="@+id/itemProfileSaleTitleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="@dimen/margin_10_dp"
         android:ellipsize="end"
@@ -38,10 +40,9 @@
         android:textColor="@color/black_202020"
         android:textSize="@dimen/text_size_12_sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/HorizontalGuideline"
         app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/itemProfileCardView"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="Maionese Vigor" />
 
     <TextView
@@ -75,9 +76,14 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/margin_10_dp"
+        android:paddingBottom="@dimen/margin_10_dp"
+        android:paddingEnd="@dimen/margin_10_dp"
+        android:paddingLeft="@dimen/margin_10_dp"
+        android:paddingRight="@dimen/margin_10_dp"
+        android:paddingStart="@dimen/margin_10_dp"
+        app:layout_constraintBottom_toBottomOf="@+id/HorizontalGuideline"
         app:layout_constraintEnd_toStartOf="@+id/itemProfileSaleDislikeLayout"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/HorizontalGuideline"
         tools:ignore="RelativeOverlap">
 
         <ImageView
@@ -106,9 +112,14 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/margin_10_dp"
+        android:paddingBottom="@dimen/margin_10_dp"
+        android:paddingEnd="@dimen/margin_10_dp"
+        android:paddingLeft="@dimen/margin_10_dp"
+        android:paddingRight="@dimen/margin_10_dp"
+        android:paddingStart="@dimen/margin_10_dp"
+        app:layout_constraintBottom_toBottomOf="@+id/HorizontalGuideline"
         app:layout_constraintEnd_toStartOf="@+id/itemProfileSaleCommentLayout"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/HorizontalGuideline"
         tools:ignore="RelativeOverlap">
 
         <ImageView
@@ -137,9 +148,16 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/margin_10_dp"
+        android:layout_marginRight="@dimen/margin_20_dp"
+        android:layout_marginEnd="@dimen/margin_20_dp"
+        android:paddingBottom="@dimen/margin_10_dp"
+        android:paddingEnd="@dimen/margin_10_dp"
+        android:paddingLeft="@dimen/margin_10_dp"
+        android:paddingRight="@dimen/margin_10_dp"
+        android:paddingStart="@dimen/margin_10_dp"
+        app:layout_constraintBottom_toBottomOf="@+id/HorizontalGuideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/HorizontalGuideline"
         tools:ignore="RelativeOverlap">
 
         <ImageView
@@ -169,6 +187,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itemProfileCardView" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/HorizontalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -12,6 +12,7 @@ import br.com.symon.base.BaseActivity
 import br.com.symon.common.dateFormat
 import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.toast
+import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.UserUpdateRequest
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerRegisterComplementActivityComponent
@@ -29,11 +30,12 @@ import java.util.*
 class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.View {
     companion object {
         private const val EXTRA_USER_ID = "EXTRA_USER_ID"
-        var userId: Int = 0
 
-        fun newIntent(context: Context, userId: Int?): Intent {
+        private lateinit var user: User
+
+        fun newIntent(context: Context, user: User?): Intent {
             val intent = Intent(context, RegisterComplementActivity::class.java)
-            intent.putExtra(EXTRA_USER_ID, userId)
+            intent.putExtra(EXTRA_USER_ID, user)
             return intent
         }
     }
@@ -58,7 +60,9 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
 
         registerComplementComponent.inject(this)
 
-        userId = intent.getIntExtra(EXTRA_USER_ID, 0)
+        user = intent.getParcelableExtra(EXTRA_USER_ID)
+
+        fillUserData()
 
         registerComplementHeaderProgressView.bind(2)
 
@@ -127,10 +131,15 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
             )
 
             registerComplementComponent.registerComplementPresenter().updateUserInfo(
-                    userId,
+                    user.id!!,
                     userUpdateRequest
             )
         }
+    }
+
+    private fun fillUserData() {
+        registerProfileImageView.loadUrlToBeRounded(user.photoUri)
+        registerComplementNameEditText.setText(user.name)
     }
 
     override fun showPhoto(photo: String?) {
@@ -161,7 +170,7 @@ class RegisterComplementActivity : BaseActivity(), RegisterComplementContract.Vi
 
     private fun pickImage() {
         RxImagePicker.with(this).requestImage(Sources.GALLERY).subscribe { uri ->
-            registerComplementComponent.registerComplementPresenter().uploadUserPhoto(userId, uri)
+            registerComplementComponent.registerComplementPresenter().uploadUserPhoto(user.id!!, uri)
         }
     }
 }

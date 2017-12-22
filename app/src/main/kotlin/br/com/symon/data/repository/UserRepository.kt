@@ -27,11 +27,15 @@ class UserRepository @Inject constructor(private val userApiService: UserApiServ
     fun getUserToken(userAuthenticateRequest: UserAuthenticateRequest)
             = call((userApiService.getToken(userAuthenticateRequest)))
 
+    fun getUserToken(userFacebookAuthenticateRequest: UserFacebookAuthenticateRequest)
+            = call((userApiService.getToken(userFacebookAuthenticateRequest)))
+
     fun registryUser(userAuthenticateRequest: UserAuthenticateRequest)
             = call(userApiService.registryUser(userAuthenticateRequest))
 
-    fun registryUserFacebook(user: UserFacebookRegistryRequest)
-            = call(userApiService.registryUserFacebook(user))
+    fun registryUserFacebook(userFacebookAuthenticateRequest: UserFacebookAuthenticateRequest)
+            = call(userApiService.registryUserFacebook(userFacebookAuthenticateRequest))
+
 
     fun deleteUser(userId: Int) = call(userApiService.deleteUser(userId))
 

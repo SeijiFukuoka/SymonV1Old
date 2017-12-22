@@ -6,7 +6,9 @@ import br.com.symon.R
 import br.com.symon.base.BaseActivity
 import br.com.symon.common.isEmailValid
 import br.com.symon.common.toast
+import br.com.symon.data.model.User
 import br.com.symon.data.model.requests.UserAuthenticateRequest
+import br.com.symon.data.model.responses.RegisterUserResponse
 import br.com.symon.injection.components.DaggerRegisterComponent
 import br.com.symon.injection.components.RegisterComponent
 import br.com.symon.injection.modules.RegisterActivityModule
@@ -68,8 +70,16 @@ class RegisterActivity : BaseActivity(), RegisterContract.View {
         }
     }
 
-    override fun goToNextStep(id: Int?) {
-        startActivity(RegisterComplementActivity.newIntent(this, id))
+    override fun goToNextStep(registerUserResponse: RegisterUserResponse?) {
+        val user = User(id = registerUserResponse?.id,
+                name = "",
+                phone = "",
+                email = "",
+                birthday = null,
+                facebookId = "",
+                photoUri = registerUserResponse?.photo)
+
+        startActivity(RegisterComplementActivity.newIntent(this, user))
         finish()
     }
 

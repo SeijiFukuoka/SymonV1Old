@@ -6,10 +6,10 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-   <br.com.symon.common.widget.HeaderProgressView
-       android:id="@+id/registerComplementHeaderProgressView"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"/>
+    <br.com.symon.common.widget.HeaderProgressView
+        android:id="@+id/registerComplementHeaderProgressView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <include
         android:id="@+id/registerComplementAppBarLayout"
@@ -31,8 +31,8 @@
                 android:id="@+id/registerComplementTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginLeft="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/register_complement_title_label"
                 android:textAppearance="@style/TextAppearance.Title"
@@ -42,36 +42,48 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/registerProfileImageView"
-                style="@style/TextAppearance.Medium"
+
+            <android.support.v7.widget.CardView
+
+                android:id="@+id/registerProfileCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_30_dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/ic_profile_placeholder"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:textColor="@color/white"
+                app:cardCornerRadius="70dp"
+                app:cardElevation="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registerComplementTitleTextView" />
+                app:layout_constraintTop_toBottomOf="@id/registerComplementTitleTextView">
+
+                <ImageView
+                    android:id="@+id/registerProfileImageView"
+                    style="@style/TextAppearance.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/ic_profile_placeholder"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:textColor="@color/white" />
+
+
+            </android.support.v7.widget.CardView>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/registerComplementNameTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_40_dp"
-                android:layout_marginStart="@dimen/margin_40_dp"
-                android:layout_marginRight="@dimen/margin_40_dp"
                 android:layout_marginLeft="@dimen/margin_40_dp"
+                android:layout_marginRight="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginTop="@dimen/margin_20_dp"
                 android:paddingBottom="5dp"
                 android:theme="@style/CustomEditText"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registerProfileImageView">
+                app:layout_constraintTop_toBottomOf="@id/registerProfileCardView">
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/registerComplementNameEditText"
@@ -90,9 +102,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_40_dp"
-                android:layout_marginStart="@dimen/margin_40_dp"
-                android:layout_marginRight="@dimen/margin_40_dp"
                 android:layout_marginLeft="@dimen/margin_40_dp"
+                android:layout_marginRight="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginTop="@dimen/margin_20_dp"
                 android:paddingBottom="5dp"
                 android:theme="@style/CustomEditText"
@@ -120,9 +132,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_40_dp"
-                android:layout_marginStart="@dimen/margin_40_dp"
-                android:layout_marginRight="@dimen/margin_40_dp"
                 android:layout_marginLeft="@dimen/margin_40_dp"
+                android:layout_marginRight="@dimen/margin_40_dp"
+                android:layout_marginStart="@dimen/margin_40_dp"
                 android:layout_marginTop="@dimen/margin_20_dp"
                 android:paddingBottom="5dp"
                 android:theme="@style/CustomEditText"
@@ -149,9 +161,9 @@
                 android:layout_height="@dimen/margin_50_dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/margin_30_dp"
-                android:layout_marginStart="@dimen/margin_30_dp"
-                android:layout_marginRight="@dimen/margin_30_dp"
                 android:layout_marginLeft="@dimen/margin_30_dp"
+                android:layout_marginRight="@dimen/margin_30_dp"
+                android:layout_marginStart="@dimen/margin_30_dp"
                 android:layout_marginTop="@dimen/margin_35_dp"
                 android:background="@drawable/button_color_accent_selector"
                 android:shadowColor="@color/buttonShadow"

@@ -8,5 +8,6 @@ class UserFullUpdateRequest(@SerializedName("name") var name: String,
                             @SerializedName("phone") var phone: String,
                             @SerializedName("birthday") var birthday: Date,
                             @SerializedName("email") var email: String?,
+                            @SerializedName("facebookId") var facebookId: String?,
                             @SerializedName("password") var currentPassword: String? = null,
                             @SerializedName("new_password") val newPassword: String? = null)

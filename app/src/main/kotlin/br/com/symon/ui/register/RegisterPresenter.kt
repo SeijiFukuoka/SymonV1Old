@@ -19,7 +19,7 @@ class RegisterPresenter @Inject constructor(
         userRepository.registryUser(userAuthenticateRequest).subscribe({
             if (it.code() == 201) {
                 view.hideLoading()
-                view.goToNextStep(it.body()?.id)
+                view.goToNextStep(it.body())
             } else {
                 val errorResponse : ErrorResponse = Gson().fromJson(it.errorBody()?.string(), ErrorResponse::class.java)
                 view.hideLoading()
