@@ -59,11 +59,6 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
         profileEditTextView.setOnClickListener {
             startActivityForResult(Intent(activity, EditProfileActivity::class.java), USER_EDIT_REQUEST)
         }
-
-        profileMessageTextView.text = getString(R.string.profile_message)
-
-        setupRecyclerView()
-
         profileFragmentComponent.profilePresenter().getUserCache()
     }
 
@@ -82,9 +77,13 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
 
     override fun showSaleList(saleListResponse: SalesListResponse) {
         if (saleListResponse.salesList.size > 0) {
+            setupRecyclerView()
             profileMessageTextView.text = getString(R.string.profile_my_posts_label)
             profileSalesAdapter.setList(saleListResponse.salesList)
+        } else {
+            profileMessageTextView.text = getString(R.string.profile_message)
         }
+        profileMessageTextView.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView() {
@@ -100,6 +99,8 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
             currentPage++
             fetchData(currentPage)
         }, linearLayoutManager))
+
+        profileMyPostsRecyclerView.visibility = View.VISIBLE
     }
 
     private fun fetchData(currentPage: Int) {

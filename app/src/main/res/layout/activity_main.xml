@@ -39,8 +39,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:visibility="gone"
                 android:theme="@style/SearchViewTheme"
+                android:visibility="gone"
                 app:queryHint="O que está procurando ? " />
 
             <ImageView
@@ -48,9 +48,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:visibility="gone"
                 android:contentDescription="@string/main_brand_logo_image_view_content_description"
                 android:padding="@dimen/margin_10_dp"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_settings_white_24dp" />
 
             <LinearLayout
@@ -105,7 +105,7 @@
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
         android:id="@+id/mainBottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
