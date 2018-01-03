@@ -23,7 +23,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/item_sale_image_sale_image_content_description"
             android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="H,16:9"
+            app:layout_constraintDimensionRatio="1.2:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:src="@color/white_F5F5F5" />
@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.Bold"
                         android:textColor="@color/black_202020"
-                        android:textSize="@dimen/text_size_12_sp"
+                        android:textSize="@dimen/text_size_14_sp"
                         android:textStyle="bold"
                         tools:text="Maionese Vigor" />
 
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.Bold"
                         android:textColor="@color/green_54983A"
-                        android:textSize="@dimen/text_size_14_sp"
+                        android:textSize="@dimen/text_size_18_sp"
                         android:textStyle="bold"
                         tools:text="R$ 0,89" />
                 </LinearLayout>

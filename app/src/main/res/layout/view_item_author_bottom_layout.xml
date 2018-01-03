@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/viewItemAuthorBottomUserPhotoImageView"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_centerVertical="true"
         android:contentDescription="@string/item_sale_user_avatar_image_content_description"
         android:scaleType="centerCrop"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Bold"
             android:textColor="@color/black_202020"
-            android:textSize="@dimen/text_size_10_sp"
+            android:textSize="@dimen/text_size_12_sp"
             android:textStyle="bold"
             tools:text="Nome do usuário" />
 
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Regular"
             android:textColor="@color/gray_9B9B9B"
-            android:textSize="@dimen/text_size_10_sp"
+            android:textSize="@dimen/text_size_12_sp"
             tools:text="10 minutos atrás" />
 
     </LinearLayout>
