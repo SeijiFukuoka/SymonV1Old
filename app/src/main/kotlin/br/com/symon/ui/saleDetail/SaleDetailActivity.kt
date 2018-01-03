@@ -26,7 +26,6 @@ import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerSaleDetailActivityComponent
 import br.com.symon.injection.components.SaleDetailActivityComponent
 import br.com.symon.injection.modules.SaleDetailActivityModule
-import br.com.symon.ui.ratings.RatingsChildFragment
 import br.com.symon.ui.send.SendSaleActivity
 import kotlinx.android.synthetic.main.activity_sale_detail.*
 import java.text.NumberFormat
@@ -118,7 +117,7 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
             }
         }
 
-        setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
+        setResult(NEED_UPDATE_RESULT)
     }
 
     override fun showSendCommentResponse(commentResponse: Comment) {
@@ -128,7 +127,7 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
             saleCommentAdapter.addItem(commentResponse)
 
         scrollDown(false)
-        setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
+        setResult(NEED_UPDATE_RESULT)
     }
 
     override fun showBlockUserResponse(blockedUserRequest: BlockUserRequest) {
@@ -136,7 +135,7 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         if (saleCommentAdapter.itemCount == 0)
             hideShowCommentList(hide = true)
 
-        setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
+        setResult(NEED_UPDATE_RESULT)
     }
 
     override fun showBlockUserResponseError() {
@@ -148,7 +147,7 @@ class SaleDetailActivity : BaseActivity(), SaleDetailContract.View, SaleCommentA
         if (saleCommentAdapter.itemCount <= 0)
             hideShowCommentList(hide = true)
 
-        setResult(RatingsChildFragment.RESPONSE_SALE_DETAIL_NEED_UPDATE)
+        setResult(NEED_UPDATE_RESULT)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

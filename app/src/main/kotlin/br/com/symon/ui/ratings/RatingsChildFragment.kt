@@ -48,7 +48,6 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
         const val EXTRA_ORDER_BY: String = "EXTRA_ORDER_BY"
 
         const val REQUEST_SALE_DETAIL = 123
-        const val RESPONSE_SALE_DETAIL_NEED_UPDATE = 456
 
         fun newInstance(apiOptionKey: RatingsChildType, orderBy: Int): RatingsChildFragment {
             val f = RatingsChildFragment()
@@ -178,7 +177,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_SALE_DETAIL && ((resultCode == RESPONSE_SALE_DETAIL_NEED_UPDATE) or (resultCode == NEED_UPDATE_RESULT))) {
+        if (requestCode == REQUEST_SALE_DETAIL && ((resultCode == NEED_UPDATE_RESULT) or (resultCode == NEED_UPDATE_RESULT))) {
             fetchData(FIRST_PAGE)
         }
     }

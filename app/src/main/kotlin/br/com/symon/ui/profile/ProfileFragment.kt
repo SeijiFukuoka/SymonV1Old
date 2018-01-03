@@ -14,6 +14,7 @@ import br.com.symon.common.inflate
 import br.com.symon.common.loadUrlToBeRounded
 import br.com.symon.common.widget.EndlessScrollListener
 import br.com.symon.data.model.Constants
+import br.com.symon.data.model.Sale
 import br.com.symon.data.model.responses.SalesListResponse
 import br.com.symon.data.model.responses.UserTokenResponse
 import br.com.symon.injection.components.DaggerProfileFragmentComponent
@@ -21,6 +22,7 @@ import br.com.symon.injection.components.ProfileFragmentComponent
 import br.com.symon.injection.modules.ProfileFragmentModule
 import br.com.symon.ui.editProfile.EditProfileActivity
 import br.com.symon.ui.profile.adapter.ProfileSalesAdapter
+import br.com.symon.ui.saleDetail.SaleDetailActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : BaseFragment(), ProfileContract.View {
@@ -28,6 +30,7 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
     companion object {
         const val USER_EXTRA = "user_extra"
         const val USER_EDIT_REQUEST = 14325
+        const val SALE_DETAIL_REQUEST = 14326
 
         private lateinit var profileSalesAdapter: ProfileSalesAdapter
         private lateinit var userTokenResponse: UserTokenResponse
@@ -59,6 +62,9 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
         profileEditTextView.setOnClickListener {
             startActivityForResult(Intent(activity, EditProfileActivity::class.java), USER_EDIT_REQUEST)
         }
+
+        setupRecyclerView()
+
         profileFragmentComponent.profilePresenter().getUserCache()
     }
 
@@ -77,9 +83,9 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
 
     override fun showSaleList(saleListResponse: SalesListResponse) {
         if (saleListResponse.salesList.size > 0) {
-            setupRecyclerView()
             profileMessageTextView.text = getString(R.string.profile_my_posts_label)
             profileSalesAdapter.setList(saleListResponse.salesList)
+            profileMyPostsRecyclerView.visibility = View.VISIBLE
         } else {
             profileMessageTextView.text = getString(R.string.profile_message)
         }
@@ -88,19 +94,16 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
 
     private fun setupRecyclerView() {
         val linearLayoutManager = LinearLayoutManager(context)
-        profileSalesAdapter = ProfileSalesAdapter()
+        profileSalesAdapter = ProfileSalesAdapter({ openSaleDetail(it) })
 
         profileMyPostsRecyclerView.setHasFixedSize(true)
         profileMyPostsRecyclerView.layoutManager = linearLayoutManager
         profileMyPostsRecyclerView.isNestedScrollingEnabled = false
         profileMyPostsRecyclerView.adapter = profileSalesAdapter
-        profileMyPostsRecyclerView.itemAnimator.changeDuration = 0
         profileMyPostsRecyclerView.addOnScrollListener(EndlessScrollListener({
             currentPage++
             fetchData(currentPage)
         }, linearLayoutManager))
-
-        profileMyPostsRecyclerView.visibility = View.VISIBLE
     }
 
     private fun fetchData(currentPage: Int) {
@@ -109,7 +112,9 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
+        if (requestCode == SALE_DETAIL_REQUEST && resultCode == Constants.NEED_UPDATE_RESULT) {
+            fetchData(Constants.FIRST_PAGE)
+        } else if (requestCode == USER_EDIT_REQUEST && resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 USER_EDIT_REQUEST -> {
                     userTokenResponse.user = data?.getParcelableExtra(USER_EXTRA)
@@ -121,5 +126,10 @@ class ProfileFragment : BaseFragment(), ProfileContract.View {
                 }
             }
         }
+    }
+
+    private fun openSaleDetail(sale: Sale) {
+        val saleDetailActivity = SaleDetailActivity.newIntent(activity, sale, userTokenResponse)
+        startActivityForResult(saleDetailActivity, SALE_DETAIL_REQUEST)
     }
 }
