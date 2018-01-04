@@ -221,10 +221,8 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
     }
 
     private fun openSales() {
-        if (!isDisplayedByTag(SalesFragment::class.java.canonicalName)) {
-            salesFragment = SalesFragment()
-            replace(R.id.mainFrameContent, salesFragment)
-        }
+        salesFragment = SalesFragment()
+        replace(R.id.mainFrameContent, salesFragment)
         setupToolbarMenu(isSearchVisible = true, isSettingsVisible = false, isRatingsOrderVisible = false)
     }
 

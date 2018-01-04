@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import br.com.symon.common.toast
 
 open class BaseFragment : Fragment(), BaseView {
     var fragmentId: String? = null
@@ -37,6 +38,10 @@ open class BaseFragment : Fragment(), BaseView {
     }
 
     override fun showError(message: Int) {
+        activity.toast(getString(message))
+    }
 
+    override fun showError(message: String) {
+        activity.toast(message)
     }
 }

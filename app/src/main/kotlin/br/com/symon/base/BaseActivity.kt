@@ -46,4 +46,8 @@ open class BaseActivity : AppCompatActivity(), BaseView {
     override fun showError(message: Int) {
         toast(getString(message))
     }
+
+    override fun showError(message: String) {
+        toast(message)
+    }
 }

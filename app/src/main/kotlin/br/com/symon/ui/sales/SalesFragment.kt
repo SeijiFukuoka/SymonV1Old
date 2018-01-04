@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import br.com.gold360.financas.common.GeneralErrorHandler
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseFragment
@@ -343,6 +344,8 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
                     latitude = it[0].latitude
                     longitude = it[0].longitude
                     getUser()
+                }, {
+                    GeneralErrorHandler(it, this, {})
                 })
     }
 
