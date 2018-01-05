@@ -39,7 +39,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_choose_photo_dialog.view.*
 
 
-class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextListener {
+class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextListener, RatingsFragment.OnRatingsListener, SalesFragment.OnSalesFragmentListener {
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
         const val REQUEST_SEND_SALE = 10412
@@ -105,6 +105,10 @@ class MainActivity : BaseActivity(), MainContract.View, SearchView.OnQueryTextLi
             toast("Resultados da procura = ${salesListResponse.salesList[0]} ")
         else
             toast("Nenhum resultado encontrado")
+    }
+
+    override fun onUserAvatarClick(userId: Int) {
+        mainBottomNavigation.currentItem = 4
     }
 
     private fun setupSearchView() {

@@ -2,6 +2,7 @@ package br.com.symon.ui.sales
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.location.Address
 import android.location.Location
@@ -59,6 +60,10 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         }
     }
 
+    interface OnSalesFragmentListener {
+        fun onUserAvatarClick(userId: Int)
+    }
+
     private val salesFragmentComponent: SalesFragmentComponent
         get() = DaggerSalesFragmentComponent.builder()
                 .applicationComponent((activity.application as CustomApplication).applicationComponent)
@@ -68,6 +73,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var salesAdapter: SalesAdapter
     private lateinit var locationProvider: ReactiveLocationProvider
+    private lateinit var onSalesFragmentListener: OnSalesFragmentListener
 
     private var extraSearchQuery: String? = ""
     private var currentPage: Int = Constants.FIRST_PAGE
@@ -76,6 +82,15 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     private var longitude: Double = 0.0
     private var radius: Int = Constants.SEEK_BAR_MIN
     private var unblockUserId: Int = 0
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is OnSalesFragmentListener) {
+            onSalesFragmentListener = context
+        } else {
+            throw ClassCastException(context.toString() + " must implement OnSalesFragmentListener.")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -192,6 +207,10 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     override fun onBlockUserClick(userId: Int) {
         unblockUserId = userId
         salesFragmentComponent.salesPresenter().blockUser(user!!.token, BlockUserRequest(unblockUserId))
+    }
+
+    override fun onUserAvatarClick(userId: Int) {
+        onSalesFragmentListener.onUserAvatarClick(userId)
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

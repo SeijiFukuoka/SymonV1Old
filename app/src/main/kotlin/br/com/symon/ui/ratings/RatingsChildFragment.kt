@@ -62,6 +62,7 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
     interface OnRatingsChildListener {
         fun onResponseQuantityLoaded(apiOptionKey: RatingsChildType, quantity: Int)
         fun onTabsUpdateNeeded()
+        fun onUserAvatarClick(userId: Int)
     }
 
     private lateinit var apiOptionKey: RatingsChildType
@@ -155,6 +156,10 @@ class RatingsChildFragment : BaseFragment(), RatingsChildFragmentContract.View, 
     override fun onBlockUserClick(userId: Int) {
         unblockUserId = userId
         ratingsChildComponent.ratingsChildFragmentPresenter().blockUser(userTokenResponse.token, BlockUserRequest(unblockUserId))
+    }
+
+    override fun onUserAvatarClick(userId: Int) {
+        onResponseLoaded.onUserAvatarClick(userId)
     }
 
     override fun updateActionSAle(position: Int, isLike: Boolean) {

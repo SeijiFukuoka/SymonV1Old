@@ -39,6 +39,7 @@ class SalesAdapter(private val list: MutableList<Sale>,
         fun onDislikeSaleClick(position: Int, sale: Sale)
         fun onReportSaleClick(sale: Sale)
         fun onBlockUserClick(userId: Int)
+        fun onUserAvatarClick(userId: Int)
     }
 
     fun addList(list: MutableList<Sale>) {
@@ -156,6 +157,10 @@ class SalesAdapter(private val list: MutableList<Sale>,
             {
                 with(viewItemAuthorBottomUserPhotoImageView) {
                     photoUri?.let { loadUrlToBeRounded(it, R.drawable.ic_profile) }
+                }
+
+                if (currentUser.id == id) {
+                    setOnClickListener { listener.onUserAvatarClick(sale.user.id!!) }
                 }
 
                 viewItemAuthorBottomUserNameTextView.text = name

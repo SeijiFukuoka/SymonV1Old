@@ -1,5 +1,6 @@
 package br.com.symon.ui.ratings
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.view.LayoutInflater
@@ -35,9 +36,23 @@ class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.On
         }
     }
 
+    interface OnRatingsListener {
+        fun onUserAvatarClick(userId: Int)
+    }
+
     private lateinit var ratingsFragmentAdapter: RatingsFragmentsPagerAdapter
     private var mLastSelectedIndex: Int = 0
     private var mNeedRefresh: Boolean = false
+    private lateinit var onRatingsListener: OnRatingsListener
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is OnRatingsListener) {
+            onRatingsListener = context
+        } else {
+            throw ClassCastException(context.toString() + " must implement OnRageComicSelected.")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +126,10 @@ class RatingsFragment : BaseFragment(), RatingsContract, RatingsChildFragment.On
             1 -> updateChildFragment()
             2 -> updateChildFragment()
         }
+    }
+
+    override fun onUserAvatarClick(userId: Int) {
+        onRatingsListener.onUserAvatarClick(userId)
     }
 
     private fun updateChildFragment() {
