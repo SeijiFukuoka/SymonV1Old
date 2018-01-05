@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.WindowManager
 import br.com.symon.R
 import br.com.symon.data.model.PlaceInfo
 import br.com.symon.ui.send.adapter.SearchPlacesAdapter
@@ -26,8 +27,6 @@ import pl.charmas.android.reactivelocation2.ReactiveLocationProvider
 import java.util.concurrent.TimeUnit
 
 
-
-
 class SearchPlacesActivity : AppCompatActivity() {
 
     companion object {
@@ -40,6 +39,8 @@ class SearchPlacesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_places)
+
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         setSupportActionBar(mainToolbar)
         supportActionBar?.setDisplayShowHomeEnabled(false)
@@ -106,7 +107,7 @@ class SearchPlacesActivity : AppCompatActivity() {
                     obs.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
-                                val placesList = it.map { PlaceInfo(it.placeId, it.getPrimaryText(null).toString(), it.getSecondaryText(null).toString())  }
+                                val placesList = it.map { PlaceInfo(it.placeId, it.getPrimaryText(null).toString(), it.getSecondaryText(null).toString()) }
                                 it.release()
 
                                 searchPlacesAdapter.updateAddressList(placesList)

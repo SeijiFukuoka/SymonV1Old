@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/white_F7F7F7">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -88,6 +89,7 @@
             android:layout_marginStart="@dimen/margin_50_dp"
             android:layout_marginTop="@dimen/margin_20_dp"
             android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/margin_20_dp"
             android:text="@string/profile_my_posts_label"
             android:textAlignment="center"
             android:textColor="@color/gray_737373"
@@ -102,7 +104,6 @@
             android:id="@+id/profileMyPostsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_20_dp"
             android:paddingBottom="@dimen/margin_20_dp"
             android:scrollbars="vertical"
             android:visibility="gone"

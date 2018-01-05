@@ -52,6 +52,7 @@ class EditProfileActivity : BaseActivity(),
 
     private lateinit var calendar: Calendar
     private lateinit var datePickerDialog: DatePickerDialog.OnDateSetListener
+    private var callbackManager: CallbackManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +69,6 @@ class EditProfileActivity : BaseActivity(),
         customToolbarBackImageView.setOnClickListener {
             onBackPressed()
         }
-
-        setupFacebookButton()
 
         PhoneMaskManager()
                 .withMask(getString(R.string.register_complement_phone_mask))
@@ -165,17 +164,23 @@ class EditProfileActivity : BaseActivity(),
         finish()
     }
 
-    private fun setupFacebookButton() {
-        val hasToken = AccessToken.getCurrentAccessToken() != null
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackManager?.onActivityResult(requestCode, resultCode, data)
+    }
 
-        profileFacebookTextView.text = if (hasToken) {
+    private fun setupFacebookButton() {
+        callbackManager = CallbackManager.Factory.create()
+        LoginManager.getInstance().registerCallback(callbackManager, this)
+
+        profileFacebookTextView.text = if (verifyFacebookToken()) {
             getString(R.string.profile_facebook_disconnect)
         } else {
             getString(R.string.profile_facebook_connect)
         }
 
         profileFacebookButtonContainerConstraint.setOnClickListener {
-            if (hasToken) {
+            if (verifyFacebookToken()) {
                 facebookLogout()
             } else {
                 facebookLogin()
@@ -213,6 +218,8 @@ class EditProfileActivity : BaseActivity(),
                 calendar.time = it
             }
         }
+
+        setupFacebookButton()
     }
 
     override fun showInvalidPassword() {
@@ -220,6 +227,10 @@ class EditProfileActivity : BaseActivity(),
         profileNewPasswordTextInput.requestFocus()
         profilePasswordTextInput.isErrorEnabled = true
         profilePasswordTextInput.error = getString(R.string.profile_wrong_password)
+    }
+
+    private fun verifyFacebookToken(): Boolean {
+        return !user?.facebookId.isNullOrEmpty() && AccessToken.getCurrentAccessToken() != null
     }
 
     override fun onCancel() {
@@ -235,6 +246,7 @@ class EditProfileActivity : BaseActivity(),
         Log.d("facebookEvent:", "Success")
         val request: GraphRequest = GraphRequest.newMeRequest(result?.accessToken) { _, _ ->
             facebookId = result?.accessToken?.userId
+            profileFacebookTextView.text = getString(R.string.profile_facebook_disconnect)
         }
 
         val parameters = Bundle()
@@ -255,8 +267,9 @@ class EditProfileActivity : BaseActivity(),
                 null,
                 HttpMethod.DELETE,
                 GraphRequest.Callback {
-
                 }).executeAsync()
+        LoginManager.getInstance().logOut()
+        profileFacebookTextView.text = getString(R.string.profile_facebook_connect)
     }
 
     private fun isValidUserPassword(): Boolean {
