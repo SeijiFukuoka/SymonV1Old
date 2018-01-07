@@ -10,3 +10,4 @@
 .idea
 /app/libs
 /gradle
+/app/release
