@@ -98,6 +98,8 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         salesFragmentComponent.inject(this)
         fragmentId = SalesFragment::class.java.canonicalName
 
+        getUser()
+
         locationProvider = ReactiveLocationProvider(activity)
 
         RxPermissions(activity)
@@ -142,24 +144,19 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         salesFragmentSalesSwipeRefreshLayout.setPrimaryColors()
         salesFragmentSalesSwipeRefreshLayout.setOnRefreshListener {
             salesFragmentSalesSwipeRefreshLayout.isRefreshing = true
-            fetchData(FIRST_PAGE)
+            fetchFirstPage(FIRST_PAGE)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_SALE_DETAIL && resultCode == NEED_UPDATE_RESULT) {
-            fetchData(FIRST_PAGE)
+            fetchFirstPage(FIRST_PAGE)
         }
     }
 
     override fun setUser(userTokenResponse: UserTokenResponse) {
         user = userTokenResponse
-        if (extraSearchQuery!!.isNotEmpty()) {
-            fetchSearchQuery(Constants.FIRST_PAGE)
-        } else {
-            fetchData(Constants.FIRST_PAGE)
-        }
     }
 
     override fun showSales(salesListResponse: SalesListResponse) {
@@ -280,6 +277,14 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     }
 
     private fun fetchData(page: Int) {
+        if (extraSearchQuery!!.isNotEmpty()) {
+            fetchSearchQuery(page)
+        } else {
+            fetchFirstPage(page)
+        }
+    }
+
+    private fun fetchFirstPage(page: Int) {
         if (page == Constants.FIRST_PAGE) {
             showContent(showContent = false)
             currentPage = 1
@@ -319,12 +324,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
         salesFragmentSalesRecyclerView.addOnScrollListener(EndlessScrollListener({
             if (currentPage < salesListResponse.totalPages) {
                 currentPage++
-                if (extraSearchQuery!!.isNotEmpty()) {
-                    fetchSearchQuery(currentPage)
-                } else {
-                    fetchData(currentPage)
-                }
-
+                fetchData(currentPage)
             }
         }, linearLayoutManager))
     }
@@ -335,7 +335,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
     private fun resetSaleData() {
         salesFragmentSalesSearchHeaderLayout.visibility = View.GONE
         extraSearchQuery = ""
-        fetchData(FIRST_PAGE)
+        fetchFirstPage(FIRST_PAGE)
     }
 
     fun showSendSuccessMessage() {
@@ -362,7 +362,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
                 .subscribe({
                     latitude = it[0].latitude
                     longitude = it[0].longitude
-                    getUser()
+                    fetchData(FIRST_PAGE)
                 }, {
                     GeneralErrorHandler(it, this, {})
                 })

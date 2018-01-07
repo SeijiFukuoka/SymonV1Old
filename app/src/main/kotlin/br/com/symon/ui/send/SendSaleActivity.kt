@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import android.view.View
+import br.com.gold360.financas.common.GeneralErrorHandler
 import br.com.symon.CustomApplication
 import br.com.symon.R
 import br.com.symon.base.BaseActivity
@@ -238,6 +239,8 @@ class SendSaleActivity : BaseActivity(), SendSaleContract.View {
                     lat = it[0].latitude
                     lng = it[0].longitude
                     sendSaleLocationEditText.setText(it[0].getAddressLine(0))
+                }, {
+                    GeneralErrorHandler(it, this, {})
                 })
     }
 
