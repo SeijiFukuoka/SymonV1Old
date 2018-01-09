@@ -333,7 +333,7 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
             String.format(Locale.getDefault(), resources.getString(R.string.sales_fragment_range_filter_text_formatted), salesFragmentHeaderRangeSeekBar.progress)
 
     private fun resetSaleData() {
-        salesFragmentSalesSearchHeaderLayout.visibility = View.GONE
+        salesFragmentSalesSearchHeaderLayout?.visibility = View.GONE
         extraSearchQuery = ""
         fetchFirstPage(FIRST_PAGE)
     }
@@ -370,10 +370,10 @@ class SalesFragment : BaseFragment(), SalesContract.View, SalesAdapter.OnItemCli
 
     private fun showContent(showContent: Boolean) {
         if (showContent) {
-            salesFragmentSalesSwipeRefreshLayout.visibility = View.VISIBLE
+            salesFragmentSalesSwipeRefreshLayout?.visibility = View.VISIBLE
             hideLoading()
         } else {
-            salesFragmentSalesSwipeRefreshLayout.visibility = View.GONE
+            salesFragmentSalesSwipeRefreshLayout?.visibility = View.GONE
             showLoading()
         }
     }
