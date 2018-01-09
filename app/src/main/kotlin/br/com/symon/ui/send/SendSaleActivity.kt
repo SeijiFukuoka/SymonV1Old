@@ -184,7 +184,6 @@ class SendSaleActivity : BaseActivity(), SendSaleContract.View {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-
         when (resultCode) {
             Activity.RESULT_OK -> {
                 if (requestCode == REQUEST_PLACE_INFO) {
